@@ -1908,7 +1908,7 @@
       0.7958069500574756
      ],
      "frac_entries_imputed_by_prior": 0.0,
-     "significant_improvement": true
+     "significant_improvement": false
     },
     {
      "prior": "complexportal",
@@ -2019,7 +2019,7 @@
       0.7958069500574756
      ],
      "frac_entries_imputed_by_prior": 0.0,
-     "significant_improvement": true
+     "significant_improvement": false
     },
     {
      "prior": "string_exp",
@@ -4152,7 +4152,7 @@
       0.8498318546211524
      ],
      "frac_entries_imputed_by_prior": 0.0,
-     "significant_improvement": true
+     "significant_improvement": false
     },
     {
      "prior": "complexportal",
@@ -4263,7 +4263,7 @@
       0.8498318546211524
      ],
      "frac_entries_imputed_by_prior": 0.0,
-     "significant_improvement": true
+     "significant_improvement": false
     },
     {
      "prior": "string_exp",

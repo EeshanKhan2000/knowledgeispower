@@ -1,7 +1,9 @@
 {
- "code_commit": "76264557deca98c831f8a174670ce0276431ed9a",
+ "code_commit": "5409d9763dd96b93548dfa6c862104e43c8752cc",
  "quick": false,
  "include_contrib": false,
+ "normalise": "none",
+ "preregistered": true,
  "seeds": [
   0,
   1,
@@ -24,7 +26,7 @@
   9
  ],
  "n_stability_bootstraps": 20,
- "runtime_seconds": 567.4,
+ "runtime_seconds": 555.3,
  "python": "3.13.16",
  "versions": {
   "numpy": "2.5.4",
