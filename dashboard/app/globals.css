@@ -1,0 +1,91 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+  --bg: #f7f7f5;
+  --surface: #ffffff;
+  --surface-2: #efeee9;
+  --ink: #111110;
+  --ink-2: #33322f;
+  --muted: #64625c;
+  --line: #dcdad3;
+  --accent: #1c5cab;
+  --good: #1d6b2a;
+  --good-bg: #e3f2e1;
+  --bad: #a3271f;
+  --bad-bg: #fbe5e2;
+  --neutral-bg: #eeede8;
+  --s1: #2a78d6; --s2: #eb6834; --s3: #1baf7a; --s4: #eda100; --s5: #e87ba4; --s6: #008300; --s7: #6250d6; --s8: #e34948;
+  --grid: #e4e2dc;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --bg: #121211;
+    --surface: #1a1a19;
+    --surface-2: #262624;
+    --ink: #f0efec;
+    --ink-2: #d6d5ce;
+    --muted: #a3a29a;
+    --line: #3a3936;
+    --accent: #6da7ec;
+    --good: #7fd18a;
+    --good-bg: #1d3320;
+    --bad: #ff9a8f;
+    --bad-bg: #3f1d1a;
+    --neutral-bg: #2a2a28;
+    --s1: #3987e5; --s2: #d95926; --s3: #199e70; --s4: #c98500; --s5: #d55181; --s6: #008300; --s7: #9085e9; --s8: #e66767;
+    --grid: #2f2f2c;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #121211; --surface: #1a1a19; --surface-2: #262624; --ink: #f0efec; --ink-2: #d6d5ce; --muted: #a3a29a;
+  --line: #3a3936; --accent: #6da7ec; --good: #7fd18a; --good-bg: #1d3320; --bad: #ff9a8f; --bad-bg: #3f1d1a; --neutral-bg: #2a2a28;
+  --s1: #3987e5; --s2: #d95926; --s3: #199e70; --s4: #c98500; --s5: #d55181; --s6: #008300; --s7: #9085e9; --s8: #e66767; --grid: #2f2f2c;
+}
+
+html, body { background: var(--bg); color: var(--ink); }
+body { overflow-x: hidden; -webkit-text-size-adjust: 100%; }
+
+@layer components {
+  .prose-p { @apply my-3 leading-relaxed text-ink2; }
+  .h1 { @apply text-2xl font-semibold tracking-tight text-ink md:text-3xl; }
+  .h2 { @apply mt-10 text-xl font-semibold text-ink; }
+  .h3 { @apply mt-6 text-base font-semibold text-ink; }
+  .card { @apply rounded-xl border border-line bg-surface p-4; }
+  .link { @apply text-accent underline underline-offset-2; }
+  .btn-ghost { @apply rounded-lg border border-line px-3 py-1.5 text-sm text-ink2 hover:bg-surface2 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent; }
+  .chip { @apply rounded-full border border-line bg-surface2 px-3 py-1 text-sm text-ink focus:outline-none focus-visible:ring-2 focus-visible:ring-accent; }
+  .term {
+    @apply inline cursor-pointer rounded-sm p-0 text-left text-inherit underline decoration-dotted decoration-2 underline-offset-[3px] focus:outline-none focus-visible:ring-2 focus-visible:ring-accent;
+    font: inherit;
+    text-decoration-color: var(--accent);
+  }
+  .tbl-wrap { @apply -mx-4 overflow-x-auto px-4 md:mx-0 md:px-0; }
+  .tbl { @apply w-full border-collapse text-sm; }
+  .tbl th { @apply whitespace-nowrap border-b border-line px-2 py-1.5 text-left text-xs font-semibold uppercase tracking-wide text-muted; }
+  .tbl td { @apply border-b border-line px-2 py-1.5 align-top text-ink2; }
+  .num { @apply whitespace-nowrap text-right font-mono tabular-nums; }
+  .tbl th.num { @apply text-right; }
+  .badge { @apply inline-flex items-center gap-1 whitespace-nowrap rounded-full px-2 py-0.5 text-xs font-semibold; }
+  .badge-good { @apply bg-goodbg text-good; }
+  .badge-bad { @apply bg-badbg text-bad; }
+  .badge-neutral { @apply bg-neutralbg text-ink2; }
+  .md h1 { @apply mt-6 text-2xl font-semibold text-ink; }
+  .md h2 { @apply mt-8 text-xl font-semibold text-ink; }
+  .md h3 { @apply mt-6 text-lg font-semibold text-ink; }
+  .md h4 { @apply mt-4 font-semibold text-ink; }
+  .md p, .md li { @apply my-2 leading-relaxed text-ink2; }
+  .md ul { @apply list-disc pl-6; }
+  .md ol { @apply list-decimal pl-6; }
+  .md blockquote { @apply my-3 border-l-4 border-line pl-3 italic; }
+  .md pre { @apply my-3 max-h-[28rem] overflow-auto rounded-lg border border-line bg-surface2 p-3 text-xs; }
+  .md code { @apply font-mono text-[0.85em]; }
+  .md :not(pre) > code { @apply rounded bg-surface2 px-1; overflow-wrap: anywhere; }
+  .md a { @apply text-accent underline; overflow-wrap: anywhere; }
+  .md table { @apply my-3 block overflow-x-auto text-sm; }
+  .md th, .md td { @apply border border-line px-2 py-1; }
+}
