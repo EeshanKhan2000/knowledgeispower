@@ -112,3 +112,27 @@ partners alone** gives lower error than using **data-derived co-variation partne
 
 **Read:** on an independent dataset with few cells, curated complexes are a *better choice of partners* than
 partners estimated from the data. However, the partner-residual model itself doesn't beat kNN here.
+
+## 2026-10-21 · v3 CONFIRMATION (Leduc 2022, all 1543 cells; `results/phase3/confirm_v3.json`)
+
+**Primary: passes the preregistered criterion (8/8), but the effect is practically negligible.**
+
+| E6 + Complex Portal vs. (in-complex) | MCAR | MNAR |
+|---|---|---|
+| Low-rank base | −0.01% RMSE | −0.01% |
+| Own null | −0.01% | −0.01% |
+| Data-derived graph | −0.14% | −0.07% |
+| kNN | −1.00% | −0.98% |
+
+**Why "passes" overstates it:**
+- **The correction is tiny:** the fitted correction weight is β ≈ 0.02 on every seed, so curated partners barely change the low-rank estimate.
+- **The CIs are optimistic:** separation comes from pooling ~100k masked entries with correlated errors.
+- **The kNN gain isn't the prior's:** the ~1% gain over kNN comes from the low-rank base.
+
+**Process error, disclosed:** v3 had no *smallest effect size of interest*. With one, for example 1% of RMSE, the primary
+would **fail** against the base and the null. We report it as: *passes the letter of v3, not its spirit*.
+
+**Consistent signal across both datasets:** curated partners beat data-derived partners. This holds for
+v3 vs. the data graph (small), v4 secondary (3–5% at 30–60 cells), Petrosius v2 secondary and Petrosius dev.
+That is the defensible, narrower form of "better than data alone": *as the source of which proteins inform
+a missing one*. It is not a claim that the curated prior beats the best data-only imputer.

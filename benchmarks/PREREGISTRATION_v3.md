@@ -45,3 +45,8 @@ base RMSE, so a statistically clear but tiny gain is not oversold.
 ## Outputs
 `results/phase3/confirm_v3.json`, written by `benchmarks/confirm_v3.py`. The script refuses to run twice or on
 uncommitted code.
+
+## Deviation note (added after the run; the analysis itself was not changed)
+This preregistration did not set a smallest effect size of interest. The primary passed 8/8, but the gains over the
+low-rank base and over the null were 0.01% of RMSE (β ≈ 0.02). With a 1% threshold it would fail. We therefore report v3
+as "passes the criterion as written; practically negligible". Future preregistrations (v5+) must include a minimum effect size.
