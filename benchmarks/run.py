@@ -427,6 +427,10 @@ def main(argv=None):
     if a.include_contrib and out_dir.resolve() == core_results:
         sys.exit("refusing: --include-contrib may not write to core results/")
     out_dir.mkdir(parents=True, exist_ok=True)
+    try:  # recorded at start: the code that actually runs
+        commit = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip()
+    except Exception:  # noqa: BLE001
+        commit = None
     t0 = time.time()
     adata, priors, null_graphs, in_cx = setup(n_nulls, a.include_contrib)
     extra = [m for m, e in METHODS.items() if e.contrib and e.select is not None] if a.include_contrib else []
@@ -450,10 +454,6 @@ def main(argv=None):
                             "cell_types": adata.obs["cell_type"].value_counts().to_dict()}
     coverage["_nulls"] = {n: [h.graph["provenance"]["n_swaps"] for h in hs] for n, hs in null_graphs.items()}
     write(out_dir, "coverage.json", coverage)
-    try:
-        commit = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip()
-    except Exception:  # noqa: BLE001
-        commit = None
     write(out_dir, "run_meta.json", {
         "code_commit": commit, "quick": a.quick, "include_contrib": a.include_contrib,
         "seeds": seeds, "n_nulls": n_nulls, "n_bootstrap": n_boot, "random_seeds": random_seeds,

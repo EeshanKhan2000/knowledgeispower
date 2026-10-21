@@ -87,4 +87,10 @@ Every row is reported, including losses. Results go to `results/*.json`, with fi
 runtime must stay under 30 min on a laptop.
 
 ## Deviations
-*(none yet)*
+1. **Metadata only, no effect on the analysis:** the first full run recorded `code_commit` at the *end* of the
+   run (`7626455`), not the start. Between the commit that was checked out at the start (`f0fb4b6`) and
+   `7626455`, the only change touching analysis inputs was one documentation line in `data/PROVENANCE.md`
+   (`git diff f0fb4b6 7626455 -- benchmarks src/scp_graphfs_mcp data`). `run.py` now records the commit at
+   the start.
+2. **Not a deviation, but flagged:** the per-cell normalisation question (see the README caveat) was noticed
+   after the run. Any normalised analysis will be reported separately as exploratory.

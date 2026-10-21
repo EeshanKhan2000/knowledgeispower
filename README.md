@@ -9,7 +9,38 @@
 ## 2. Headline result
 
 <!-- HEADLINE:START -->
-*Filled from `results/` after the preregistered run.*
+Dataset: 215 cells × 2813 protein groups, 40.7% missing; 1545 proteins are in ≥1 curated complex. 5 seeds × 2 masks, 10% of observed values masked; 10 shuffled nulls per prior; 95% paired-bootstrap CIs. Run: `7626455`, 567 s.
+
+**Imputation, proteins in a curated complex (RMSE, lower is better; Δ = prior − reference, 95% CI):**
+
+| Prior | Mask | RMSE | kNN | Δ vs kNN | own null (mean) | Δ vs own null |
+|---|---|---|---|---|---|---|
+| Complex Portal | MCAR | 0.730 | 0.687 | +0.043 [+0.037, +0.048] | 0.807 | -0.076 [-0.082, -0.071] |
+| CORUM | MCAR | 0.771 | 0.687 | +0.083 [+0.077, +0.089] | 0.843 | -0.073 [-0.078, -0.068] |
+| STRING (combined ≥700) | MCAR | 0.761 | 0.687 | +0.074 [+0.068, +0.079] | 0.895 | -0.134 [-0.140, -0.128] |
+| STRING (experimental ≥700) | MCAR | 0.784 | 0.687 | +0.097 [+0.091, +0.103] | 0.897 | -0.113 [-0.119, -0.108] |
+| Complex Portal | MNAR | 0.816 | 0.772 | +0.044 [+0.040, +0.048] | 0.901 | -0.085 [-0.089, -0.081] |
+| CORUM | MNAR | 0.865 | 0.772 | +0.093 [+0.088, +0.097] | 0.940 | -0.075 [-0.080, -0.071] |
+| STRING (combined ≥700) | MNAR | 0.878 | 0.772 | +0.106 [+0.101, +0.110] | 1.002 | -0.124 [-0.128, -0.121] |
+| STRING (experimental ≥700) | MNAR | 0.905 | 0.772 | +0.133 [+0.128, +0.137] | 1.004 | -0.099 [-0.104, -0.095] |
+
+Not in a complex, the curated priors fall back to kNN, so they are identical to it (MCAR 0.796, MNAR 0.850). STRING has partners for these proteins and is worse there (MCAR 0.927, MNAR 1.034).
+
+**Preregistered verdicts:**
+
+- **Test 1 (headline): complex prior beats kNN *and* its own null, in-complex, on both masks:** **fail**.
+  - Every prior beats its own shuffled null, so the curated graph structure carries real signal.
+  - No prior beats kNN imputation, which uses whole-cell similarity, so "better than data alone" is not supported.
+- **Test 2: panel design beats HVP and the null:** **fail**. Complex-propagated panels won 0/3 (CORUM) and 0/3 (Complex Portal) k values.
+  - At k=50, mean held-out R² was 0.193 for Complex Portal, 0.181 for CORUM, 0.189 for HVP and 0.419 for **random panels**.
+  - Random beat every scored panel at k=25 and k=50. The HVP seed scores favour high-variance proteins, including likely contaminants.
+- **Test 3: stability (k=50, Jaccard):** **pass**, by a negligible margin.
+  - Complex Portal 0.761 vs HVP 0.751 vs its null 0.760.
+  - CORUM 0.742 (fail).
+- **Test 4: curated ≥ STRING-exp ≥ STRING on in-complex RMSE:** **fail**. Complex Portal is best of the four priors on both masks, but STRING-combined beats STRING-experimental.
+- **Sanity (classification, k=50, macro-F1, not evidence):** HVP 0.787, random 0.767, Complex Portal 0.768, all proteins 0.865. Ceiling flag: False.
+
+**Caveat found after the run (not preregistered):** for well-measured complex proteins, the weighted mean of *shuffled-null* partners already correlates with the protein at median r = 0.63 (IQR 0.38–0.79), against median r = 0.75 for real curated partners (`results/discordant_subunits.csv`). That suggests a strong cell-wide abundance factor in these per-cell-unnormalised values, which kNN exploits. A normalised rerun would be a separate, exploratory analysis.
 <!-- HEADLINE:END -->
 
 The design was preregistered in [`benchmarks/PREREGISTRATION.md`](benchmarks/PREREGISTRATION.md), committed before any benchmark ran. Every row, including losses, is in `results/*.json` and on the dashboard.
@@ -20,7 +51,7 @@ The design was preregistered in [`benchmarks/PREREGISTRATION.md`](benchmarks/PRE
 git clone https://github.com/xX-its-amit-Xx/knowledgeispower && cd knowledgeispower
 python -m venv .venv && source .venv/bin/activate && pip install -e ".[dev]"
 pytest -q -m "not network"
-python benchmarks/run.py                  # ~6 min on a laptop -> results/
+python benchmarks/run.py                  # ~10 min on a laptop -> results/
 scp-graphfs-mcp                           # MCP server over stdio
 claude mcp add scp-graphfs -- "$PWD/.venv/bin/scp-graphfs-mcp"   # connect Claude Code
 ```
