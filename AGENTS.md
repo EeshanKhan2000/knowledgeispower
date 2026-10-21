@@ -49,6 +49,7 @@ python benchmarks/run.py --include-contrib   # + contrib entries -> results/cont
 scp-graphfs-mcp                              # MCP server (stdio), core tools
 scp-graphfs-mcp --enable-contrib variant_to_complexes
 python scripts/mcp_smoke.py                  # spawn server, call tools once
+# logs/scratch: write under benchmarks/_quick_out/ (gitignored), never repo root or /
 cd dashboard && npm ci && npm run build      # static dashboard -> dashboard/out
 ./scripts/fetch_data.sh                      # re-download snapshots + verify SHA-256
 ```
@@ -56,16 +57,20 @@ cd dashboard && npm ci && npm run build      # static dashboard -> dashboard/out
 ## How to add a prior (`contrib/<slot>/__init__.py`)
 ```python
 import networkx as nx
+from scp_graphfs_mcp.complexes import CORUM_PATH          # or your own snapshot under data/
+from scp_graphfs_mcp.priors import file_sha256
 from scp_graphfs_mcp.registry import register_prior
 
 def build(protein_ids: list[str]) -> nx.Graph:
     g = nx.Graph()
     g.add_nodes_from(protein_ids)
     g.add_edge(protein_ids[0], protein_ids[1], weight=1.0)   # weight > 0, no self-loops
-    g.graph["provenance"] = {"source": "MySource", "version": "v1", "url": "https://...", "sha256": "..."}
-    return g
+    g.graph["provenance"] = {"source": "MySource", "version": "v1", "url": "https://...",
+                             "sha256": file_sha256(CORUM_PATH)}   # must match a data/PROVENANCE.md row
+    return g                                                      # coverage stats are added for you
 
 register_prior("my_prior", build, "one-line description")   # shuffled null added automatically
+# check it: python benchmarks/run.py --include-contrib --quick  -> results/contrib/ (look for my_prior__null0)
 ```
 
 ## How to add a method

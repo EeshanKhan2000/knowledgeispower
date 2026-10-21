@@ -74,3 +74,24 @@ def test_bad_string_args():
         build_string_graph(["P28074"], 100)
     with pytest.raises(ValueError):
         build_string_graph(["P28074"], 700, "coexpression")
+
+
+def test_contrib_prior_without_coverage_gets_it(toy):
+    """Contrib priors only need provenance; build_prior adds coverage (onboarding-test finding)."""
+    from scp_graphfs_mcp.complexes import CORUM_PATH
+    from scp_graphfs_mcp.priors import file_sha256
+    from scp_graphfs_mcp.registry import PRIORS, register_prior
+
+    _, ids, _ = toy
+
+    def build(pids):
+        g = nx.Graph(); g.add_nodes_from(pids); g.add_edge(pids[0], pids[1], weight=1.0)
+        g.graph["provenance"] = {"source": "t", "version": "0", "url": "-", "sha256": file_sha256(CORUM_PATH)}
+        return g
+
+    register_prior("_test_nocov", build, "test", contrib=True)
+    try:
+        g = build_prior("_test_nocov", ids)
+        assert g.graph["coverage"]["n_edges"] == 1
+    finally:
+        PRIORS.pop("_test_nocov")

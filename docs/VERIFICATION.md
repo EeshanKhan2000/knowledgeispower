@@ -308,3 +308,21 @@ pageerrors=[]
 | 13 | Fragile S1 test premises | Premises are now asserted against the snapshot in-test. Assertions were added only, never weakened. |
 | 14 | Contributor wording | S1 credit line now reads "in progress; credited here once merged". |
 | 15 | NIFty author order | Note added to `docs/prior-art.json`. |
+
+## Agent-onboarding test (2026-10-21)
+
+**Setup:**
+- A fresh headless Claude Code session ran in an isolated clone at `867e76e`, with the git remote removed so it could not push.
+- It was told only to "read AGENTS.md first and follow it" and to add a toy prior (`toy_ribosome`) through the registry.
+- It was then to show that the automatic null runs.
+
+**Result: PASS.**
+- **Files created:** only `contrib/toy_ribosome/__init__.py`, `tests/contrib/test_toy_ribosome.py` and `results/contrib/*`.
+- **Protected paths:** none modified. `git status` shows no change to core `results/`.
+- **Automatic null:** `results/contrib/coverage.json` → `_nulls.toy_ribosome` has 3 replicates (quick mode).
+- **Null rows:** `toy_ribosome__null0..2` appear in `imputation.json`.
+
+**Where the agent got confused, and the fixes:**
+1. **Undocumented field:** the benchmark reads `graph.graph['coverage']`, which `AGENTS.md` never mentioned. The agent copied the private helper's logic. `priors.build_prior` now adds coverage when it is missing, with a regression test (`test_contrib_prior_without_coverage_gets_it`).
+2. **Hard-coded hash:** the agent hard-coded the snapshot SHA-256. A public `priors.file_sha256(path)` now exists, and the `AGENTS.md` example uses it.
+3. **Stray log:** the agent wrote a log to `/` because `$TMPDIR` was unset. `AGENTS.md` now names `benchmarks/_quick_out/` for logs and scratch files.

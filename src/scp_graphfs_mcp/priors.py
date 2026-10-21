@@ -44,6 +44,11 @@ def _sha256(path) -> str:
     return hashlib.sha256(open(path, "rb").read()).hexdigest()
 
 
+def file_sha256(path) -> str:
+    """SHA-256 of a file (use it for ``graph.graph['provenance']['sha256']``; must match data/PROVENANCE.md)."""
+    return _sha256(str(path))
+
+
 def _provenance(key: str, **extra) -> dict:
     p = dict(_PROV[key])
     p["sha256"] = _sha256(p.pop("path"))
@@ -167,6 +172,9 @@ def build_prior(name: str, protein_ids: list[str], **kw) -> nx.Graph:
         raise KeyError(f"unknown prior {name!r}; registered: {sorted(PRIORS)}")
     g = PRIORS[name].build(list(protein_ids), **kw)
     validate_prior(g, list(protein_ids))
+    if "coverage" not in g.graph:  # contrib priors need not compute it themselves
+        _, unmapped = _acc_to_features(list(protein_ids))
+        _finish(g, list(protein_ids), unmapped, g.graph["provenance"])
     return g
 
 
