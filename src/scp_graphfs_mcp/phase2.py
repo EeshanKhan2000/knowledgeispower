@@ -231,7 +231,8 @@ def data_graph(X, var_names, n_edges: int) -> nx.Graph:
     O = obs.astype(float)
     cnt = O.T @ O
     C = (Z.T @ Z) / np.maximum(cnt, 1)
-    C[cnt < 30] = -np.inf
+    min_overlap = min(30, max(5, X.shape[0] // 2))  # 30 at full n; feasible for small subsamples
+    C[cnt < min_overlap] = -np.inf
     np.fill_diagonal(C, -np.inf)
     iu = np.triu_indices_from(C, 1)
     vals = C[iu]
