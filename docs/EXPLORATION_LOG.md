@@ -48,3 +48,28 @@ Raw rows: `results/phase2/dev/dev_results.json`.
 **Selection (rule fixed in `EXPLORATION.md` before these runs):**
 - **Eligible:** among methods whose curated version beats kNN, its null and the data graph on dev (215 cells, both masks), the lowest mean RMSE is **E3 low-rank + Laplacian with CORUM** (0.680).
 - **Chosen:** it goes to confirmation (`PREREGISTRATION_v2.md`). Its dev margin over its own null is tiny, so we expect the confirmation to **fail** on the null comparison. We follow the rule regardless.
+
+## 2026-10-21 · v2 CONFIRMATION (seeds 1000–1004, single run; `results/phase2/confirm/confirm_v2.json`)
+
+**Primary (E3 low-rank + CORUM Laplacian): NOT CONFIRMED, 6/8 comparisons.** It beats kNN, low-rank-no-graph
+and the data graph on both masks. It does **not** beat its own shuffled null:
+- MCAR Δ = −0.0007 [−0.0031, +0.0016]
+- MNAR Δ = +0.0001 [−0.0018, +0.0017]
+
+The Laplacian helps through regularisation, not curation. This is the outcome predicted from dev.
+
+**Secondary (reported, not claimed):**
+- **E6, Complex Portal residuals on a low-rank base,** beats low-rank, its own null and the data graph on **both** masks, with all CIs excluding 0:
+
+  | E6 (Complex Portal) vs. | MCAR ΔRMSE [95% CI] | MNAR ΔRMSE [95% CI] |
+  |---|---|---|
+  | Low-rank, no graph | −0.0033 [−0.0039, −0.0028] | −0.0030 [−0.0035, −0.0025] |
+  | Own null | −0.0033 [−0.0039, −0.0028] | −0.0030 [−0.0035, −0.0025] |
+  | Data-derived graph | −0.0026 [−0.0032, −0.0019] | −0.0016 [−0.0021, −0.0010] |
+
+  The effect is small (~0.5% of RMSE). Its null gives the same RMSE as the low-rank base, so null "partners" add nothing (fitted β ≈ 0).
+- **E1+E4** (gated, kNN base) beats kNN, its null and the data graph, but loses to low-rank.
+- **E3 with STRING** has the lowest RMSE of all (MCAR 0.627, MNAR 0.706). It was not part of any pass test.
+
+**What this suggests:** E6 is a candidate for an **independent** test. Next: `PREREGISTRATION_v3.md` on the
+held-out Leduc 2022 dataset, chosen from Petrosius evidence only.
