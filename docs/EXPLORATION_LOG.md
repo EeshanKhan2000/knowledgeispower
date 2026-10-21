@@ -161,3 +161,26 @@ Against its own null: −0.38% (MCAR) and −0.21% (MNAR), both with CIs includi
    every prior-based method by any practically meaningful margin, on all three datasets.
 
 Further attempts on these three datasets would be forking paths. A new claim needs new data.
+
+## 2026-10-21 · Amendment 4 dev: external-evidence priors (`results/phase4/dev/dev_ext.json`)
+
+**Setup:** leave-one-dataset-out over the 5-dataset corpus. Petrosius uses 215/28 cells; Leduc and SCoPE2 use subsamples of 200/30. Dev seeds 100–102.
+Each prior graph was tested in residual-on-kNN (E1) and residual-on-low-rank (E6). The priors were:
+- Complex Portal (CP);
+- CP gated by external co-variation;
+- the external-only graph;
+- external ∪ CP, vs. external ∪ CP-null;
+- hu.MAP 3.0, alone and gated;
+- an in-dataset data graph.
+
+**Findings:**
+- **External co-variation adds nothing.** The external-only graph never beats kNN or low-rank, gating CP by external
+  evidence never beats plain CP, and ext ∪ CP is worse than CP alone.
+  - Curated CP edges do have higher external correlation than random pairs (median r 0.057 vs 0.003), so the evidence is real but weak.
+- **On Leduc and SCoPE2, every partner correction is ≈ 0.** RMSE equals the kNN or low-rank base to 3 decimals; β ≈ 0.
+- **Only Petrosius at 28 cells shows a gain:** CP + E1 gives 0.862 / 0.878 vs. best data-only 0.884 / 0.905 (MCAR / MNAR). This is the
+  dataset that motivated v4 and v5, which did not replicate.
+- **hu.MAP 3.0 ≈ CP** wherever there is any signal.
+
+**Selection rule (Amendment 4): no method qualifies.** No curated variant beats all baselines across corpus targets.
+Following the rule, **v6 is not run as a win**, and khan2023 stays an untouched holdout for a future, different idea.

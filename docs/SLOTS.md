@@ -26,6 +26,7 @@ Source: README §2b, `docs/EXPLORATION_LOG.md`, and issue #1. **Rules for everyo
 | **S1** variant bridge | (no new findings; checkpoint missed) | Unmerged. If reopened, the contract (`tests/test_variant_bridge.py`) is unchanged; pull the latest core first |
 | **A** hard filter | HVP picks contaminants: 8 keratins in a 25-protein panel. Random panels beat HVP and propagation panels. Greedy coverage over curated complexes ≈ random, and beats its null by ~0.1 R² | Apply the W1 filter (`phase2.keratin_mask`) before ranking. Compare against **random** and **coverage** panels, not just HVP. Evaluate on dev CV seeds 100–102 (`benchmarks/explore_panel.py`) |
 | **S2** datasets | Leduc and SCoPE2 are now loaders (`load_leduc2022`, `load_specht2021`). `.Rda` files can be read without R (`scripts/rda_*`). The scpdata `proteins` assays are often **imputed**; rebuild from unimputed peptides | Target a **fourth**, untouched dataset (e.g. plexDIA/Derks 2023, or another scpdata set), with ≥ 500 proteins and real missingness. It becomes the next held-out confirmation set |
+| **All tracks** (17:30 ET) | Pooling co-variation from 5 external datasets and hu.MAP 3.0 did **not** help (dev, leave-one-dataset-out). On Leduc and SCoPE2, partner corrections are ≈ 0 after kNN or low-rank | "More data" in the form of external co-variation is not the missing inductive bias. Proposals now need a *different* mechanism or task (see Proposals below) |
 | **S3** extra prior | **Complex Portal consistently beats CORUM** as a partner source (CORUM was worse than data-derived partners on SCoPE2). Curated partners beat data-derived ones by 3–5% on Leduc and ~1% on SCoPE2 | **hu.MAP 3.0 predicted complexes are now the top candidate.** Does a larger, predicted complex set beat curated Complex Portal? Use the matched-edge data graph and nulls as baselines; results go to `results/contrib/` |
 | **S4** NIFty | NIFty already benchmarks on a Petrosius dataset (prior-art log) | Use it as a panel-selection baseline next to random and coverage panels |
 | **S5** recipes | Six core MCP tools are live; contrib tools mount with `--enable-contrib` | No change |
@@ -36,4 +37,8 @@ Ideas outside the thesis (multi-omics, GNN embeddings, general KG) are logged be
 not code.
 
 ## Proposals (not scheduled)
-- *(none yet)*
+- **Change the task, not the prior:** use stoichiometry where it constrains *observed* values (denoising, or detecting
+  outlier subunits and orphan-subunit degradation) rather than imputing missing values that kNN already captures.
+- **Peptide-level priors:** complexes constrain protein ratios. Imputing at peptide level, then aggregating, may expose more signal than protein-level kNN.
+- **Bulk co-fractionation (CF-MS) profiles** as external evidence. They are richer than single-cell co-variation, but need a new data source.
+- **Any new claim:** khan2023 is still an untouched holdout. Preregister with a SESOI before touching it.
