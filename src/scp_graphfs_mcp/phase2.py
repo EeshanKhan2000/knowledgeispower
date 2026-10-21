@@ -244,3 +244,57 @@ def data_graph(X, var_names, n_edges: int) -> nx.Graph:
             g.add_edge(names[iu[0][t]], names[iu[1][t]], weight=1.0)
     g.graph["provenance"] = {"source": "data-derived co-variation", "version": "-", "url": "-", "sha256": "-"}
     return g
+
+
+# --------------------------------------------------------------------------- W1 / P1 panel design
+
+
+def keratin_mask(var_names) -> np.ndarray:
+    """W1: True for protein groups containing a keratin (HGNC gene groups matching 'Keratin', from the
+    committed HGNC snapshot). Keratins are the commonest sample-handling contaminants in proteomics."""
+    from .ids import group_accessions, hgnc_table
+
+    h = hgnc_table()
+    kr = h[h["gene_group"].str.contains("Keratin", case=False)]
+    accs = {a for ids in kr["uniprot_ids"] for a in ids.split("|") if a}
+    return np.array([any(a in accs for a in group_accessions(f)) for f in var_names])
+
+
+def select_coverage(X, graph: nx.Graph, var_names, k: int, exclude: np.ndarray | None = None,
+                    min_detection: float = 0.8) -> list[str]:
+    """P1: greedy max-coverage panel. Choosing protein p covers p and its graph neighbours; each covered
+    protein counts its detection rate. Submodular → greedy is (1-1/e)-optimal. Ties: higher variance."""
+    names = list(var_names)
+    pos = {n: i for i, n in enumerate(names)}
+    det = (~np.isnan(X)).mean(0)
+    var = np.nan_to_num(np.nanvar(X, 0))
+    cand = det >= min_detection
+    if exclude is not None:
+        cand &= ~exclude
+    covers = {i: {i} | {pos[v] for v in graph.neighbors(names[i]) if v in pos} if names[i] in graph else {i}
+              for i in np.where(cand)[0]}
+    covered: set[int] = set()
+    chosen: list[int] = []
+    for _ in range(min(k, len(covers))):
+        best, best_key = None, None
+        for i, cov in covers.items():
+            if i in chosen:
+                continue
+            gain = sum(det[j] for j in cov - covered)
+            key = (gain, var[i])
+            if best_key is None or key > best_key:
+                best, best_key = i, key
+        chosen.append(best)
+        covered |= covers[best]
+    return [names[i] for i in chosen]
+
+
+def select_pivoted_qr(Xfilled, var_names, k: int, cand: np.ndarray) -> list[str]:
+    """Data-only control for P1: column-subset selection by QR with column pivoting on standardised data."""
+    from scipy.linalg import qr
+
+    idx = np.where(cand)[0]
+    A = Xfilled[:, idx]
+    A = (A - A.mean(0)) / np.where(A.std(0) > 0, A.std(0), 1.0)
+    _, _, piv = qr(A, pivoting=True, mode="economic")
+    return [list(var_names)[idx[p]] for p in piv[:k]]
