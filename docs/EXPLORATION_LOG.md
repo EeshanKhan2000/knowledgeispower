@@ -90,3 +90,25 @@ In-complex RMSE, dev seeds 100–102, for E1+E4 (gated residual-on-kNN) with Com
 - **CORUM is mixed:** at n = 28 MNAR, data + null (0.828) ≤ data + CORUM (0.835).
 
 This motivates **v4** (low-data regime, independent Leduc dataset). v4 was preregistered *before* the v3 result was known.
+
+## 2026-10-21 · v4 CONFIRMATION (Leduc 2022, low-data regime; `results/phase3/confirm_v4.json`)
+
+**Primary: NOT CONFIRMED (2/6).** At n = 30 cells, data + Complex Portal:
+- **vs. data + null:** beats it on MCAR (−1.05%, CI excludes 0). On MNAR the CI includes 0 (−0.35%).
+- **vs. data alone:** beats it on MCAR (−0.50%). On MNAR the CI includes 0.
+- **vs. kNN: loses on both masks** (+6.25% MCAR, +2.93% MNAR). On Leduc, residual correction on top of kNN *hurts*, whatever the graph.
+
+**Secondary, worth recording (consistent across all 4 regime × mask cells, CIs excluding 0):** using **Complex Portal
+partners alone** gives lower error than using **data-derived co-variation partners**. Both are in the same residual-on-kNN model, and both are still worse than kNN:
+
+| Cells | Mask | Complex Portal partners vs. data-derived partners |
+|---|---|---|
+| 30 | MCAR | −5.3% RMSE |
+| 30 | MNAR | −2.8% RMSE |
+| 60 | MCAR | −4.7% RMSE |
+| 60 | MNAR | −3.7% RMSE |
+
+**Mixed:** CORUM gives −2.3% / −2.1% at n = 60, but at n = 30 it is not better (−0.2%, CI includes 0) and is worse on MNAR (+0.7%).
+
+**Read:** on an independent dataset with few cells, curated complexes are a *better choice of partners* than
+partners estimated from the data. However, the partner-residual model itself doesn't beat kNN here.
