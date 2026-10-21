@@ -51,3 +51,22 @@ the data-derived graph**, with paired 95% bootstrap CIs excluding 0 on both mask
 - Before the confirmation run, `benchmarks/PREREGISTRATION_v2.md` is committed with the chosen method,
   hyperparameters, baselines and pass criteria. The confirmation masks are run once.
 - Phase-2 outputs go to `results/phase2/` (dev runs to `results/phase2/dev/`).
+
+## Amendment 1 (committed before the runs it covers)
+
+Dev seed 100, MCAR, was already run (in `results/phase2/dev/dev_results_quick.json`). It showed:
+- residual-on-kNN with curated graphs beats kNN and the null, but the data-derived graph and STRING beat it;
+- low-rank completion (E3) beats everything, and graph regularisation adds nothing over its null.
+
+Before running more, three dev dimensions are added:
+1. **Low-data regime (prior-matters-most hypothesis; analogies: recommender cold-start, Bayesian shrinkage).**
+   - Subsample n_cells ∈ {30, 60} (cell-subsample seeds = mask seed; stratified by cell type), then mask
+     within the subsample.
+   - The data-derived graph and kNN use only those cells. The curated prior is unchanged.
+2. **Prior + data (does the prior add information beyond the data?).** Graphs: union(data-derived,
+   curated) vs. union(data-derived, null) vs. data-derived alone.
+3. **E6 = residual correction on a low-rank base:** x̂ = GRMF + β · partner-weighted GRMF residuals.
+
+**Scoping rule:** if the only qualifying method wins in a regime (e.g. n_cells ≤ 60), the v2
+preregistration states that regime, and the README reports the claim *as scoped*. The phase-1
+full-data result stays as reported.
