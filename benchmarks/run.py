@@ -50,8 +50,20 @@ def log(msg: str) -> None:
 # --------------------------------------------------------------------------- setup
 
 
-def setup(n_nulls: int, include_contrib: bool):
+def median_normalise(adata):
+    """Exploratory only (not preregistered): subtract each cell's median observed log2 value,
+    add back the global median. Keeps NaN; rebuilds layers['raw']."""
+    X = np.asarray(adata.X, float)
+    Xn = X - np.nanmedian(X, axis=1, keepdims=True) + np.nanmedian(X)
+    out = from_log2_matrix(Xn, adata.obs_names, adata.var_names, obs=adata.obs)
+    out.uns = dict(adata.uns)
+    return out
+
+
+def setup(n_nulls: int, include_contrib: bool, normalise: str = "none"):
     adata = load_petrosius2023()
+    if normalise == "median":
+        adata = median_normalise(adata)
     ids = list(adata.var_names)
     prior_names = list(CORE_PRIORS)
     if include_contrib:
@@ -416,11 +428,15 @@ def main(argv=None):
     ap.add_argument("--include-contrib", action="store_true")
     ap.add_argument("--quick", action="store_true")
     ap.add_argument("--out", type=Path, default=None)
+    ap.add_argument("--normalise", choices=["none", "median"], default="none",
+                    help="EXPLORATORY (not preregistered): per-cell median normalisation; writes to results/exploratory/")
     a = ap.parse_args(argv)
     if a.quick:
         seeds, n_nulls, n_boot, random_seeds, n_stab = [0, 1], 3, 200, list(range(3)), 5
     else:
         seeds, n_nulls, n_boot, random_seeds, n_stab = [0, 1, 2, 3, 4], 10, 1000, list(range(10)), 20
+    if a.normalise != "none" and a.out is None:
+        a.out = ROOT / "results" / "exploratory" / f"normalise_{a.normalise}"
     out_dir = a.out or (ROOT / "results" / "contrib" if a.include_contrib
                         else ROOT / "benchmarks" / "_quick_out" if a.quick else ROOT / "results")
     core_results = (ROOT / "results").resolve()
@@ -432,7 +448,7 @@ def main(argv=None):
     except Exception:  # noqa: BLE001
         commit = None
     t0 = time.time()
-    adata, priors, null_graphs, in_cx = setup(n_nulls, a.include_contrib)
+    adata, priors, null_graphs, in_cx = setup(n_nulls, a.include_contrib, a.normalise)
     extra = [m for m, e in METHODS.items() if e.contrib and e.select is not None] if a.include_contrib else []
 
     imp = test_imputation(adata, priors, null_graphs, in_cx, seeds, n_boot)
@@ -456,6 +472,7 @@ def main(argv=None):
     write(out_dir, "coverage.json", coverage)
     write(out_dir, "run_meta.json", {
         "code_commit": commit, "quick": a.quick, "include_contrib": a.include_contrib,
+        "normalise": a.normalise, "preregistered": a.normalise == "none" and not a.quick,
         "seeds": seeds, "n_nulls": n_nulls, "n_bootstrap": n_boot, "random_seeds": random_seeds,
         "n_stability_bootstraps": n_stab, "runtime_seconds": round(time.time() - t0, 1),
         "python": platform.python_version(),
