@@ -1,4 +1,6 @@
 """S2 contract: a contributed dataset with real (unimputed) missingness."""
+import re
+
 import numpy as np
 import pytest
 
@@ -18,4 +20,6 @@ def test_contrib_dataset_contract():
         assert np.isnan(np.asarray(a.X, float)).mean() >= 0.2, "must be unimputed"
         assert "cell_type" in a.obs
         prov = open("data/PROVENANCE.md").read()
-        assert name in prov or a.uns.get("source_sha256", "") in prov
+        sha = a.uns.get("source_sha256", "")
+        assert re.fullmatch(r"[0-9a-f]{64}", sha), "set adata.uns['source_sha256'] to the source file's SHA-256"
+        assert sha in prov, "source SHA-256 must have a row in data/PROVENANCE.md"

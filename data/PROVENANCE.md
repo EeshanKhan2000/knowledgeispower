@@ -1,7 +1,7 @@
 # Data provenance
 
 Every database snapshot and dataset used by this repo. Downloaded 2026-10-21 (UTC) unless noted.
-`scripts/fetch_data.sh` re-downloads everything and checks these SHA-256 sums. If a "current"
+`scripts/fetch_data.sh` checks these SHA-256 sums against local files and downloads any that are missing. `--refetch` re-downloads every file and compares it to the committed copy. If a "current"
 release has moved on, the checksum will differ: that is expected. Record the new release and its
 hash in a new row, and leave the old row in place.
 

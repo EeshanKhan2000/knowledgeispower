@@ -62,7 +62,7 @@ The MCP tools are `get_complexes`, `explain_protein`, `build_prior`, `propagate_
 
 ## 4. Prior art and differentiation
 
-All entries were verified by fetching DOI metadata or pages; full list (35 entries) and query log in [`docs/prior-art.json`](docs/prior-art.json) and [`docs/prior-art-search-log.md`](docs/prior-art-search-log.md).
+Every DOI and arXiv ID resolved, and its title, authors, year and venue matched (re-checked by an independent verifier). Some specific claims about papers could not be checked from the full text, and those entries say so in `unverified_note`. GIRAFI's use of a STRING v11.5 prior could not be re-checked (bioRxiv was rate-limited). The full list (35 entries) and query log in [`docs/prior-art.json`](docs/prior-art.json) and [`docs/prior-art-search-log.md`](docs/prior-art-search-log.md).
 
 | Work | Class | How we differ |
 |---|---|---|
@@ -98,20 +98,21 @@ None of the pieces is new alone.
 ## 6. Limitations
 
 - **Coverage:** curated databases have limited coverage and favour well-studied proteins.
-  - Only ~1100 of 2813 proteins here have any curated-complex partner.
+  - Only 1317 of 2813 protein groups here have a curated-complex partner that is also measured (CORUM 1147, Complex Portal 847).
   - CORUM is mammal-centric.
 - **One dataset:** 215 cells of one AML model (Petrosius et al. 2023 preprint, [10.1101/2023.06.06.543943](https://doi.org/10.1101/2023.06.06.543943)).
 - **Masking undercounts the hardest cases:** masked *observed* values under-represent the hardest true dropouts. Our MNAR mask only mimics them.
 - **`layers['raw']` is reconstructed** as `2**X`, because the source ships log2 values only.
 - **Contaminants:** the HVP panel scores pick up keratins (likely sample contaminants), as the agent transcript shows. No contaminant filter was preregistered.
 - **The CORUM null keeps ~30% of real edges.** Its large cliques restrict how far degree-preserving swaps can move, so that null is conservative.
+- **Optimistic CIs:** the bootstrap resamples masked entries independently and pools overlapping masks from 5 seeds, so the CIs are narrower than they should be.
 - **Hackathon scale:** built in about one day.
 
 ## 7. Contributors
 
 - Thesis, priors, benchmark, core MCP: **Amit Shenoy**
 - Hard-filter arm: **Collaborator A** *(in progress; credited here when merged)*
-- Variant→complex bridge: **Eeshan Khan** *(slot S1; listed as a contributor only if merged)*
+- Variant→complex bridge (slot S1): *in progress; credited here once merged*
 - One line per merged slot: see [`CONTRIBUTORS.md`](CONTRIBUTORS.md)
 
 ## 8. Where you could plug in

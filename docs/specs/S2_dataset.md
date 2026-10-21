@@ -13,7 +13,7 @@ so the benchmark can test transfer across datasets.
   - ≥ 500 proteins;
   - missing fraction ≥ 0.2;
   - an `obs['cell_type']` column.
-- **Provenance:** ask Amit to add a row to `data/PROVENANCE.md` (URL, release, date, SHA-256).
+- **Provenance:** set `adata.uns["source_sha256"]` to the downloaded file's SHA-256, and ask Amit to add a row to `data/PROVENANCE.md` (URL, release, date, SHA-256).
   Don't commit files > 50 MB; download on first use into `data/cache/`.
 - **No new dependencies.** If the source is an `.Rda` file, propose the reader first (R isn't
   assumed).

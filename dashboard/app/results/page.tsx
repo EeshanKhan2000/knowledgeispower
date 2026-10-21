@@ -87,7 +87,10 @@ function Extra({ o }: { o: Record<string, unknown> }) {
   if (!extra.length) return null;
   return (
     <p className="mt-2 break-words text-xs text-muted">
-      {extra.map(([k, v]) => `${k}: ${Array.isArray(v) ? v.join(", ") : typeof v === "object" ? JSON.stringify(v) : String(v)}`).join(" · ")}
+      {extra
+        .filter(([, v]) => v === null || typeof v !== "object" || Array.isArray(v)) // nested objects are rendered as tables
+        .map(([k, v]) => `${k}: ${Array.isArray(v) ? v.join(", ") : String(v)}`)
+        .join(" · ")}
     </p>
   );
 }

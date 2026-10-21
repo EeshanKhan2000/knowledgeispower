@@ -1,4 +1,6 @@
 """S3 contract: a contributed prior is valid, provenance-logged, and gets an automatic null."""
+import re
+
 import pytest
 
 from scp_graphfs_mcp.datasets import load_petrosius2023
@@ -17,7 +19,9 @@ def test_contrib_prior_contract():
     for name in contrib_priors:
         g = build_prior(name, ids)
         validate_prior(g, ids)
-        assert g.graph["provenance"]["sha256"] in prov, "snapshot must be logged in data/PROVENANCE.md"
+        sha = g.graph["provenance"]["sha256"]
+        assert re.fullmatch(r"[0-9a-f]{64}", sha), "provenance sha256 must be a 64-hex SHA-256"
+        assert sha in prov, "snapshot must be logged in data/PROVENANCE.md"
         assert g.number_of_edges() > 0
         h = shuffled_null(g, 0)
         assert dict(h.degree) == dict(g.degree)

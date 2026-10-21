@@ -83,16 +83,21 @@ lines += [
     "",
     f"- **Test 1 (headline): complex prior beats kNN *and* its own null, in-complex, on both masks:** "
     f"{yn(v['test1_pass'])}.",
-    "  - Every prior beats its own shuffled null, so the curated graph structure carries real signal.",
+    "  - Every prior beats its own shuffled null, and STRING beats its null by more than the curated priors do. "
+    "So graph structure helps, but this does not show a curation-specific effect.",
     "  - No prior beats kNN imputation, which uses whole-cell similarity, so \"better than data alone\" is not supported.",
 ]
 p50 = panel["50"]["all"]
+_real = ["hvp"] + PRIORS
+_ok = all(panel[k]["all"]["random_mean"] > panel[k]["all"][m] for k in ["25", "50"] for m in _real)
+beats_random = "checked: true" if _ok else "checked: FALSE, see results/panel.json"
 lines += [
     f"- **Test 2: panel design beats HVP and the null:** {yn(v['test2_pass'])}. Complex-propagated panels won "
     f"{v['test2_wins_out_of_3']['corum']}/3 (CORUM) and {v['test2_wins_out_of_3']['complexportal']}/3 (Complex Portal) k values.",
     f"  - At k=50, mean held-out R² was {p50['complexportal']:.3f} for Complex Portal, {p50['corum']:.3f} for CORUM, "
     f"{p50['hvp']:.3f} for HVP and {p50['random_mean']:.3f} for **random panels**.",
-    "  - Random beat every scored panel at k=25 and k=50. The HVP seed scores favour high-variance proteins, including likely contaminants.",
+    f"  - Random panels beat HVP and every real prior's panel at k=25 and k=50 ({beats_random}). "
+    "The HVP seed scores favour high-variance proteins, including likely contaminants.",
     f"- **Test 3: stability (k=50, Jaccard):** {yn(v['test3_pass'])}, by a negligible margin.",
     f"  - Complex Portal {stab['complexportal']:.3f} vs HVP {stab['hvp']:.3f} vs its null {stab['complexportal__null_mean']:.3f}.",
     f"  - CORUM {stab['corum']:.3f} (fail).",

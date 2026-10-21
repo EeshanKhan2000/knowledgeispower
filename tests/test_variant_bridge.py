@@ -66,6 +66,8 @@ def test_tool_registered_as_contrib():
 
 @impl
 def test_proteasome_subunit(offline):
+    snap_names = complexes_for_accession(uniprot_for_symbol("PSMB5")[0])["name"].str.lower()
+    assert snap_names.str.contains("proteasome").any()  # premise checked against snapshot
     out = _ok(variant_to_complexes("PSMB5"))
     assert out["resolved_gene"] == {"symbol": "PSMB5", "how": "symbol"}
     assert out["uniprot"] == uniprot_for_symbol("PSMB5")
@@ -76,6 +78,8 @@ def test_proteasome_subunit(offline):
 
 @impl
 def test_rna_pol_ii_subunit(offline):
+    snap_names = complexes_for_accession(uniprot_for_symbol("POLR2A")[0])["name"].str.lower()
+    assert snap_names.str.contains("rna polymerase ii").any()  # premise checked against snapshot
     out = _ok(variant_to_complexes("POLR2A"))
     got = {c["complex_id"] for c in out["complexes"]}
     assert got == _snapshot_complex_ids("POLR2A")
@@ -113,7 +117,7 @@ def test_unambiguous_alias_resolves_to_current(offline):
 def test_ambiguous_alias_is_reported_not_guessed(offline):
     # MB1 is an HGNC alias of more than one gene in the snapshot; checked here.
     syms, how = resolve_symbol("MB1")
-    assert how == "alias" and len(syms) > 1
+    assert how == "alias" and len(syms) > 1 and syms == sorted(syms)
     out = variant_to_complexes("MB1")
     jsonschema.validate(out, OUTPUT_SCHEMA)
     assert out["error"]["code"] == "ambiguous_symbol"
@@ -152,6 +156,8 @@ def test_partners_and_dataset_flags(offline):
     acc = uniprot_for_symbol("PSMB5")[0]
     snap = complexes_for_accession(acc)
     some_partner = next(m for mem in snap["members"] for m in mem if m != acc)
+    all_partners = {m for mem in snap["members"] for m in mem}
+    assert "P99999" not in all_partners and "Q00000" not in all_partners  # premise checked against snapshot
     out = _ok(variant_to_complexes("PSMB5", dataset_proteins=[f"{some_partner};Q00000", "P99999"]))
     for c in out["complexes"]:
         row = snap[snap["complex_id"] == c["complex_id"]].iloc[0]

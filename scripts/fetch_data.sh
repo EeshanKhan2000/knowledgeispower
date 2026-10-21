@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 # Re-download every snapshot listed in data/PROVENANCE.md and verify SHA-256.
+# By default, files already present are only re-hashed. Pass --refetch to download everything again
+# into a temp dir and compare those fresh downloads (detects upstream releases moving on).
 # Committed files (data/raw, data/datasets) are only needed if you deleted them;
 # the STRING raw files (data/cache/string) are needed to rebuild data/derived/string_*.
 set -euo pipefail
@@ -13,9 +15,15 @@ curl -sS -m 60 -o "$tmp/inter.der" http://crt.harica.gr/HARICA-GEANT-TLS-R1.cer
 openssl x509 -inform DER -in "$tmp/inter.der" -out "$tmp/inter.pem"
 cat "$base_ca" "$tmp/inter.pem" > "$tmp/ca.pem"
 
+REFETCH=0; [ "${1:-}" = "--refetch" ] && REFETCH=1
 fetch() { # url dest [curl args...]
   local url=$1 dest=$2; shift 2
-  [ -s "$dest" ] && { echo "have $dest"; return; }
+  if [ "$REFETCH" = 1 ] && [ -s "$dest" ]; then
+    curl -sS -m 1800 -L "$@" -o "$tmp/fresh" "$url"
+    if cmp -s "$tmp/fresh" "$dest"; then echo "fresh download identical: $dest"; else echo "UPSTREAM CHANGED: $dest"; fi
+    return
+  fi
+  [ -s "$dest" ] && { echo "have $dest (re-hashing local copy; use --refetch to re-download)"; return; }
   echo "fetch $dest"; curl -sS -m 1800 -L "$@" -o "$dest" "$url"
 }
 fetch "https://mips.helmholtz-muenchen.de/fastapi-corum/public/file/download_current_file?file_id=human&file_format=txt" data/raw/corum_humanComplexes.txt --cacert "$tmp/ca.pem"
