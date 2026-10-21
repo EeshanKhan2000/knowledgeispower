@@ -73,3 +73,20 @@ The Laplacian helps through regularisation, not curation. This is the outcome pr
 
 **What this suggests:** E6 is a candidate for an **independent** test. Next: `PREREGISTRATION_v3.md` on the
 held-out Leduc 2022 dataset, chosen from Petrosius evidence only.
+
+## 2026-10-21 · Low-data regimes, rerun with the data-graph fix (`dev_results_lown_fixed.json`)
+In-complex RMSE, dev seeds 100–102, for E1+E4 (gated residual-on-kNN) with Complex Portal:
+
+| Cells | Mask | data + CP | data + null | data alone | CP alone | kNN | low-rank |
+|---|---|---|---|---|---|---|---|
+| 28 | MCAR | **0.841** | 0.871 | 0.883 | 0.864 | 0.922 | 1.046 |
+| 28 | MNAR | **0.861** | 0.874 | 0.904 | 0.876 | 0.932 | 1.065 |
+| 60 | MCAR | **0.759** | 0.777 | 0.772 | 0.779 | 0.813 | 0.802 |
+| 60 | MNAR | **0.849** | 0.856 | 0.869 | 0.854 | 0.886 | 0.889 |
+
+**Read:**
+- **Low-rank collapses with few cells,** so kNN-based stacking is the right base there.
+- **Complex Portal adds information beyond the data graph:** data + CP beats data + null and data alone in every cell of the table.
+- **CORUM is mixed:** at n = 28 MNAR, data + null (0.828) ≤ data + CORUM (0.835).
+
+This motivates **v4** (low-data regime, independent Leduc dataset). v4 was preregistered *before* the v3 result was known.
