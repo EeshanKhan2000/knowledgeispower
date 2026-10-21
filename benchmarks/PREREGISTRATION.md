@@ -91,6 +91,17 @@ runtime must stay under 30 min on a laptop.
    run (`7626455`), not the start. Between the commit that was checked out at the start (`f0fb4b6`) and
    `7626455`, the only change touching analysis inputs was one documentation line in `data/PROVENANCE.md`
    (`git diff f0fb4b6 7626455 -- benchmarks src/scp_graphfs_mcp data`). `run.py` now records the commit at
-   the start.
+   the start. **Correction (found by independent verification):** that diff also adds 172 lines to
+   `src/scp_graphfs_mcp/tools.py` (the MCP tools). `benchmarks/run.py` does not import `tools.py`, so the
+   analysis is unaffected, but the original sentence was wrong.
 2. **Not a deviation, but flagged:** the per-cell normalisation question (see the README caveat) was noticed
    after the run. An exploratory per-cell median-normalised rerun (`python benchmarks/run.py --normalise median` → `results/exploratory/normalise_median/`) gave the same verdicts. It is not part of the preregistered result.
+3. **Significance flag tolerance (bug fix, found by independent verification):** `significant_improvement`
+   was `ci95_upper < 0`. Where both sides make identical predictions (curated priors vs. their nulls on
+   not-in-complex proteins, which all fall back to kNN), float noise gave CIs of about [-2e-14, -1e-14], so the
+   flag read as `true`. It is now `ci95_upper < -1e-9`. The results were regenerated with this fix. No
+   preregistered verdict changes, because every verdict uses the in-complex stratum, where the CIs are far
+   from 0.
+4. **Limitation of the CI method (as preregistered, stated here explicitly):** the bootstrap resamples masked
+   entries independently and pools 5 seeds whose masks overlap. Entries from the same cell and protein are
+   correlated, so the CIs are optimistic (too narrow).

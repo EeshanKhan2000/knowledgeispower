@@ -41,6 +41,9 @@ ROOT = Path(__file__).resolve().parents[1]
 CORE_PRIORS = ["corum", "complexportal", "string_exp", "string"]
 CURATED = ["corum", "complexportal"]
 KS = [25, 50, 100]
+# A CI upper bound must be below -SIG_TOL to count as an improvement: identical predictions
+# (e.g. kNN fallback on both sides) otherwise produce float noise around -1e-14.
+SIG_TOL = 1e-9
 
 
 def log(msg: str) -> None:
@@ -175,7 +178,7 @@ def test_imputation(adata, priors, null_graphs, in_cx, seeds, n_boot):
                                   "rmse_ref": float(np.mean([np.sqrt(SE[r][sel].mean()) for r in refs])),
                                   "null_rmse_range": [min(null_rmses), max(null_rmses)] if ref != "knn" else None,
                                   "frac_entries_imputed_by_prior": float(1 - fb[sel].mean()),
-                                  "significant_improvement": c["ci95"][1] < 0})
+                                  "significant_improvement": c["ci95"][1] < -SIG_TOL})
         out["masks"][kind] = {"rows": rows, "comparisons": comps}
     return out
 
@@ -439,9 +442,17 @@ def main(argv=None):
         a.out = ROOT / "results" / "exploratory" / f"normalise_{a.normalise}"
     out_dir = a.out or (ROOT / "results" / "contrib" if a.include_contrib
                         else ROOT / "benchmarks" / "_quick_out" if a.quick else ROOT / "results")
-    core_results = (ROOT / "results").resolve()
-    if a.include_contrib and out_dir.resolve() == core_results:
-        sys.exit("refusing: --include-contrib may not write to core results/")
+    core = (ROOT / "results").resolve()
+    od = out_dir.resolve()
+    under = od == core or core in od.parents
+    if a.include_contrib and under and not (od == core / "contrib" or (core / "contrib") in od.parents):
+        sys.exit("refusing: --include-contrib may only write under results/contrib/")
+    if a.normalise != "none" and under and not (core / "exploratory") in od.parents:
+        sys.exit("refusing: exploratory runs may only write under results/exploratory/")
+    if a.quick and under:
+        sys.exit("refusing: --quick may not write under results/")
+    if under and od != core and not a.include_contrib and a.normalise == "none":
+        sys.exit("refusing: a core run writes to results/ itself, not a subdirectory")
     out_dir.mkdir(parents=True, exist_ok=True)
     try:  # recorded at start: the code that actually runs
         commit = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip()

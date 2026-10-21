@@ -28,8 +28,8 @@ export const STRATUM_LABEL: Record<string, string> = { all: "all proteins", in_c
 export function cmpVerdict(c: Comparison): { kind: "good" | "bad" | "neutral"; text: string } {
   const lo = c.ci95?.[0];
   const hi = c.ci95?.[1];
-  if (c.significant_improvement || (isNum(hi) && hi < 0)) return { kind: "good", text: "prior lower error (CI excludes 0)" };
-  if (isNum(lo) && lo > 0) return { kind: "bad", text: "prior higher error (CI excludes 0)" };
+  if (isNum(hi) && hi < -1e-9) return { kind: "good", text: "prior lower error (CI excludes 0)" };
+  if (isNum(lo) && lo > 1e-9) return { kind: "bad", text: "prior higher error (CI excludes 0)" };
   return { kind: "neutral", text: "no clear difference (CI includes 0)" };
 }
 
