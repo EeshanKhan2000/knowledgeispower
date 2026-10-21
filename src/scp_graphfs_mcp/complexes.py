@@ -16,8 +16,9 @@ import pandas as pd
 from .ids import DATA_DIR, extract_accessions
 
 CORUM_PATH = DATA_DIR / "raw" / "corum_humanComplexes.txt"
+HUMAP3_PATH = DATA_DIR / "raw" / "humap3_complexes.csv"
 COMPLEX_PORTAL_PATH = DATA_DIR / "raw" / "complexportal_9606.tsv"
-SOURCES = ("corum", "complexportal")
+SOURCES = ("corum", "complexportal")  # curated sources; "humap3" (predicted) is opt-in
 
 
 @lru_cache(maxsize=1)
@@ -53,11 +54,22 @@ def load_complex_portal() -> pd.DataFrame:
     return out[out["members"].map(len) > 0].reset_index(drop=True)
 
 
+@lru_cache(maxsize=1)
+def load_humap3() -> pd.DataFrame:
+    """hu.MAP 3.0 *predicted* complexes (co-fractionation MS + ML); ComplexConfidence 1 = highest."""
+    df = pd.read_csv(HUMAP3_PATH, dtype=str).fillna("")
+    out = pd.DataFrame({"source": "humap3", "complex_id": df["HuMAP3_ID"],
+                        "name": "hu.MAP3 " + df["HuMAP3_ID"] + " (conf " + df["ComplexConfidence"] + ")",
+                        "members": [tuple(extract_accessions(s)) for s in df["Uniprot_ACCs"]],
+                        "confidence": df["ComplexConfidence"].astype(int)})
+    return out[out["members"].map(len) > 0].reset_index(drop=True)
+
+
 def load_complexes(sources: tuple[str, ...] | list[str] = SOURCES) -> pd.DataFrame:
-    loaders = {"corum": load_corum, "complexportal": load_complex_portal}
+    loaders = {"corum": load_corum, "complexportal": load_complex_portal, "humap3": load_humap3}
     unknown = set(sources) - set(loaders)
     if unknown:
-        raise ValueError(f"unknown complex source(s): {sorted(unknown)}; choose from {SOURCES}")
+        raise ValueError(f"unknown complex source(s): {sorted(unknown)}; choose from {sorted(loaders)}")
     return pd.concat([loaders[s]() for s in sources], ignore_index=True)
 
 

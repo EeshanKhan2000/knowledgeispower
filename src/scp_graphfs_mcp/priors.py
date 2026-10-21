@@ -35,6 +35,8 @@ _PROV = {
               "url": "https://mips.helmholtz-muenchen.de/corum/", "path": CORUM_PATH},
     "complexportal": {"source": "EBI Complex Portal", "version": "current (release dir 2026-01-09)",
                       "url": "https://www.ebi.ac.uk/complexportal/", "path": COMPLEX_PORTAL_PATH},
+    "humap3": {"source": "hu.MAP 3.0 (predicted complexes)", "version": "20240922 release file",
+               "url": "https://humap3.proteincomplexes.org/", "path": DATA_DIR / "raw" / "humap3_complexes.csv"},
     "string": {"source": "STRING", "version": "12.5", "url": "https://string-db.org/", "path": STRING_PATH},
 }
 
@@ -182,6 +184,8 @@ register_prior("corum", lambda ids: build_complex_graph(ids, "corum"),
                "CORUM: edge = shared complex, weight = #shared complexes", contrib=False)
 register_prior("complexportal", lambda ids: build_complex_graph(ids, "complexportal"),
                "EBI Complex Portal: edge = shared complex, weight = #shared complexes", contrib=False)
+register_prior("humap3", lambda ids: build_complex_graph(ids, "humap3"),
+               "hu.MAP 3.0 predicted complexes: edge = shared complex, weight = #shared", contrib=False)
 register_prior("string", lambda ids, min_score=700: build_string_graph(ids, min_score, "combined"),
                "STRING v12.5 combined score >= 700", contrib=False)
 register_prior("string_exp", lambda ids, min_score=700: build_string_graph(ids, min_score, "experimental"),
