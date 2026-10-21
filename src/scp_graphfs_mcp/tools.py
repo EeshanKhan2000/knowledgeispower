@@ -116,3 +116,175 @@ register_tool(
     {"type": "object", "properties": {"id": _ID}, "required": ["id"]},
     contrib=False,
 )
+
+
+# --------------------------------------------------------------------------- graph / data tools
+
+import uuid  # noqa: E402
+from pathlib import Path  # noqa: E402
+
+import anndata as ad  # noqa: E402
+import numpy as np  # noqa: E402
+
+_HANDLES: dict[str, object] = {}
+_PRIOR_NAMES = ["corum", "complexportal", "string", "string_exp"]
+
+
+def _graph_for(prior: str, protein_ids: list[str]):
+    from .priors import build_prior
+
+    if prior in _HANDLES:
+        return _HANDLES[prior]
+    return build_prior(prior, protein_ids)
+
+
+def build_prior(proteins: list[str], sources: list[str] | None = None, string_min_score: int = 700) -> dict:
+    """Build prior graph(s) over a protein list; returns coverage + a handle per source."""
+    from .priors import build_prior as _build
+
+    if not isinstance(proteins, list) or not proteins or not all(isinstance(p, str) for p in proteins):
+        return _err("invalid_input", "proteins must be a non-empty list of UniProt accessions / protein-group ids")
+    sources = sources or ["corum", "complexportal"]
+    out = {}
+    for s in sources:
+        if s not in _PRIOR_NAMES:
+            return _err("invalid_input", f"unknown source {s!r}; choose from {_PRIOR_NAMES}")
+        kw = {"min_score": string_min_score} if s.startswith("string") else {}
+        try:
+            g = _build(s, list(dict.fromkeys(proteins)), **kw)
+        except ValueError as exc:
+            return _err("invalid_input", str(exc))
+        h = f"prior-{s}-{uuid.uuid4().hex[:8]}"
+        _HANDLES[h] = g
+        cov = g.graph["coverage"]
+        degs = sorted(g.degree, key=lambda x: -x[1])[:5]
+        out[s] = {"handle": h, "n_proteins": cov["n_features"], "n_edges": cov["n_edges"],
+                  "n_proteins_with_partners": cov["n_with_edges"], "unmapped": cov["unmapped"][:50],
+                  "unmapped_fraction": cov["unmapped_fraction"],
+                  "top_degree": [{"protein": p, "symbols": symbols_for_accession(p.split(';')[0]), "degree": d}
+                                 for p, d in degs],
+                  "provenance": {k: v for k, v in g.graph["provenance"].items()}}
+    return {"priors": out, "note": "Use a handle in propagate_scores; a shuffled null of each graph is available "
+                                   "in the benchmark (results/), not here."}
+
+
+def propagate_scores(handle: str, scores: dict, alpha: float = 0.5, top: int = 20) -> dict:
+    """Random walk with restart of non-negative scores over a prior graph (alpha = restart probability)."""
+    from .methods import propagate
+
+    g = _HANDLES.get(handle)
+    if g is None:
+        return _err("unknown_handle", f"{handle!r}; call build_prior first")
+    if not isinstance(scores, dict) or not scores:
+        return _err("invalid_input", "scores must be a non-empty {protein: score} object")
+    try:
+        p = propagate(g, scores, list(g.nodes), alpha=float(alpha))
+    except ValueError as exc:
+        return _err("invalid_input", str(exc))
+    names = list(g.nodes)
+    order = np.argsort(-p)[: int(top)]
+    return {"alpha": alpha, "top": [{"protein": names[i], "symbols": symbols_for_accession(names[i].split(';')[0]),
+                                     "propagated": float(p[i]), "seed_score": float(scores.get(names[i], 0.0))}
+                                    for i in order]}
+
+
+def _read(h5ad_path: str):
+    p = Path(h5ad_path).expanduser()
+    if p.suffix != ".h5ad" or not p.is_file():
+        return None, _err("invalid_input", f"not an existing .h5ad file: {h5ad_path}")
+    a = ad.read_h5ad(p)
+    if "raw" not in a.layers:
+        a.layers["raw"] = np.exp2(np.asarray(a.X, float))
+    return a, None
+
+
+def impute_with_prior(h5ad_path: str, prior: str = "complexportal", output_path: str | None = None) -> dict:
+    """Impute NaNs from observed co-complex partners in the same cell (kNN fallback); writes a new .h5ad."""
+    from .methods import impute_with_prior as _impute
+
+    a, err = _read(h5ad_path)
+    if err:
+        return err
+    g = _graph_for(prior, list(a.var_names))
+    res = _impute(a, g)
+    out_path = Path(output_path) if output_path else Path(h5ad_path).with_name(Path(h5ad_path).stem + f".imputed_{prior}.h5ad")
+    if out_path.suffix != ".h5ad":
+        return _err("invalid_input", "output_path must end in .h5ad")
+    res.uns["impute_with_prior"]["prior"] = {k: str(v) for k, v in res.uns["impute_with_prior"]["prior"].items()}
+    res.write_h5ad(out_path)
+    rep = res.uns["impute_with_prior"]
+    by_prior = np.asarray(res.layers["imputed_by_prior"])
+    per_prot = by_prior.sum(0)
+    top = np.argsort(-per_prot)[:10]
+    return {"output_path": str(out_path), "prior": prior, "beta": rep["beta"],
+            "n_missing": rep["n_missing"], "n_imputed_from_partners": rep["n_imputed_by_prior"],
+            "n_imputed_by_knn_fallback": rep["n_imputed_by_knn_fallback"],
+            "proteins_most_inferred_from_partners": [
+                {"protein": a.var_names[i], "symbols": symbols_for_accession(a.var_names[i].split(';')[0]),
+                 "n_cells_filled_from_partners": int(per_prot[i])} for i in top if per_prot[i] > 0],
+            "caveat": "In the benchmark (results/imputation.json) check whether this prior beat kNN and its shuffled null "
+                      "before trusting partner-based values."}
+
+
+def select_panel(h5ad_path: str, prior: str = "complexportal", k: int = 25, mode: str = "soft_weight") -> dict:
+    """Choose k proteins (detected in >=80% of cells) that best summarise the rest; each with a justification."""
+    from .methods import select_features
+
+    a, err = _read(h5ad_path)
+    if err:
+        return err
+    if not isinstance(k, int) or not 1 <= k <= a.n_vars:
+        return _err("invalid_input", f"k must be an integer in [1, {a.n_vars}]")
+    g = _graph_for(prior, list(a.var_names)) if mode != "none" else None
+    try:
+        panel, score = select_features(a, g, k, mode, return_scores=True)
+    except (ValueError, NotImplementedError) as exc:
+        return _err("invalid_input", str(exc))
+    names = list(a.var_names)
+    rows = []
+    for rank, p in enumerate(panel, 1):
+        acc = p.split(";")[0]
+        cx = complexes_for_accession(acc)
+        partners = sorted(set(g.neighbors(p))) if g is not None and p in g else []
+        psym = [s for q in partners[:6] for s in symbols_for_accession(q.split(';')[0])[:1]]
+        sym = "/".join(symbols_for_accession(acc)) or acc
+        if len(cx):
+            why = f"{sym} is in {cx['name'].iloc[0]}" + (f" with {', '.join(psym)}" if psym else "") + \
+                  f" ({len(cx)} curated complexes, {len(partners)} partners measured here)."
+        else:
+            why = f"{sym}: high variance across cells; no curated complex, so it carries information the prior cannot."
+        rows.append({"rank": rank, "protein": p, "symbols": symbols_for_accession(acc),
+                     "score": float(score[names.index(p)]) if score is not None else None, "justification": why})
+    return {"mode": mode, "prior": prior if g is not None else None, "k": k, "panel": rows}
+
+
+_H5 = {"type": "string", "description": "Path to a .h5ad (cells=obs, proteins=var, X=log2 with NaN missing)."}
+_PRIOR = {"type": "string", "enum": _PRIOR_NAMES, "default": "complexportal"}
+register_tool("build_prior", build_prior,
+              "Build curated-complex (and/or STRING) prior graphs over a protein list: coverage, unmapped ids, "
+              "hub proteins, and a handle for propagate_scores.",
+              {"type": "object", "properties": {
+                  "proteins": {"type": "array", "items": {"type": "string"}},
+                  "sources": {"type": "array", "items": {"type": "string", "enum": _PRIOR_NAMES}},
+                  "string_min_score": {"type": "integer", "minimum": 400, "maximum": 1000, "default": 700}},
+               "required": ["proteins"]}, contrib=False)
+register_tool("propagate_scores", propagate_scores,
+              "Random walk with restart of {protein: score} over a prior graph handle.",
+              {"type": "object", "properties": {
+                  "handle": {"type": "string"}, "scores": {"type": "object", "additionalProperties": {"type": "number"}},
+                  "alpha": {"type": "number", "minimum": 0.01, "maximum": 1, "default": 0.5},
+                  "top": {"type": "integer", "default": 20}},
+               "required": ["handle", "scores"]}, contrib=False)
+register_tool("impute_with_prior", impute_with_prior,
+              "Fill missing values in a single-cell proteomics .h5ad from observed co-complex partners in the same "
+              "cell (kNN fallback). Writes a new .h5ad; reports how many values came from partners.",
+              {"type": "object", "properties": {"h5ad_path": _H5, "prior": _PRIOR,
+                                                "output_path": {"type": "string"}},
+               "required": ["h5ad_path"]}, contrib=False)
+register_tool("select_panel", select_panel,
+              "Choose a k-protein measurement panel (prior-weighted or plain HVP) with a per-protein justification.",
+              {"type": "object", "properties": {"h5ad_path": _H5, "prior": _PRIOR,
+                                                "k": {"type": "integer", "minimum": 1, "default": 25},
+                                                "mode": {"type": "string", "enum": ["soft_weight", "none", "hard_filter"],
+                                                         "default": "soft_weight"}},
+               "required": ["h5ad_path"]}, contrib=False)

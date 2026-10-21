@@ -1,0 +1,37 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below, and cite the data sources listed in data/PROVENANCE.md."
+title: "scp-graphfs-mcp: curated protein-complex priors for single-cell proteomics reconstruction, over MCP"
+type: software
+authors:
+  - family-names: Shenoy
+    given-names: Amit
+license: Apache-2.0
+repository-code: "https://github.com/xX-its-amit-Xx/knowledgeispower"
+version: 0.1.0
+date-released: "2026-10-22"
+keywords: [single-cell proteomics, protein complexes, CORUM, Complex Portal, imputation, MCP]
+references:
+  - type: article
+    title: "CORUM in 2024: protein complexes as drug targets"
+    doi: 10.1093/nar/gkae1033
+    journal: Nucleic Acids Research
+    year: 2025
+    authors: [{name: "Steinkamp et al."}]
+  - type: article
+    doi: 10.1093/nar/gkae1085
+    journal: Nucleic Acids Research
+    year: 2025
+    title: "Complex portal 2025: predicted human complexes and enhanced visualisation tools for the comparison of orthologous and paralogous complexes"
+    authors: [{name: "Balu et al."}]
+  - type: article
+    doi: 10.1093/nar/gkae1113
+    journal: Nucleic Acids Research
+    year: 2025
+    title: "The STRING database in 2025: protein networks with directionality of regulation"
+    authors: [{name: "Szklarczyk et al."}]
+  - type: article
+    doi: 10.1101/2023.06.06.543943
+    journal: bioRxiv
+    year: 2023
+    title: "Evaluating the capabilities of the Astral mass analyzer for single-cell proteomics"
+    authors: [{name: "Petrosius et al."}]

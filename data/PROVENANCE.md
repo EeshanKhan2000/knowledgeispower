@@ -25,6 +25,7 @@ hash in a new row, and leave the old row in place.
   (https://mips.helmholtz-muenchen.de/corum/), Complex Portal (CC0 per EBI), STRING (CC BY 4.0),
   HGNC (freely available), and the Petrosius 2023 data (Dataverse record terms). These were
   **not verified** by fetching the licence pages at snapshot time.
+- **Complex Portal is curated only:** `complextab/9606.tsv` holds the 2498 manually curated human complexes (all `CPX-` with curator-assigned ECO evidence). The hu.MAP 3.0 machine-predicted complexes are distributed separately as `9606_predicted.tsv`, which is **not** used.
 - **The dataset ships without `layers['raw']`.** The loader in `scp_graphfs_mcp.datasets` adds it
   as `2**X`, which follows the convention exactly but is not an independent raw export.
 
