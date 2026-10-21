@@ -55,6 +55,19 @@ def load_leduc2022() -> ad.AnnData:
     return a
 
 
+SPECHT_PATH = DATA_DIR / "datasets" / "specht2021_scope2_proteins_from_peptides.h5ad"
+
+
+def load_specht2021() -> ad.AnnData:
+    """SCoPE2 macrophages/monocytes (Specht et al. 2021); proteins = median of unimputed peptides.
+    Held out for the v5 confirmation; see benchmarks/EXPLORATION.md Amendment 3."""
+    a = ad.read_h5ad(SPECHT_PATH)
+    validate_dataset(a)
+    return a
+
+
+register_dataset("specht2021", load_specht2021,
+                 "SCoPE2 macrophage/monocyte, proteins aggregated from unimputed peptides (held-out dataset)", contrib=False)
 register_dataset("leduc2022", load_leduc2022,
                  "Leduc et al. 2022 pSCoPE melanoma/monocyte, pre-imputation proteins (held-out dataset)", contrib=False)
 register_dataset("petrosius2023", load_petrosius2023,

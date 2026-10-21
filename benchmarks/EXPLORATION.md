@@ -82,3 +82,14 @@ dataset**: Leduc et al. 2022 (nPOP/pSCoPE), melanoma + monocytes, the **pre-impu
   until `benchmarks/PREREGISTRATION_v3.md` is committed. v3 fixes the method(s) using Petrosius
   evidence only (dev + v2 confirmation).
 - Allowed before v3: shape, missingness and label counts (already printed by the build script).
+
+## Amendment 3: a third held-out dataset (committed before any evaluation on it)
+
+**Dataset:** SCoPE2 (Specht et al. 2021) from scpdata `specht2019v3.Rda`, 1490 cells, 79.5% missing. The scpdata
+`proteins` assay is imputed, so proteins are re-aggregated from the **unimputed** `peptides` assay (median per
+protein per cell). Provenance is in `data/PROVENANCE.md`.
+
+**What has been looked at:** only shape, missingness and label counts.
+
+**Purpose:** it is reserved for v5. v5 tests the one claim that held up across Petrosius and Leduc: curated
+partners beat data-derived partners. This time the test includes a minimum effect size.
