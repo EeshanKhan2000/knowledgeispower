@@ -2,6 +2,8 @@
 
 **Headline:** Protein-network priors (curated complexes and STRING) beat shuffled graphs but not kNN for filling gaps in single-cell proteomes. Preregistered, every number public.
 
+**Update:** we also ran preregistered held-out tests on 3 datasets. Curated complexes beat shuffles, but no prior-based method meaningfully beats data-only imputers.
+
 **One-liner:** An MCP server that lets an LLM agent use CORUM and Complex Portal complex membership to impute and design panels for single-cell proteomics, with an honest benchmark against kNN, STRING and degree-preserving nulls.
 
 **Ask:**

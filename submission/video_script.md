@@ -23,6 +23,11 @@ partners?" Show:
 STRING included, beat a shuffled version of itself, and Complex Portal had the lowest error. But plain kNN beat every
 prior, so our headline hypothesis failed. And random panels beat prior-guided ones."
 
+**(optional, +15 s) · We tried hard to make it true, honestly.**
+- 6 new ideas: residual stacking, stoichiometry, graph-regularised matrix factorisation, gating, fusion, sensor-placement panels.
+- Each was developed on dev masks, then preregistered and confirmed once on held-out data from two new datasets.
+- Verdict: curated complexes beat shuffles, and they beat data-derived partners on Leduc. But nothing meaningfully beats kNN or low-rank models.
+
 **1:45–2:00 · Limitations and ask.**
 - One dataset.
 - Much protein co-variation is shared broadly, not complex-specific. A per-cell-normalised exploratory rerun gave the same verdict.
