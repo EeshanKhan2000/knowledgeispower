@@ -72,6 +72,24 @@ The design was preregistered in [`benchmarks/PREREGISTRATION.md`](benchmarks/PRE
 - n=60 MCAR: -0.0253 [-0.0284, -0.0225] (-4.73%)
 - n=60 MNAR: -0.0230 [-0.0257, -0.0202] (-3.72%)
 
+**v5: third dataset (SCoPE2), 30-cell subsamples, minimum effect size 1%.** The claim is narrow: *curated Complex Portal partners beat data-derived partners and a shuffled null.* Result: **not confirmed** (0/4).
+- n=30 MCAR vs data_alone: -0.0043 [-0.0104, +0.0016] (-0.78%) ✗
+- n=30 MCAR vs own_null_mean: -0.0021 [-0.0050, +0.0009] (-0.38%) ✗
+- n=30 MCAR vs knn (secondary): +0.0057 [+0.0029, +0.0085] (+1.04%) ✗
+- n=30 MNAR vs data_alone: -0.0063 [-0.0121, -0.0004] (-0.95%) ✗
+- n=30 MNAR vs own_null_mean: -0.0014 [-0.0041, +0.0013] (-0.21%) ✗
+- n=30 MNAR vs knn (secondary): -0.0002 [-0.0028, +0.0026] (-0.02%) ✗
+- n=60 MCAR vs data_alone (secondary): -0.0078 [-0.0119, -0.0038] (-1.45%) ✓
+- n=60 MCAR vs own_null_mean (secondary): -0.0032 [-0.0046, -0.0018] (-0.60%) ✗
+- n=60 MCAR vs knn (secondary): +0.0010 [-0.0004, +0.0024] (+0.19%) ✗
+- n=60 MNAR vs data_alone (secondary): -0.0094 [-0.0136, -0.0049] (-1.48%) ✓
+- n=60 MNAR vs own_null_mean (secondary): -0.0029 [-0.0046, -0.0012] (-0.46%) ✗
+- n=60 MNAR vs knn (secondary): -0.0026 [-0.0043, -0.0009] (-0.42%) ✗
+
+**Bottom line after three datasets (no hand-typed numbers above; see the JSON):**
+- **Robust:** curated complexes beat degree-preserving shuffles of themselves.
+- **Small, and not confirmed at a 1% minimum effect:** Complex Portal partners beat data-derived partners.
+- **Not supported:** "better than data alone" as an imputer. kNN or low-rank models match or beat every prior-based method by any meaningful margin.
 <!-- PHASE23:END -->
 
 ## 3. Quickstart

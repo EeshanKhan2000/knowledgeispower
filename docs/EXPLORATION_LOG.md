@@ -136,3 +136,28 @@ would **fail** against the base and the null. We report it as: *passes the lette
 v3 vs. the data graph (small), v4 secondary (3–5% at 30–60 cells), Petrosius v2 secondary and Petrosius dev.
 That is the defensible, narrower form of "better than data alone": *as the source of which proteins inform
 a missing one*. It is not a claim that the curated prior beats the best data-only imputer.
+
+## 2026-10-21 · v5 CONFIRMATION (SCoPE2, third dataset, SESOI 1%; `results/phase3/confirm_v5.json`)
+
+**Primary: NOT CONFIRMED (0/4).** At n = 30, Complex Portal partners vs. data-derived partners:
+
+| Mask | Δ RMSE | 95% CI | % of reference | Pass? |
+|---|---|---|---|---|
+| MCAR | −0.0043 | [−0.0104, +0.0016] | −0.78% | fails (CI includes 0 and below the 1% SESOI) |
+| MNAR | −0.0063 | [−0.0121, −0.0004] | −0.95% | fails (below the 1% SESOI) |
+
+Against its own null: −0.38% (MCAR) and −0.21% (MNAR), both with CIs including 0.
+
+**Secondary:**
+- **At n = 60,** Complex Portal beats data-derived partners by −1.45% (MCAR) and −1.48% (MNAR), with CIs excluding 0.
+- **CORUM partners are worse than data-derived partners** on SCoPE2 (+3.7% at n = 30, MCAR).
+- **No graph-based variant meaningfully beats kNN.**
+
+**Where the evidence stands after three datasets:**
+1. **Robust:** curated complex graphs carry real signal. They beat degree-preserving shuffles across tests and datasets (phase 1, v4, v5 n = 60), though the gain is often small.
+2. **Directionally consistent but small, and not confirmed at a 1% SESOI:** Complex Portal partners beat
+   data-derived partners. That's 3–5% on Leduc, ~1% on SCoPE2, and it isn't true for CORUM on SCoPE2.
+3. **Not supported:** that a curated prior gives a *better imputer than data alone*. kNN or low-rank models match or beat
+   every prior-based method by any practically meaningful margin, on all three datasets.
+
+Further attempts on these three datasets would be forking paths. A new claim needs new data.

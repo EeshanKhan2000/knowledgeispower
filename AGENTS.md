@@ -122,7 +122,7 @@ register_tool("my_tool", my_tool, "what it does",
 - Amit merges.
 
 ## Current status (update at every merge)
-- Headline result (results/verdicts.json): test 1 FAILS. Curated priors beat their own shuffled nulls (in-complex RMSE, e.g. Complex Portal 0.730 vs null 0.807, MCAR) but lose to kNN (0.687). Panel test fails (random panels beat scored ones). See README for every row.
+- Headline: phase-1 test 1 FAILS (priors beat nulls, lose to kNN). Phase 2–3 (v2–v5, three datasets): no prior-based imputer beats data-only methods by a meaningful margin. Curated graphs robustly beat shuffled nulls. 'Curated partners > data-derived partners' is consistent but small (not confirmed at 1% SESOI on SCoPE2). See README §2b and docs/EXPLORATION_LOG.md.
 - Core MCP tools live: `get_complexes`, `explain_protein`, `build_prior`, `propagate_scores`, `impute_with_prior`, `select_panel`.
 - Slots: S1 taken (Eeshan Khan, checkpoint Oct 21 14:00 ET). S2–S7 open (`docs/SLOTS.md`).
 - Known limitations: one dataset (Petrosius 2023, 215 cells); much co-variation is broad rather than complex-specific (a per-cell-normalised exploratory rerun gave the same verdict); curated-database coverage bias; masked observed values under-represent true dropouts; HVP picks likely contaminants (keratins).
