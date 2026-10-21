@@ -93,3 +93,29 @@ protein per cell). Provenance is in `data/PROVENANCE.md`.
 
 **Purpose:** it is reserved for v5. v5 tests the one claim that held up across Petrosius and Leduc: curated
 partners beat data-derived partners. This time the test includes a minimum effect size.
+
+## Amendment 4: "more data as inductive bias", with holdouts reserved before download
+
+**Idea (analogy: pretraining / transfer learning):** learn the partner prior from *other* datasets instead of
+from the dataset being imputed. The sources are curated complexes, predicted complexes (hu.MAP 3.0), and protein
+co-variation pooled across an external corpus of single-cell proteomics datasets. Each external dataset is a
+noisy, independent measurement of which proteins move together.
+
+**Reserved holdouts (declared before they were downloaded; never used to build priors or tune anything):**
+- **khan2023** (scpdata EH9477; 421 MCF-10A cells, EMT): the v6 confirmation dataset.
+- **derks2022** (scpdata EH7712; plexDIA): a spare for a later confirmation.
+
+**Pretraining corpus, which is also the dev set:**
+- petrosius2023_AstralAML, leduc2022_pSCoPE and specht2019v3 (already local);
+- schoof2021 and woo2022_macrophage (to be added).
+
+Dev evaluation is **leave-one-dataset-out:** a target dataset's prior is built only from the *other* corpus
+datasets. The dev mask seeds are the phase-2 ones (100–102); subsample seeds for low-n are the same.
+
+**Required baselines:** kNN, low-rank (`grmf`, λ_g = 0), the in-dataset data graph (matched edges), degree-preserving
+nulls, and **an external data-only graph** (pooled co-variation, no curation). The last one is the
+"more data alone" control, so a win must come from curation × external evidence, not from external data alone.
+
+**v6 rule (fixed now):** pick the single method with the best mean dev in-complex RMSE across corpus targets
+whose curated version beats all baselines on dev. Preregister it with a **SESOI of 1% RMSE** against every
+comparator, then run once on khan2023.
