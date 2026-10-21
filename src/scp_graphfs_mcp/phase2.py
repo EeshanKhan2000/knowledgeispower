@@ -164,7 +164,7 @@ def fused(X, graph, var_names, K=None):
 
 
 def grmf(X, graph: nx.Graph | None, var_names, rank: int = 10, lam: float = 1.0, lam_g: float = 1.0,
-         iters: int = 400, lr: float = 0.05, seed: int = 0):
+         iters: int = 400, lr: float = 0.05, seed: int = 0, full: bool = False):
     """X ≈ mu + U Vᵀ on observed entries; penalty lam(|U|²+|V|²) + lam_g tr(Vᵀ L V) (Adam)."""
     obs = ~np.isnan(X)
     mu = np.nanmean(X, axis=0)
@@ -194,7 +194,28 @@ def grmf(X, graph: nx.Graph | None, var_names, rank: int = 10, lam: float = 1.0,
         mV, vV = b1 * mV + (1 - b1) * gV, b2 * vV + (1 - b2) * gV ** 2
         U = U - lr * (mU / (1 - b1 ** t)) / (np.sqrt(vU / (1 - b2 ** t)) + eps)
         V = V - lr * (mV / (1 - b1 ** t)) / (np.sqrt(vV / (1 - b2 ** t)) + eps)
-    return _fill(X, mu + sd * (U @ V.T))
+    rec = mu + sd * (U @ V.T)
+    return rec if full else _fill(X, rec)
+
+
+def residual_on_lowrank(X, graph, var_names, base_full: np.ndarray | None = None):
+    """E6: x̂ = GRMF + β · partner-weighted GRMF residuals (same cell)."""
+    base = P_grmf_full(X, var_names) if base_full is None else base_full
+    return residual_on_knn(X, graph, var_names, K=base)
+
+
+def P_grmf_full(X, var_names):
+    return grmf(X, None, var_names, lam_g=0.0, full=True)
+
+
+def union_graph(a: nx.Graph, b: nx.Graph) -> nx.Graph:
+    g = nx.Graph()
+    g.add_nodes_from(a.nodes)
+    for src in (a, b):
+        for u, v, w in src.edges(data="weight", default=1.0):
+            g.add_edge(u, v, weight=(g.edges[u, v]["weight"] if g.has_edge(u, v) else 0.0) + w)
+    g.graph["provenance"] = {"source": "union", "version": "-", "url": "-", "sha256": "-"}
+    return g
 
 
 # --------------------------------------------------------------------------- data-derived graph

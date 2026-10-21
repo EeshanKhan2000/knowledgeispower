@@ -2,6 +2,10 @@
 
 Read this whole file before editing anything. It's short on purpose.
 
+**Breadcrumbs:** before starting work, read the latest comments on GitHub issue #1 ("Updates log"):
+https://github.com/xX-its-amit-Xx/knowledgeispower/issues/1. Phase-2 ideas are the issues labelled
+`phase2`. After you push something others depend on, add a short comment to #1.
+
 ## Mission
 Claim under test: *Curated protein-complex membership (CORUM, EBI Complex Portal) is a better prior for reconstructing a cell's protein state from incomplete single-cell proteomics measurements than data alone, than generic PPI networks (STRING), and than a degree-preserving shuffled version of the same graph.*
 Primary task: impute missing protein values. Secondary task: targeted panel design (pick k proteins that best predict the rest).
@@ -122,6 +126,11 @@ register_tool("my_tool", my_tool, "what it does",
 - Core MCP tools live: `get_complexes`, `explain_protein`, `build_prior`, `propagate_scores`, `impute_with_prior`, `select_panel`.
 - Slots: S1 taken (Eeshan Khan, checkpoint Oct 21 14:00 ET). S2–S7 open (`docs/SLOTS.md`).
 - Known limitations: one dataset (Petrosius 2023, 215 cells); much co-variation is broad rather than complex-specific (a per-cell-normalised exploratory rerun gave the same verdict); curated-database coverage bias; masked observed values under-represent true dropouts; HVP picks likely contaminants (keratins).
+
+## Phase 2 (exploration in progress)
+`benchmarks/EXPLORATION.md` is the protocol. Use only the dev mask seeds 100–102 via `benchmarks/explore.py`.
+**Never run confirmation seeds 1000–1004**: they are used once, after `PREREGISTRATION_v2.md` is committed.
+Log every dev result, failures included, in `docs/EXPLORATION_LOG.md` and on the idea's issue.
 
 ## Scope guard
 This project is **not** multi-omics integration, **not** a GNN embedding of the data, and **not** a general knowledge-graph platform. Ideas outside the thesis go to `docs/SLOTS.md` as proposals, not code.
