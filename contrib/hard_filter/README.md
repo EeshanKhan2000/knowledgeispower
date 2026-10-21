@@ -21,3 +21,9 @@ core `select_features(..., mode="hard_filter")` dispatches to it once it's regis
 ## Contract
 `tests/test_hard_filter.py`: xfail until registered. Benchmark rows appear only with
 `python benchmarks/run.py --include-contrib`, written to `results/contrib/`.
+
+## Update 2026-10-21 (findings that affect this arm)
+- **Contaminants:** HVP rankings are dominated by contaminants (8 keratins in 25). Apply `scp_graphfs_mcp.phase2.keratin_mask(var_names)` before ranking. This is the W1 filter, built from the HGNC "Keratins" gene groups.
+- **Random beats HVP:** random panels beat HVP and propagation panels (R² ≈ 0.45 vs ≈ 0.21 at k = 25). A hard filter that ranks by HVP may therefore lose to random too, so report it against random.
+- **Coverage is a useful comparator:** greedy coverage over curated complexes (`phase2.select_coverage`) ≈ random, and beats its null.
+- **Dev only:** evaluate with `benchmarks/explore_panel.py`-style CV seeds 100–102. The datasets are dev-only for new claims (see `docs/SLOTS.md`).

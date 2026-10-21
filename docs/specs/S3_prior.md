@@ -1,5 +1,7 @@
 # S3: extra prior source
 
+> **Update 2026-10-21:** Complex Portal consistently beats CORUM as a partner source, and curated partners beat data-derived ones on Leduc (3–5%). **The priority question is whether hu.MAP 3.0 predicted complexes beat curated Complex Portal.** Baselines are a matched-edge data graph (`phase2.data_graph`) and degree-preserving nulls.
+
 **Goal:** one more curated or data-derived complex prior, compared like-for-like with
 CORUM / Complex Portal.
 

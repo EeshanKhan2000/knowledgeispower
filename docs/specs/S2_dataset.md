@@ -1,4 +1,6 @@
-# S2: second dataset loader + cross-context test
+# S2: fourth dataset loader + cross-context test
+
+> **Update 2026-10-21:** Leduc 2022 and SCoPE2 are already loaders (`load_leduc2022`, `load_specht2021`), and both have been used for confirmations. S2 now targets a **fourth, untouched** dataset. Reuse `scripts/rda_common.py` to read `.Rda` without R.
 
 **Goal:** add a second public single-cell proteomics dataset with **real, unimputed missingness**
 so the benchmark can test transfer across datasets.
