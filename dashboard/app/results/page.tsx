@@ -14,7 +14,7 @@ import {
   type Imputation,
   type ScoreRow,
 } from "@/lib/results";
-import { LineChart, colorFor, seriesName, type Series } from "@/components/LineChart";
+import { LineChart, colorFor, type Series } from "@/components/LineChart";
 
 export const metadata = { title: "Results · Complex priors" };
 
@@ -59,7 +59,7 @@ function ScoreTable({ o, metric, refKey = "hvp" }: { o: Record<string, unknown>;
             const d = isNum(r.value) && isNum(ref) && r.method !== refKey ? r.value - ref : null;
             return (
               <tr key={r.method}>
-                <td className={BASELINES.has(r.method) ? "italic" : "font-medium text-ink"}>{label(r.method)}</td>
+                <td className={"min-w-[8rem] " + (BASELINES.has(r.method) ? "italic" : "font-medium text-ink")}>{label(r.method)}</td>
                 <td className="num">{f(r.value)}</td>
                 <td className="hidden w-24 sm:table-cell">
                   {isNum(r.value) && max > 0 && (
@@ -124,7 +124,7 @@ function ImputationTables({ imp }: { imp: Imputation }) {
                 <tbody>
                   {rows.map((r) => (
                     <tr key={r.method + (r.isNull ? "__null" : "")} className={r.isNull ? "bg-surface2/60" : ""}>
-                      <td className={r.isNull ? "pl-5 text-muted" : BASELINES.has(r.method) ? "italic" : "font-medium text-ink"}>
+                      <td className={"min-w-[9.5rem] " + (r.isNull ? "pl-5 text-muted" : BASELINES.has(r.method) ? "italic" : "font-medium text-ink")}>
                         {r.isNull ? `↳ ${label(r.method)} shuffled nulls (×${r.nReplicates})` : label(r.method)}
                       </td>
                       {strata.map((s) => {
@@ -163,9 +163,43 @@ function ComparisonTables({ imp }: { imp: Imputation }) {
           <div key={mask} className="mt-4">
             <h3 className="h3">Mask: {mask}</h3>
             <p className="text-xs text-muted">
-              {cs.length} comparisons: {counts.good} with lower error for the prior, {counts.bad} with higher error, {counts.neutral} unclear.
+              {cs.length} comparisons: {counts.good} with lower error for the prior, {counts.bad} with higher error, {counts.neutral} unclear. &quot;Share by prior&quot; is the fraction of hidden entries the prior could fill from observed partners; the rest fell back to kNN.
             </p>
-            <div className="tbl-wrap mt-2">
+            <ul className="mt-2 space-y-2 md:hidden">
+              {cs.map((c, i) => {
+                const vd = cmpVerdict(c);
+                return (
+                  <li key={i} className={"rounded-xl border border-line p-3 " + (vd.kind === "good" ? "bg-goodbg/50" : vd.kind === "bad" ? "bg-badbg/50" : "bg-surface")}>
+                    <div className="text-sm font-medium text-ink">
+                      {label(c.prior)} vs {label(c.vs)}
+                    </div>
+                    <div className="text-xs text-muted">{STRATUM_LABEL[c.stratum] ?? c.stratum}</div>
+                    <div className="mt-1">
+                      <Verdict kind={vd.kind}>{vd.text}</Verdict>
+                    </div>
+                    <dl className="mt-2 grid grid-cols-2 gap-x-3 gap-y-1 font-mono text-xs text-ink2">
+                      <dt className="text-muted">ΔRMSE</dt>
+                      <dd className={vd.kind === "good" ? "text-good" : vd.kind === "bad" ? "text-bad" : ""}>{signed(c.delta_rmse)}</dd>
+                      <dt className="text-muted">95% CI</dt>
+                      <dd>[{range(c.ci95).replace(" – ", ", ")}]</dd>
+                      <dt className="text-muted">dz</dt>
+                      <dd>{signed(c.effect_size_dz_sqerr)}</dd>
+                      <dt className="text-muted">RMSE prior / ref</dt>
+                      <dd>
+                        {f(c.rmse_prior)} / {f(c.rmse_ref)}
+                      </dd>
+                      <dt className="text-muted">null RMSE range</dt>
+                      <dd>{range(c.null_rmse_range)}</dd>
+                      <dt className="text-muted">share by prior</dt>
+                      <dd>{f(c.frac_entries_imputed_by_prior, 2)}</dd>
+                      <dt className="text-muted">entries</dt>
+                      <dd>{int(c.n_entries)}</dd>
+                    </dl>
+                  </li>
+                );
+              })}
+            </ul>
+            <div className="tbl-wrap mt-2 hidden md:block">
               <table className="tbl">
                 <thead>
                   <tr>
@@ -215,26 +249,74 @@ function ComparisonTables({ imp }: { imp: Imputation }) {
   );
 }
 
+function PanelCharts({ panel, ks, stratum }: { panel: Record<string, any>; ks: string[]; stratum: string }) {
+  const rowsAt = (k: string) => scoreRows(panel[k]?.[stratum] || {}).rows;
+  const methods = [...new Set(ks.flatMap((k) => rowsAt(k).map((r) => r.method)))];
+  const priors = methods.filter((mth) => !BASELINES.has(mth) && ks.some((k) => isNum(rowsAt(k).find((r) => r.method === mth)?.nullMean)));
+  const baselines = methods.filter((mth) => BASELINES.has(mth));
+  const all = ks.flatMap((k) => rowsAt(k).flatMap((r) => [r.value, r.nullMean, ...(r.nullRange || [])])).filter(isNum);
+  const domain: [number, number] = [Math.min(0, ...all), Math.max(...all)];
+  const pts = (mth: string, f: (r: ScoreRow) => number | null) =>
+    ks.map((k) => {
+      const r = rowsAt(k).find((x) => x.method === mth);
+      return { x: +k, y: r ? f(r) : null };
+    });
+  const baseSeries: Series[] = baselines.map((b, i) => ({
+    key: b,
+    name: label(b),
+    color: i === 0 ? "var(--ink-2)" : "var(--muted)",
+    dotted: i > 0,
+    points: pts(b, (r) => r.value),
+  }));
+  return (
+    <div className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2">
+      {priors.map((p) => (
+        <LineChart
+          key={p}
+          title={label(p)}
+          xs={ks.map(Number)}
+          yLabel={`mean held-out R², ${STRATUM_LABEL[stratum] ?? stratum}`}
+          domain={domain}
+          series={[
+            ...baseSeries,
+            {
+              key: p + "__null",
+              name: "its shuffled nulls (mean, range)",
+              color: colorFor(p),
+              dashed: true,
+              points: pts(p, (r) => r.nullMean),
+              band: ks.map((k) => rowsAt(k).find((x) => x.method === p)?.nullRange ?? null),
+            },
+            { key: p, name: label(p), color: colorFor(p), points: pts(p, (r) => r.value) },
+          ]}
+        />
+      ))}
+    </div>
+  );
+}
+
 function PanelSection({ panel }: { panel: Record<string, any> }) {
   const ks = Object.keys(panel)
     .filter((k) => /^\d+$/.test(k))
     .sort((a, b) => +a - +b);
   const strata = [...new Set(ks.flatMap((k) => Object.keys(panel[k]).filter((s) => s !== "panels")))];
+  const first = strata.includes("in_complex") ? "in_complex" : strata[0];
   return (
     <>
-      <div className="mt-3 grid gap-3 md:grid-cols-3">
-        {strata.map((s) => {
-          const methods = [...new Set(ks.flatMap((k) => scoreRows(panel[k][s] || {}).rows.map((r) => r.method)))];
-          const series: Series[] = [];
-          for (const mth of methods) {
-            const rowAt = (k: string) => scoreRows(panel[k][s] || {}).rows.find((r) => r.method === mth);
-            series.push({ key: mth, name: seriesName(mth, false), color: colorFor(mth), points: ks.map((k) => ({ x: +k, y: rowAt(k)?.value ?? null })) });
-            if (ks.some((k) => isNum(rowAt(k)?.nullMean)))
-              series.push({ key: mth + "__null", name: seriesName(mth, true), color: colorFor(mth), dashed: true, points: ks.map((k) => ({ x: +k, y: rowAt(k)?.nullMean ?? null })) });
-          }
-          return <LineChart key={s} title={`Mean held-out R² · ${STRATUM_LABEL[s] ?? s}`} series={series} xs={ks.map(Number)} yLabel="R²" />;
-        })}
-      </div>
+      <h3 className="h3">Proteins {STRATUM_LABEL[first] ?? first}: one small chart per prior</h3>
+      <p className="text-xs text-muted">
+        Solid coloured line: the prior. Dashed line and shaded band: the mean and range of that prior&apos;s shuffled nulls. Dark
+        grey: HVP; dotted grey: random panels. All four charts share one y-axis. Hover a point for its value.
+      </p>
+      <PanelCharts panel={panel} ks={ks} stratum={first} />
+      {strata
+        .filter((s) => s !== first)
+        .map((s) => (
+          <details key={s} className="mt-3">
+            <summary className="cursor-pointer text-sm font-semibold text-ink">Charts: {STRATUM_LABEL[s] ?? s}</summary>
+            <PanelCharts panel={panel} ks={ks} stratum={s} />
+          </details>
+        ))}
       {ks.map((k) => (
         <details key={k} className="card mt-3" open={k === ks[0]}>
           <summary className="cursor-pointer font-semibold text-ink">Table: k = {k}</summary>

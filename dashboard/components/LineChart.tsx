@@ -1,7 +1,15 @@
 // Inline SVG line chart built from data at build time (no chart library).
 import { label } from "@/lib/format";
 
-export type Series = { key: string; points: { x: number; y: number | null }[]; dashed?: boolean; color: string; name: string };
+export type Series = {
+  key: string;
+  points: { x: number; y: number | null }[];
+  dashed?: boolean;
+  dotted?: boolean;
+  color: string;
+  name: string;
+  band?: ([number, number] | null)[];
+};
 
 const COLOR: Record<string, string> = {
   corum: "var(--s1)",
@@ -19,11 +27,25 @@ export function colorFor(k: string): string {
   return COLOR[k];
 }
 
-export function LineChart({ title, series, xs, yLabel }: { title: string; series: Series[]; xs: number[]; yLabel: string }) {
-  const W = 340;
-  const H = 220;
-  const m = { l: 40, r: 12, t: 14, b: 30 };
-  const ys = series.flatMap((s) => s.points.map((p) => p.y)).filter((v): v is number => v !== null);
+export function LineChart({
+  title,
+  series,
+  xs,
+  yLabel,
+  domain,
+  legend = true,
+}: {
+  title: string;
+  series: Series[];
+  xs: number[];
+  yLabel: string;
+  domain?: [number, number];
+  legend?: boolean;
+}) {
+  const W = 300;
+  const H = 200;
+  const m = { l: 36, r: 22, t: 12, b: 34 };
+  const ys = domain ?? series.flatMap((s) => [...s.points.map((p) => p.y), ...(s.band || []).flat()]).filter((v): v is number => v !== null && v !== undefined);
   if (!ys.length || !xs.length) return null;
   let lo = Math.min(0, ...ys);
   let hi = Math.max(...ys);
@@ -31,7 +53,8 @@ export function LineChart({ title, series, xs, yLabel }: { title: string; series
   lo = Math.floor(lo / step) * step;
   hi = Math.ceil(hi / step) * step;
   if (hi === lo) hi = lo + step;
-  const sx = (i: number) => m.l + (xs.length === 1 ? (W - m.l - m.r) / 2 : (i * (W - m.l - m.r)) / (xs.length - 1));
+  const inset = 16;
+  const sx = (i: number) => m.l + inset + (xs.length === 1 ? (W - m.l - m.r - 2 * inset) / 2 : (i * (W - m.l - m.r - 2 * inset)) / (xs.length - 1));
   const sy = (v: number) => m.t + ((hi - v) * (H - m.t - m.b)) / (hi - lo);
   const ticks: number[] = [];
   for (let v = lo; v <= hi + step / 2; v += step) ticks.push(+v.toFixed(6));
@@ -49,17 +72,26 @@ export function LineChart({ title, series, xs, yLabel }: { title: string; series
         ))}
         {xs.map((x, i) => (
           <text key={x} x={sx(i)} y={H - m.b + 16} textAnchor="middle" fontSize={10} fill="var(--muted)">
-            k = {x}
+            {x}
           </text>
         ))}
+        <text x={(m.l + W - m.r) / 2} y={H - 4} textAnchor="middle" fontSize={10} fill="var(--muted)">
+          k (panel size)
+        </text>
         {series.map((s) => {
           const pts = s.points.map((p, i) => (p.y === null ? null : ([sx(i), sy(p.y)] as const)));
           const d = pts
             .map((p, i) => (p ? `${i === 0 || !pts[i - 1] ? "M" : "L"}${p[0].toFixed(1)},${p[1].toFixed(1)}` : ""))
             .join("");
+          const band = s.band && s.band.every((b) => b) ? (s.band as [number, number][]) : null;
+          const bandPath = band
+            ? band.map((b, i) => `${i ? "L" : "M"}${sx(i).toFixed(1)},${sy(b[1]).toFixed(1)}`).join("") +
+              [...band].reverse().map((b, j) => `L${sx(band.length - 1 - j).toFixed(1)},${sy(b[0]).toFixed(1)}`).join("") + "Z"
+            : null;
           return (
             <g key={s.key}>
-              <path d={d} fill="none" stroke={s.color} strokeWidth={2} strokeDasharray={s.dashed ? "5 4" : undefined} strokeLinejoin="round" />
+              {bandPath && <path d={bandPath} fill={s.color} opacity={0.15} stroke="none" />}
+              <path d={d} fill="none" stroke={s.color} strokeWidth={2} strokeDasharray={s.dashed ? "5 4" : s.dotted ? "2 3" : undefined} strokeLinejoin="round" />
               {pts.map((p, i) =>
                 p ? (
                   <g key={i}>
@@ -74,16 +106,16 @@ export function LineChart({ title, series, xs, yLabel }: { title: string; series
           );
         })}
       </svg>
-      <ul className="mt-2 flex flex-wrap gap-x-3 gap-y-1 text-xs text-ink2">
+      {legend && <ul className="mt-2 flex flex-wrap gap-x-3 gap-y-1 text-xs text-ink2">
         {series.map((s) => (
           <li key={s.key} className="flex items-center gap-1">
             <svg width="20" height="8" aria-hidden="true">
-              <line x1="0" x2="20" y1="4" y2="4" stroke={s.color} strokeWidth={2} strokeDasharray={s.dashed ? "4 3" : undefined} />
+              <line x1="0" x2="20" y1="4" y2="4" stroke={s.color} strokeWidth={2} strokeDasharray={s.dashed ? "4 3" : s.dotted ? "2 3" : undefined} />
             </svg>
             {s.name}
           </li>
         ))}
-      </ul>
+      </ul>}
     </figure>
   );
 }

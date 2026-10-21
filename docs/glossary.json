@@ -1,0 +1,1550 @@
+[
+  {
+    "term": "protein complex",
+    "aka": [
+      "multiprotein complex",
+      "protein machine"
+    ],
+    "category": "biology",
+    "who": "Studied by biochemists and structural biologists worldwide. Curators at CORUM and the Complex Portal collect the complexes that experiments have confirmed.",
+    "why": "Many jobs in a cell are too big for one protein. Cutting up old proteins, copying DNA, and making new proteins are all done by machines built from several proteins stuck together.",
+    "how": "Each protein chain (a subunit) folds into a shape with sticky patches on its surface. Matching patches on other subunits fit together through many weak bonds: hydrogen bonds, salt bridges and water-avoiding (hydrophobic) contacts. Together these hold the parts in a fixed arrangement. Most complexes need every part to work, and the cell builds them in set proportions (see stoichiometry). A subunit left without its partners is often unstable and gets destroyed (see orphan subunit degradation).",
+    "what": "Our central bet. If subunits of one complex rise and fall together inside each cell, then a missing value for one subunit can be guessed from its measured partners. CORUM and Complex Portal membership become the edges of our knowledge graph.",
+    "example": "The proteasome is a complex. Its 20S core is four stacked rings of seven subunits each, such as PSMB5.",
+    "links": [
+      {
+        "label": "Wikipedia: Protein complex",
+        "url": "https://en.wikipedia.org/wiki/Protein_complex",
+        "checked": "HTTP 200 on 2026-10-21"
+      },
+      {
+        "label": "EBI Complex Portal",
+        "url": "https://www.ebi.ac.uk/complexportal/",
+        "checked": "HTTP 200 on 2026-10-21"
+      }
+    ],
+    "related": [
+      "stoichiometry",
+      "orphan subunit degradation",
+      "proteasome",
+      "CORUM",
+      "Complex Portal",
+      "PPI"
+    ],
+    "link_check": "Every URL fetched with curl -L on 2026-10-21 and returned HTTP 200."
+  },
+  {
+    "term": "stoichiometry",
+    "aka": [
+      "subunit ratio",
+      "complex stoichiometry"
+    ],
+    "category": "biology",
+    "who": "Wikipedia says the word was first used by the chemist Jeremias Benjamin Richter in 1792. In biology it is used for the number of copies of each subunit in a complex. In bacteria, Li and colleagues (2014) showed that cells make the parts of many complexes in proportion to need.",
+    "why": "If a complex needs two copies of A for every one of B, making them in a different ratio wastes energy and leaves extra parts lying around.",
+    "how": "Stoichiometry is the fixed count of each part in a finished complex, like 2 wheels per bicycle frame. Cells tune how fast each gene is read and how fast each protein is made so the ratios roughly match. Any extra subunits that cannot join a complex are usually broken down.",
+    "what": "This is why subunit levels move together in a cell, and that is what our complex prior relies on. When one subunit is missing, its partners' levels (as z-scores) give a good guess for it.",
+    "example": "The 20S proteasome core has 2 copies of each of its 14 different subunits, 28 subunits in all.",
+    "links": [
+      {
+        "label": "Wikipedia: Stoichiometry",
+        "url": "https://en.wikipedia.org/wiki/Stoichiometry",
+        "checked": "HTTP 200 on 2026-10-21"
+      },
+      {
+        "label": "Li et al. 2014, Cell: proportional synthesis of complex subunits",
+        "url": "https://doi.org/10.1016/j.cell.2014.02.033",
+        "checked": "Crossref 200 on 2026-10-21"
+      }
+    ],
+    "related": [
+      "protein complex",
+      "orphan subunit degradation",
+      "proteasome",
+      "co-expression vs co-complex membership"
+    ],
+    "link_check": "Web URLs fetched with curl -L and returned HTTP 200. DOIs were checked at https://api.crossref.org/works/<DOI> (HTTP 200, title matched); doi.org itself forwards to publisher pages that often block scripts, so those were not used as the check."
+  },
+  {
+    "term": "orphan subunit degradation",
+    "aka": [
+      "orphan protein quality control",
+      "orphan degradation"
+    ],
+    "category": "biology",
+    "who": "Studied by protein quality-control researchers. Yanagitani, Juszkiewicz and Hegde (2017) identified UBE2O as one factor that marks orphans of multiprotein complexes. McShane and colleagues (2016) found that many proteins broken down in a non-steady way are complex subunits.",
+    "why": "It cleans up subunits made in excess. A lone subunit can show sticky surfaces that are normally hidden inside the complex, and that can make it clump or bind the wrong things.",
+    "how": "Quality-control enzymes spot surfaces that should be covered by a partner. They attach chains of a small protein called ubiquitin to the orphan. The ubiquitin chain is a 'destroy me' tag, and the proteasome reads it and chops the orphan into short pieces. A subunit that has joined its complex hides those surfaces and survives much longer.",
+    "what": "This is the molecular reason a complex prior could work. Extra copies of a subunit are destroyed, so the amount that survives tracks the amount of its partners. It is also why we label surprising subunits in our discordance list as hypotheses and not findings.",
+    "example": "If a cell makes too much of one ribosome protein, the extra copies that cannot be built into ribosomes are tagged and degraded.",
+    "links": [
+      {
+        "label": "Juszkiewicz & Hegde 2018, Mol Cell: Quality Control of Orphaned Proteins",
+        "url": "https://doi.org/10.1016/j.molcel.2018.07.001",
+        "checked": "Crossref 200 on 2026-10-21"
+      },
+      {
+        "label": "Yanagitani et al. 2017, Science: UBE2O and orphans of multiprotein complexes",
+        "url": "https://doi.org/10.1126/science.aan0178",
+        "checked": "Crossref 200 on 2026-10-21"
+      },
+      {
+        "label": "McShane et al. 2016, Cell: Kinetic analysis of protein stability",
+        "url": "https://doi.org/10.1016/j.cell.2016.09.015",
+        "checked": "Crossref 200 on 2026-10-21"
+      },
+      {
+        "label": "Wikipedia: Ubiquitin",
+        "url": "https://en.wikipedia.org/wiki/Ubiquitin",
+        "checked": "HTTP 200 on 2026-10-21"
+      }
+    ],
+    "related": [
+      "protein complex",
+      "stoichiometry",
+      "proteasome"
+    ],
+    "link_check": "Web URLs fetched with curl -L and returned HTTP 200. DOIs were checked at https://api.crossref.org/works/<DOI> (HTTP 200, title matched); doi.org itself forwards to publisher pages that often block scripts, so those were not used as the check."
+  },
+  {
+    "term": "proteasome",
+    "aka": [
+      "26S proteasome",
+      "20S proteasome"
+    ],
+    "category": "biology",
+    "who": "Wikipedia notes that the 2004 Nobel Prize in Chemistry went to Aaron Ciechanover, Avram Hershko and Irwin Rose for showing how ubiquitin marks proteins for breakdown.",
+    "why": "Cells must destroy damaged, unneeded or orphan proteins quickly and safely. The proteasome is the main shredder for this.",
+    "how": "The core is a hollow barrel of four stacked rings, each with seven subunits. Cutting sites sit inside the barrel, so only proteins pushed in get cut. A cap on top recognises ubiquitin chains, unfolds the tagged protein, and threads it into the barrel. Out come short peptides.",
+    "what": "It is both the cleaner behind orphan subunit degradation and a textbook example complex in our data. Proteasome subunits like PSMB5 are a natural demo for the variant bridge tool (variant_to_complexes).",
+    "example": "PSMB5 (UniProt P28074), proteasome subunit beta-5, is one of the cutting subunits in the 20S core.",
+    "links": [
+      {
+        "label": "Wikipedia: Proteasome",
+        "url": "https://en.wikipedia.org/wiki/Proteasome",
+        "checked": "HTTP 200 on 2026-10-21"
+      },
+      {
+        "label": "UniProt entry P28074 (PSMB5)",
+        "url": "https://www.uniprot.org/uniprotkb/P28074/entry",
+        "checked": "HTTP 200 on 2026-10-21"
+      }
+    ],
+    "related": [
+      "protein complex",
+      "orphan subunit degradation",
+      "stoichiometry",
+      "UniProt"
+    ],
+    "link_check": "Every URL fetched with curl -L on 2026-10-21 and returned HTTP 200."
+  },
+  {
+    "term": "CORUM",
+    "aka": [
+      "Comprehensive Resource of Mammalian protein complexes"
+    ],
+    "category": "databases",
+    "who": "Run at Helmholtz Munich. The 2024 update paper is by Steinkamp, Tsitsiridis, Brauner and colleagues, with Ruepp as last author.",
+    "why": "Experiments that find complexes are spread over thousands of papers. CORUM collects mammalian complexes that experiments have shown, in one table people can download.",
+    "how": "Curators read papers and record each complex: its name, its subunits (as UniProt accessions), the organism, and the experiment that showed it (for example co-purification). The download is a table, one row per complex, with a list of subunits.",
+    "what": "One of our two curated priors. Two proteins get an edge if they share a CORUM complex. The edge weight is the number of complexes they share. We use a snapshot in data/raw, so there is no network access at run time.",
+    "example": "The CORUM entry for the 26S proteasome lists many subunits, including PSMB5.",
+    "links": [
+      {
+        "label": "CORUM in 2024: protein complexes as drug targets (NAR)",
+        "url": "https://doi.org/10.1093/nar/gkae1033",
+        "checked": "Crossref 200 on 2026-10-21"
+      },
+      {
+        "label": "CORUM 2022 update (NAR)",
+        "url": "https://doi.org/10.1093/nar/gkac1015",
+        "checked": "Crossref 200 on 2026-10-21"
+      }
+    ],
+    "related": [
+      "Complex Portal",
+      "protein complex",
+      "knowledge graph",
+      "prior",
+      "UniProt"
+    ],
+    "link_check": "Web URLs fetched with curl -L and returned HTTP 200. DOIs were checked at https://api.crossref.org/works/<DOI> (HTTP 200, title matched); doi.org itself forwards to publisher pages that often block scripts, so those were not used as the check."
+  },
+  {
+    "term": "Complex Portal",
+    "aka": [
+      "EBI Complex Portal",
+      "Complex Portal (EMBL-EBI)"
+    ],
+    "category": "databases",
+    "who": "Run by EMBL's European Bioinformatics Institute (EMBL-EBI). The 2022 update paper is by Meldal, Perfetto, Combe and colleagues, with Orchard as last author.",
+    "why": "It gives each complex a stable ID and a careful, evidence-backed list of members, so different tools mean the same thing when they say 'this complex'.",
+    "how": "Curators make one record per complex with a stable ID such as CPX-1234 (made-up example), its member proteins (UniProt accessions), how many copies of each when known, and evidence codes. Records link to the Gene Ontology and to structure databases.",
+    "what": "Our second curated prior, built the same way as CORUM (edge = shared complex). In our preregistered run it was the best of the four priors on in-complex RMSE, but it still did not beat kNN imputation.",
+    "example": "Searching the portal for PSMB5 shows proteasome complex records that list it as a member.",
+    "links": [
+      {
+        "label": "EBI Complex Portal",
+        "url": "https://www.ebi.ac.uk/complexportal/",
+        "checked": "HTTP 200 on 2026-10-21"
+      },
+      {
+        "label": "Complex Portal 2022: new curation frontiers (NAR)",
+        "url": "https://doi.org/10.1093/nar/gkab991",
+        "checked": "Crossref 200 on 2026-10-21"
+      }
+    ],
+    "related": [
+      "CORUM",
+      "protein complex",
+      "knowledge graph",
+      "prior",
+      "stoichiometry"
+    ],
+    "link_check": "Web URLs fetched with curl -L and returned HTTP 200. DOIs were checked at https://api.crossref.org/works/<DOI> (HTTP 200, title matched); doi.org itself forwards to publisher pages that often block scripts, so those were not used as the check."
+  },
+  {
+    "term": "STRING",
+    "aka": [
+      "STRING database",
+      "STRING-db"
+    ],
+    "category": "databases",
+    "who": "Built by an academic consortium. The 2023 paper is by Szklarczyk and colleagues, with Jensen and von Mering among the senior authors. A 2025 update added direction of regulation.",
+    "why": "It gives a score for almost any pair of proteins in thousands of species. That lets people build a protein network even where little has been tested.",
+    "how": "STRING collects many kinds of evidence (see STRING evidence channels). Each channel gives a score between 0 and 1. These are merged into one combined score and stored as score × 1000, so 700 means 0.7 ('high confidence').",
+    "what": "Our generic PPI baseline. We built two graphs: 'string' uses the combined score of 700 or more, and 'string_exp' uses only the experimental channel at 700 or more. The combined score already contains curated complex data, so string_exp is the cleaner comparison.",
+    "example": "PSMB5 and PSMB6 have a very high STRING score because they sit side by side in the proteasome.",
+    "links": [
+      {
+        "label": "STRING homepage",
+        "url": "https://string-db.org/",
+        "checked": "HTTP 200 on 2026-10-21"
+      },
+      {
+        "label": "STRING FAQ (score definitions)",
+        "url": "https://string-db.org/help/faq/",
+        "checked": "HTTP 200 on 2026-10-21"
+      },
+      {
+        "label": "The STRING database in 2023 (NAR)",
+        "url": "https://doi.org/10.1093/nar/gkac1000",
+        "checked": "Crossref 200 on 2026-10-21"
+      },
+      {
+        "label": "The STRING database in 2025 (NAR)",
+        "url": "https://doi.org/10.1093/nar/gkae1113",
+        "checked": "Crossref 200 on 2026-10-21"
+      }
+    ],
+    "related": [
+      "STRING evidence channels",
+      "PPI",
+      "knowledge graph",
+      "prior",
+      "co-expression vs co-complex membership"
+    ],
+    "link_check": "Web URLs fetched with curl -L and returned HTTP 200. DOIs were checked at https://api.crossref.org/works/<DOI> (HTTP 200, title matched); doi.org itself forwards to publisher pages that often block scripts, so those were not used as the check."
+  },
+  {
+    "term": "STRING evidence channels",
+    "aka": [
+      "STRING subscores",
+      "nscore/fscore/pscore/ascore/escore/dscore/tscore"
+    ],
+    "category": "databases",
+    "who": "Defined by the STRING team; listed in the STRING FAQ.",
+    "why": "Different clues about two proteins mean very different things. Being in the same experiment is not the same as being named in the same sentence of a paper.",
+    "how": "The STRING FAQ lists: neighborhood (genes sit near each other in bacterial genomes), fusion (the two genes are joined into one in some species), co-occurrence (the genes are present or absent together across species), co-expression (their mRNA levels move together), experiments (lab data such as affinity purification), databases (curated sources such as pathway and complex databases), and textmining (names appear together in abstracts). To combine them, a small 'random pair' chance p = 0.041 is removed from each score. Then combined = 1 − product of (1 − score) over all channels, and p is added back once.",
+    "what": "Explains why STRING-combined is not a clean 'physical binding' prior. It mixes co-expression and curated complex data. So we also test the experiments channel alone (string_exp).",
+    "example": "A pair with experiments 0.621 and textmining 0.585 gets a combined score higher than either, because two independent clues agree.",
+    "links": [
+      {
+        "label": "STRING FAQ: what the score columns mean",
+        "url": "https://string-db.org/help/faq/",
+        "checked": "HTTP 200 on 2026-10-21"
+      },
+      {
+        "label": "The STRING database in 2023 (NAR)",
+        "url": "https://doi.org/10.1093/nar/gkac1000",
+        "checked": "Crossref 200 on 2026-10-21"
+      }
+    ],
+    "related": [
+      "STRING",
+      "PPI",
+      "co-expression vs co-complex membership",
+      "prior"
+    ],
+    "link_check": "Web URLs fetched with curl -L and returned HTTP 200. DOIs were checked at https://api.crossref.org/works/<DOI> (HTTP 200, title matched); doi.org itself forwards to publisher pages that often block scripts, so those were not used as the check."
+  },
+  {
+    "term": "PPI",
+    "aka": [
+      "protein-protein interaction",
+      "interactome"
+    ],
+    "category": "databases",
+    "who": "Measured by many labs with methods like yeast two-hybrid and affinity purification with mass spectrometry. Collected by databases such as IntAct and STRING.",
+    "why": "Knowing which proteins touch helps explain what they do and how a broken protein spreads trouble to others.",
+    "how": "Two proteins interact if their surfaces bind, even briefly. Experiments catch this in different ways. One method pulls out a tagged protein and identifies what comes with it by mass spectrometry. Another switches on a reporter gene only when two halves meet. A PPI network has proteins as nodes and interactions as edges. It includes short-lived contacts too, not only stable complexes.",
+    "what": "The comparison class for our complex prior. The question is whether stable co-complex membership predicts single-cell levels better than broader PPI edges from STRING.",
+    "example": "A kinase binding its target for a moment is a PPI edge, but the two are not in the same protein complex.",
+    "links": [
+      {
+        "label": "Wikipedia: Protein-protein interaction",
+        "url": "https://en.wikipedia.org/wiki/Protein%E2%80%93protein_interaction",
+        "checked": "HTTP 200 on 2026-10-21"
+      },
+      {
+        "label": "IntAct molecular interaction database",
+        "url": "https://www.ebi.ac.uk/intact/",
+        "checked": "HTTP 200 on 2026-10-21"
+      }
+    ],
+    "related": [
+      "STRING",
+      "protein complex",
+      "knowledge graph",
+      "co-expression vs co-complex membership"
+    ],
+    "link_check": "Every URL fetched with curl -L on 2026-10-21 and returned HTTP 200."
+  },
+  {
+    "term": "mass spectrometry",
+    "aka": [
+      "MS",
+      "mass spec",
+      "LC-MS/MS"
+    ],
+    "category": "measurement",
+    "who": "Wikipedia credits early work to Wien and J. J. Thomson, and modern forms to Dempster (1918) and Aston (1919). Proteomics labs use it to measure thousands of proteins at once.",
+    "why": "Proteins cannot be read like DNA. Mass spectrometry identifies and counts them by weighing their pieces very precisely.",
+    "how": "Proteins are cut into peptides by trypsin. A liquid column releases them over time, and they get an electric charge and fly into the instrument. The instrument measures mass divided by charge (m/z). It then breaks selected peptides (MS2) and weighs the fragments. The fragment pattern spells out the amino-acid sequence. The signal strength (intensity) tells how much was there.",
+    "what": "It produced our dataset: an Orbitrap Astral instrument run in DIA mode on single AML cells (Petrosius et al. 2023 preprint).",
+    "example": "A peptide of mass 1000 Da with charge 2+ shows up at m/z about 501.",
+    "links": [
+      {
+        "label": "Wikipedia: Mass spectrometry",
+        "url": "https://en.wikipedia.org/wiki/Mass_spectrometry",
+        "checked": "HTTP 200 on 2026-10-21"
+      },
+      {
+        "label": "Wikipedia: Protein mass spectrometry",
+        "url": "https://en.wikipedia.org/wiki/Protein_mass_spectrometry",
+        "checked": "HTTP 200 on 2026-10-21"
+      },
+      {
+        "label": "Wikipedia: Orbitrap",
+        "url": "https://en.wikipedia.org/wiki/Orbitrap",
+        "checked": "HTTP 200 on 2026-10-21"
+      }
+    ],
+    "related": [
+      "peptide",
+      "trypsin",
+      "DIA",
+      "DDA",
+      "TMT",
+      "single-cell proteomics",
+      "log2 intensity"
+    ],
+    "link_check": "Every URL fetched with curl -L on 2026-10-21 and returned HTTP 200."
+  },
+  {
+    "term": "peptide",
+    "aka": [
+      "tryptic peptide"
+    ],
+    "category": "measurement",
+    "who": "A basic chemistry term. In proteomics it means the short pieces that the instrument actually measures.",
+    "why": "Whole proteins are too big and awkward to measure well. Short peptides fly, break and get identified much more reliably.",
+    "how": "A peptide is a short chain of amino acids joined by peptide bonds (about 7 to 30 in a typical proteomics run). Software matches the measured fragments of each peptide to a protein sequence database. It then adds up peptides to estimate how much of each protein was there.",
+    "what": "Our values are protein-group intensities built from peptides. When a protein's peptides are too faint in a cell, that protein becomes a missing value we must impute.",
+    "example": "Trypsin cuts PSMB5 into many peptides. Each one ends in K or R, and only some are bright enough to be seen in a single cell.",
+    "links": [
+      {
+        "label": "Wikipedia: Peptide",
+        "url": "https://en.wikipedia.org/wiki/Peptide",
+        "checked": "HTTP 200 on 2026-10-21"
+      }
+    ],
+    "related": [
+      "trypsin",
+      "mass spectrometry",
+      "UniProt",
+      "MNAR"
+    ],
+    "link_check": "Every URL fetched with curl -L on 2026-10-21 and returned HTTP 200."
+  },
+  {
+    "term": "trypsin",
+    "aka": [],
+    "category": "measurement",
+    "who": "Wikipedia notes it is a digestive enzyme from the pancreas. Proteomics labs use purified trypsin as the standard 'scissors'.",
+    "why": "It cuts in predictable places, so software knows which peptides to expect from each protein.",
+    "how": "Trypsin is a protease that cuts protein chains just after the amino acids lysine (K) and arginine (R). The cut is usually blocked when the next amino acid is proline. Every peptide then ends in K or R, which carry a positive charge. That helps the peptide pick up charge and break into readable fragments in the instrument.",
+    "what": "It is the first wet-lab step behind every number in our dataset.",
+    "example": "The sequence ...AGKLMNR|AVE... is cut after K and after R, giving 'LMNR' as one piece.",
+    "links": [
+      {
+        "label": "Wikipedia: Trypsin",
+        "url": "https://en.wikipedia.org/wiki/Trypsin",
+        "checked": "HTTP 200 on 2026-10-21"
+      }
+    ],
+    "related": [
+      "peptide",
+      "mass spectrometry"
+    ],
+    "link_check": "Every URL fetched with curl -L on 2026-10-21 and returned HTTP 200."
+  },
+  {
+    "term": "TMT",
+    "aka": [
+      "tandem mass tag",
+      "isobaric labelling"
+    ],
+    "category": "measurement",
+    "who": "Introduced by Thompson and colleagues in 2003 (Analytical Chemistry). Used in multiplexed single-cell methods such as SCoPE-MS.",
+    "why": "It lets you measure many samples (or cells) in one run, which saves instrument time and makes peptides easier to see.",
+    "how": "Each sample's peptides get a chemical tag. All tags weigh the same in total, so the same peptide from every sample lands at one spot (one m/z). When the peptide is broken in the instrument, each tag releases a small reporter ion of a different mass. The heights of those reporter ions tell how much came from each sample.",
+    "what": "Not used in our data, which is label-free DIA (one cell per run). It matters for transferability: missing-value patterns in TMT single-cell data differ, so results here may not carry over.",
+    "example": "With 16 tags, 14 single cells plus one 'carrier' and one reference can be measured together.",
+    "links": [
+      {
+        "label": "Wikipedia: Tandem mass tag",
+        "url": "https://en.wikipedia.org/wiki/Tandem_mass_tag",
+        "checked": "HTTP 200 on 2026-10-21"
+      },
+      {
+        "label": "Thompson et al. 2003, Anal Chem: Tandem Mass Tags",
+        "url": "https://doi.org/10.1021/ac0262560",
+        "checked": "Crossref 200 on 2026-10-21"
+      },
+      {
+        "label": "SCoPE-MS, Genome Biology 2018",
+        "url": "https://doi.org/10.1186/s13059-018-1547-5",
+        "checked": "Crossref 200 on 2026-10-21"
+      }
+    ],
+    "related": [
+      "mass spectrometry",
+      "single-cell proteomics",
+      "DDA",
+      "DIA",
+      "transferability"
+    ],
+    "link_check": "Web URLs fetched with curl -L and returned HTTP 200. DOIs were checked at https://api.crossref.org/works/<DOI> (HTTP 200, title matched); doi.org itself forwards to publisher pages that often block scripts, so those were not used as the check."
+  },
+  {
+    "term": "DIA",
+    "aka": [
+      "data-independent acquisition",
+      "SWATH-MS (one DIA method)"
+    ],
+    "category": "measurement",
+    "who": "Developed by several groups. Wikipedia describes SWATH-MS as one widely used form. Our dataset used DIA on an Orbitrap Astral.",
+    "why": "DDA picks only the brightest peptides to break, so it misses many at random. DIA breaks everything, which gives fewer random gaps between cells.",
+    "how": "The instrument steps through a series of m/z windows (for example 2 to 20 m/z wide). It breaks all peptides in each window at once and records every fragment. Software later untangles these mixed spectra, often by matching them to a library of known peptides and their elution times.",
+    "what": "The acquisition mode behind our 215-cell AML dataset. Even with DIA, 40.7% of values are missing, mostly because faint proteins fall below the detection limit (MNAR).",
+    "example": "One cycle might cover m/z 400–800 in 100 windows, then repeat every second or so as peptides come off the column.",
+    "links": [
+      {
+        "label": "Wikipedia: Data-independent acquisition",
+        "url": "https://en.wikipedia.org/wiki/Data-independent_acquisition",
+        "checked": "HTTP 200 on 2026-10-21"
+      },
+      {
+        "label": "Petrosius et al. 2023 preprint (our dataset)",
+        "url": "https://doi.org/10.1101/2023.06.06.543943",
+        "checked": "Crossref 200 on 2026-10-21"
+      }
+    ],
+    "related": [
+      "DDA",
+      "mass spectrometry",
+      "single-cell proteomics",
+      "MNAR"
+    ],
+    "link_check": "Web URLs fetched with curl -L and returned HTTP 200. DOIs were checked at https://api.crossref.org/works/<DOI> (HTTP 200, title matched); doi.org itself forwards to publisher pages that often block scripts, so those were not used as the check."
+  },
+  {
+    "term": "DDA",
+    "aka": [
+      "data-dependent acquisition",
+      "top-N"
+    ],
+    "category": "measurement",
+    "who": "The classic shotgun-proteomics mode used by most labs for many years.",
+    "why": "It gives clean fragment spectra that are easy to match to a peptide, because only one peptide is broken at a time.",
+    "how": "After each quick survey scan (MS1), the instrument picks the N most intense peaks and isolates each one alone. It breaks them one by one, then usually ignores them for a short time so others get a turn. Faint peptides are picked only some of the time, so different runs miss different peptides.",
+    "what": "The contrast to our DIA data. DDA's random picking creates more MCAR-like gaps, while DIA gaps are more intensity-driven (MNAR).",
+    "example": "In a top-10 method, the 10 brightest peaks in each survey scan get fragmented.",
+    "links": [
+      {
+        "label": "Wikipedia: Tandem mass spectrometry (DDA redirects here)",
+        "url": "https://en.wikipedia.org/wiki/Data-dependent_acquisition",
+        "checked": "HTTP 200 on 2026-10-21"
+      }
+    ],
+    "related": [
+      "DIA",
+      "mass spectrometry",
+      "MCAR",
+      "MNAR"
+    ],
+    "link_check": "Every URL fetched with curl -L on 2026-10-21 and returned HTTP 200."
+  },
+  {
+    "term": "single-cell proteomics",
+    "aka": [
+      "SCP",
+      "scProteomics"
+    ],
+    "category": "measurement",
+    "who": "A fast-growing field. Petrosius, Schoof and colleagues produced our dataset. Earlier multiplexed work included SCoPE-MS (2018).",
+    "why": "Cells in one tissue or tumour differ. Averaging over millions of cells hides rare cell states, such as leukemia stem cells.",
+    "how": "Single cells are sorted into tiny wells. They are broken open and digested with trypsin in very small volumes so little is lost. Then they are measured by very sensitive mass spectrometry. A single cell holds only tiny amounts of protein, so many proteins are seen in some cells and not others.",
+    "what": "Our setting: 215 OCI-AML8227 cells × 2813 protein groups, sorted into 4 populations (LSC, prog, CD38_pos, CD38_neg).",
+    "example": "A protein seen in 120 of 215 cells has 95 missing values that a method must fill or ignore.",
+    "links": [
+      {
+        "label": "Petrosius et al. 2023 preprint: Astral mass analyzer for single-cell proteomics",
+        "url": "https://doi.org/10.1101/2023.06.06.543943",
+        "checked": "Crossref 200 on 2026-10-21"
+      },
+      {
+        "label": "SCoPE-MS, Genome Biology 2018",
+        "url": "https://doi.org/10.1186/s13059-018-1547-5",
+        "checked": "Crossref 200 on 2026-10-21"
+      },
+      {
+        "label": "Wikipedia: Acute myeloid leukemia",
+        "url": "https://en.wikipedia.org/wiki/Acute_myeloid_leukemia",
+        "checked": "HTTP 200 on 2026-10-21"
+      }
+    ],
+    "related": [
+      "mass spectrometry",
+      "DIA",
+      "imputation",
+      "MNAR",
+      "AnnData"
+    ],
+    "link_check": "Web URLs fetched with curl -L and returned HTTP 200. DOIs were checked at https://api.crossref.org/works/<DOI> (HTTP 200, title matched); doi.org itself forwards to publisher pages that often block scripts, so those were not used as the check."
+  },
+  {
+    "term": "MCAR",
+    "aka": [
+      "missing completely at random"
+    ],
+    "category": "measurement",
+    "who": "Part of the missing-data framework set out by Donald Rubin (1976, Biometrika).",
+    "why": "If gaps are truly random, ignoring them or filling them simply does not bias the answer. That makes MCAR the easy case.",
+    "how": "A value is MCAR when the chance it is missing has nothing to do with any value, seen or unseen. It is like a coin flip deciding which entries to hide.",
+    "what": "One of our two masks. We hide 10% of observed entries uniformly at random and score how well each method recovers them.",
+    "example": "Dropping a test tube by accident is MCAR: it has nothing to do with what was in the tube.",
+    "links": [
+      {
+        "label": "Wikipedia: Missing data",
+        "url": "https://en.wikipedia.org/wiki/Missing_data",
+        "checked": "HTTP 200 on 2026-10-21"
+      },
+      {
+        "label": "Rubin 1976, Biometrika: Inference and missing data",
+        "url": "https://doi.org/10.1093/biomet/63.3.581",
+        "checked": "Crossref 200 on 2026-10-21"
+      }
+    ],
+    "related": [
+      "MAR",
+      "MNAR",
+      "imputation",
+      "bootstrap"
+    ],
+    "link_check": "Web URLs fetched with curl -L and returned HTTP 200. DOIs were checked at https://api.crossref.org/works/<DOI> (HTTP 200, title matched); doi.org itself forwards to publisher pages that often block scripts, so those were not used as the check."
+  },
+  {
+    "term": "MAR",
+    "aka": [
+      "missing at random"
+    ],
+    "category": "measurement",
+    "who": "Part of Rubin's (1976) missing-data framework.",
+    "why": "It is the middle case. Missingness depends only on things you did measure, so you can correct for it using those things.",
+    "how": "A value is MAR when the chance it is missing depends on other observed information (like which batch a cell came from) but not on the hidden value itself. The name is confusing, because the gaps are not purely random.",
+    "what": "Not one of our masks, but useful for thinking. Gaps that depend on a cell's overall depth (which we can see) are MAR-like.",
+    "example": "If cells from one sorting plate show fewer proteins overall, gaps there depend on the plate (observed), not on each protein's true level.",
+    "links": [
+      {
+        "label": "Wikipedia: Missing data",
+        "url": "https://en.wikipedia.org/wiki/Missing_data",
+        "checked": "HTTP 200 on 2026-10-21"
+      },
+      {
+        "label": "Rubin 1976, Biometrika: Inference and missing data",
+        "url": "https://doi.org/10.1093/biomet/63.3.581",
+        "checked": "Crossref 200 on 2026-10-21"
+      }
+    ],
+    "related": [
+      "MCAR",
+      "MNAR",
+      "imputation"
+    ],
+    "link_check": "Web URLs fetched with curl -L and returned HTTP 200. DOIs were checked at https://api.crossref.org/works/<DOI> (HTTP 200, title matched); doi.org itself forwards to publisher pages that often block scripts, so those were not used as the check."
+  },
+  {
+    "term": "MNAR",
+    "aka": [
+      "missing not at random",
+      "censored missingness"
+    ],
+    "category": "measurement",
+    "who": "Part of Rubin's (1976) missing-data framework. It is the usual worry in proteomics.",
+    "why": "It is the hard case. The missing values are systematically different (usually lower), so naive filling is biased.",
+    "how": "A value is MNAR when the chance it is missing depends on the hidden value itself. In mass spectrometry, faint peptides drop below the detection limit, so low-abundance proteins go missing more often.",
+    "what": "Our second mask. Each observed entry is hidden with a weight logistic((q25 − x)/(0.5·σ)), so values below the protein's 25th percentile are much more likely to be hidden.",
+    "example": "A protein at log2 intensity 10 when its usual level is 14 is far more likely to be missing than one at 16.",
+    "links": [
+      {
+        "label": "Wikipedia: Missing data",
+        "url": "https://en.wikipedia.org/wiki/Missing_data",
+        "checked": "HTTP 200 on 2026-10-21"
+      },
+      {
+        "label": "Rubin 1976, Biometrika: Inference and missing data",
+        "url": "https://doi.org/10.1093/biomet/63.3.581",
+        "checked": "Crossref 200 on 2026-10-21"
+      }
+    ],
+    "related": [
+      "MCAR",
+      "MAR",
+      "imputation",
+      "log2 intensity",
+      "DIA"
+    ],
+    "link_check": "Web URLs fetched with curl -L and returned HTTP 200. DOIs were checked at https://api.crossref.org/works/<DOI> (HTTP 200, title matched); doi.org itself forwards to publisher pages that often block scripts, so those were not used as the check."
+  },
+  {
+    "term": "log2 intensity",
+    "aka": [
+      "log2 abundance",
+      "log-transformed intensity"
+    ],
+    "category": "measurement",
+    "who": "Standard practice across proteomics and genomics.",
+    "why": "Raw intensities range from hundreds to billions and errors grow with size. Taking log2 makes doubling an equal step everywhere and makes the spread more even.",
+    "how": "log2(x) asks 'how many times do I double 1 to get x?' So log2(1024) = 10 and log2(2048) = 11. A difference of 1 on this scale means 2-fold; 3 means 8-fold. Means and z-scores are computed on these log values.",
+    "what": "All our data, imputations and errors (RMSE) are on the log2 scale. An RMSE of 0.7 means a typical error of about 2^0.7 ≈ 1.6-fold.",
+    "example": "A protein at intensity 65,536 has log2 intensity 16.",
+    "links": [
+      {
+        "label": "Wikipedia: Binary logarithm",
+        "url": "https://en.wikipedia.org/wiki/Binary_logarithm",
+        "checked": "HTTP 200 on 2026-10-21"
+      }
+    ],
+    "related": [
+      "mass spectrometry",
+      "RMSE",
+      "imputation",
+      "MNAR"
+    ],
+    "link_check": "Every URL fetched with curl -L on 2026-10-21 and returned HTTP 200."
+  },
+  {
+    "term": "AnnData",
+    "aka": [
+      "annotated data",
+      ".h5ad"
+    ],
+    "category": "methods",
+    "who": "Python package from the scverse community; preprint by Virshup, Rybakov, Theis, Angerer and Wolf (2021).",
+    "why": "Single-cell data has a big number table plus labels for rows and columns. AnnData keeps them together so they never get out of sync.",
+    "how": "An AnnData object holds X (cells × features matrix), obs (a table about each cell, like its population), var (a table about each feature, like UniProt IDs), and extra layers of the same shape. It saves to an .h5ad file.",
+    "what": "Our tools read and write .h5ad. impute_with_prior adds a layer 'imputed_by_prior' that marks which entries came from the graph rather than the kNN fallback.",
+    "example": "adata.X[5, 100] is cell 5's log2 value for protein 100; adata.obs['population'][5] might be 'LSC'.",
+    "links": [
+      {
+        "label": "AnnData documentation",
+        "url": "https://anndata.readthedocs.io/",
+        "checked": "HTTP 200 on 2026-10-21"
+      },
+      {
+        "label": "Virshup et al. 2021 preprint: anndata",
+        "url": "https://doi.org/10.1101/2021.12.16.473007",
+        "checked": "Crossref 200 on 2026-10-21"
+      }
+    ],
+    "related": [
+      "single-cell proteomics",
+      "imputation",
+      "MCP"
+    ],
+    "link_check": "Web URLs fetched with curl -L and returned HTTP 200. DOIs were checked at https://api.crossref.org/works/<DOI> (HTTP 200, title matched); doi.org itself forwards to publisher pages that often block scripts, so those were not used as the check."
+  },
+  {
+    "term": "knowledge graph",
+    "aka": [
+      "prior graph",
+      "biological network"
+    ],
+    "category": "methods",
+    "who": "A general idea used by search engines, databases and biology. Here it means a graph built from curated biology.",
+    "why": "It turns facts like 'A and B are in the same complex' into something an algorithm can use.",
+    "how": "A graph has nodes (here, proteins keyed by UniProt accession) and edges (a relation between two nodes). Edges can carry weights. We store it as a weighted adjacency matrix: entry (i, j) is the edge weight, or 0 if there is no edge.",
+    "what": "build_prior turns CORUM, Complex Portal or STRING into a weighted graph over the proteins in a dataset. Every method here (imputation, propagation, panel design) runs on that graph.",
+    "example": "PSMB5 –(weight 3)– PSMB6 if they share 3 curated complexes.",
+    "links": [
+      {
+        "label": "Wikipedia: Knowledge graph",
+        "url": "https://en.wikipedia.org/wiki/Knowledge_graph",
+        "checked": "HTTP 200 on 2026-10-21"
+      },
+      {
+        "label": "Wikipedia: Graph (discrete mathematics)",
+        "url": "https://en.wikipedia.org/wiki/Graph_(discrete_mathematics)",
+        "checked": "HTTP 200 on 2026-10-21"
+      }
+    ],
+    "related": [
+      "CORUM",
+      "Complex Portal",
+      "STRING",
+      "network propagation",
+      "prior",
+      "degree-preserving shuffle"
+    ],
+    "link_check": "Every URL fetched with curl -L on 2026-10-21 and returned HTTP 200."
+  },
+  {
+    "term": "network propagation",
+    "aka": [
+      "network diffusion",
+      "network smoothing"
+    ],
+    "category": "methods",
+    "who": "Reviewed by Cowen, Ideker, Raphael and Sharan (2017, Nature Reviews Genetics) as 'a universal amplifier' of gene-level signals.",
+    "why": "A single gene's score is noisy. Letting scores flow to neighbours boosts genes whose whole neighbourhood looks interesting.",
+    "how": "Start with a score on each node. Repeatedly let every node pass part of its score along its edges to neighbours, mixed with its own starting score. After enough rounds the scores settle into a smooth pattern. Random walk with restart is the most common form.",
+    "what": "propagate_scores spreads protein scores (for example variance) over the prior graph. Panel selection 'soft_weight' uses it to favour proteins in well-connected complexes.",
+    "example": "If 5 of 7 subunits of a complex score high, propagation lifts the other 2 as well.",
+    "links": [
+      {
+        "label": "Cowen et al. 2017, Nat Rev Genet: Network propagation",
+        "url": "https://doi.org/10.1038/nrg.2017.38",
+        "checked": "Crossref 200 on 2026-10-21"
+      }
+    ],
+    "related": [
+      "random walk with restart",
+      "knowledge graph",
+      "panel design"
+    ],
+    "link_check": "Web URLs fetched with curl -L and returned HTTP 200. DOIs were checked at https://api.crossref.org/works/<DOI> (HTTP 200, title matched); doi.org itself forwards to publisher pages that often block scripts, so those were not used as the check."
+  },
+  {
+    "term": "random walk with restart",
+    "aka": [
+      "RWR",
+      "personalized PageRank"
+    ],
+    "category": "methods",
+    "who": "Studied in computer science by Tong, Faloutsos and Pan (2006). Applied to protein networks by Köhler and colleagues (2008) to rank disease genes. It is closely related to PageRank.",
+    "why": "It gives a 'closeness to the start' score that uses all paths through the graph, not just direct neighbours.",
+    "how": "Picture a walker on the graph. At each step, with chance α it jumps back to the start (the seed scores). Otherwise it moves along a random edge, choosing heavier edges more often. In maths, p_next = (1 − α)·W·p + α·p0, where W is the column-normalised edge-weight matrix. Repeat until p stops changing. So it is repeated averaging over neighbours with a constant pull back to the start.",
+    "what": "Our soft_weight panel mode seeds the walk with each protein's variance and uses α = 0.5. Nodes with no edges keep their mass. We then take the top-k candidates.",
+    "example": "With α = 0.5, half of every node's final score comes from its own seed and half from what flowed in from neighbours.",
+    "links": [
+      {
+        "label": "Tong, Faloutsos & Pan 2006: Fast Random Walk with Restart",
+        "url": "https://doi.org/10.1109/ICDM.2006.70",
+        "checked": "Crossref 200 on 2026-10-21"
+      },
+      {
+        "label": "Köhler et al. 2008: Walking the Interactome",
+        "url": "https://doi.org/10.1016/j.ajhg.2008.02.013",
+        "checked": "Crossref 200 on 2026-10-21"
+      },
+      {
+        "label": "Wikipedia: PageRank",
+        "url": "https://en.wikipedia.org/wiki/PageRank",
+        "checked": "HTTP 200 on 2026-10-21"
+      },
+      {
+        "label": "Wikipedia: Random walk",
+        "url": "https://en.wikipedia.org/wiki/Random_walk",
+        "checked": "HTTP 200 on 2026-10-21"
+      }
+    ],
+    "related": [
+      "network propagation",
+      "panel design",
+      "knowledge graph"
+    ],
+    "link_check": "Web URLs fetched with curl -L and returned HTTP 200. DOIs were checked at https://api.crossref.org/works/<DOI> (HTTP 200, title matched); doi.org itself forwards to publisher pages that often block scripts, so those were not used as the check."
+  },
+  {
+    "term": "degree-preserving shuffle",
+    "aka": [
+      "degree-preserving randomization",
+      "double-edge swap",
+      "rewiring"
+    ],
+    "category": "methods",
+    "who": "Popularised for protein networks by Maslov and Sneppen (2002, Science).",
+    "why": "Some proteins have many edges just because they are well studied or abundant. A good null keeps that and scrambles only who connects to whom.",
+    "how": "Pick two edges A–B and C–D at random and swap their ends to get A–D and C–B. Skip the swap if it would make a self-loop or a duplicate edge. Every node keeps the same number of edges (its degree), but the specific partners change. Repeat many times.",
+    "what": "Our null graphs. Each prior gets 10 shuffles (seeds 0–9) with 10×|E| swaps, and the edge weights are permuted onto the new edges.",
+    "example": "If PSMB5 had 30 partners, after shuffling it still has 30, but they are mostly random proteins.",
+    "links": [
+      {
+        "label": "Wikipedia: Degree-preserving randomization",
+        "url": "https://en.wikipedia.org/wiki/Degree-preserving_randomization",
+        "checked": "HTTP 200 on 2026-10-21"
+      },
+      {
+        "label": "NetworkX: double_edge_swap",
+        "url": "https://networkx.org/documentation/stable/reference/algorithms/generated/networkx.algorithms.swap.double_edge_swap.html",
+        "checked": "HTTP 200 on 2026-10-21"
+      },
+      {
+        "label": "Maslov & Sneppen 2002, Science",
+        "url": "https://doi.org/10.1126/science.1065103",
+        "checked": "Crossref 200 on 2026-10-21"
+      }
+    ],
+    "related": [
+      "shuffled null",
+      "knowledge graph",
+      "prior"
+    ],
+    "link_check": "Web URLs fetched with curl -L and returned HTTP 200. DOIs were checked at https://api.crossref.org/works/<DOI> (HTTP 200, title matched); doi.org itself forwards to publisher pages that often block scripts, so those were not used as the check."
+  },
+  {
+    "term": "imputation",
+    "aka": [
+      "missing-value imputation",
+      "filling in"
+    ],
+    "category": "methods",
+    "who": "A standard statistical tool across many fields.",
+    "why": "Many analyses need a complete table. Imputation fills gaps with a best guess instead of throwing away whole cells or proteins.",
+    "how": "Use what is known to predict what is missing. Simple methods use the column mean. Smarter ones borrow from similar cells (kNN imputation) or related proteins (our prior method). Our prior method works in z-scores: for protein j, z = (x − μ_j)/σ_j. A missing z is predicted as β × the edge-weighted mean of its observed partners' z in that cell. Then x̂ = μ_j + σ_j·β·ẑ. If no partner is observed, it falls back to kNN.",
+    "what": "The headline test. We mask known values (MCAR and MNAR), impute them, and compare RMSE in the in-complex stratum.",
+    "example": "If PSMB5 is missing in a cell where its partners sit 1 SD above their averages and β = 0.6, the guess is μ + 0.6σ.",
+    "links": [
+      {
+        "label": "Wikipedia: Imputation (statistics)",
+        "url": "https://en.wikipedia.org/wiki/Imputation_(statistics)",
+        "checked": "HTTP 200 on 2026-10-21"
+      },
+      {
+        "label": "Wikipedia: Standard score (z-score)",
+        "url": "https://en.wikipedia.org/wiki/Standard_score",
+        "checked": "HTTP 200 on 2026-10-21"
+      }
+    ],
+    "related": [
+      "kNN imputation",
+      "MCAR",
+      "MNAR",
+      "RMSE",
+      "prior",
+      "knowledge graph"
+    ],
+    "link_check": "Every URL fetched with curl -L on 2026-10-21 and returned HTTP 200."
+  },
+  {
+    "term": "kNN imputation",
+    "aka": [
+      "k-nearest-neighbour imputation",
+      "KNNimpute"
+    ],
+    "category": "methods",
+    "who": "Wikipedia says the k-nearest-neighbours method was first developed by Evelyn Fix and Joseph Hodges in 1951 and later expanded by Thomas Cover. Troyanskaya and colleagues (2001) popularised it for filling gaps in gene-expression data.",
+    "why": "Similar cells tend to have similar protein levels, so their values are good guesses for a missing one.",
+    "how": "For a cell with a gap, find the k other cells most similar to it on the proteins both have measured (smallest distance). The gap is filled with the average of those neighbours' values for that protein.",
+    "what": "Our main baseline (k = 10, uniform weights), and the fallback when a protein has no observed partner. It won: every graph prior had higher in-complex RMSE than kNN on both masks.",
+    "example": "To fill PSMB5 in cell 7, take the 10 cells that look most like cell 7 and average their PSMB5 values.",
+    "links": [
+      {
+        "label": "Wikipedia: k-nearest neighbors algorithm",
+        "url": "https://en.wikipedia.org/wiki/K-nearest_neighbors_algorithm",
+        "checked": "HTTP 200 on 2026-10-21"
+      },
+      {
+        "label": "scikit-learn KNNImputer",
+        "url": "https://scikit-learn.org/stable/modules/generated/sklearn.impute.KNNImputer.html",
+        "checked": "HTTP 200 on 2026-10-21"
+      },
+      {
+        "label": "Troyanskaya et al. 2001, Bioinformatics",
+        "url": "https://doi.org/10.1093/bioinformatics/17.6.520",
+        "checked": "Crossref 200 on 2026-10-21"
+      }
+    ],
+    "related": [
+      "imputation",
+      "RMSE",
+      "prior"
+    ],
+    "link_check": "Web URLs fetched with curl -L and returned HTTP 200. DOIs were checked at https://api.crossref.org/works/<DOI> (HTTP 200, title matched); doi.org itself forwards to publisher pages that often block scripts, so those were not used as the check."
+  },
+  {
+    "term": "panel design",
+    "aka": [
+      "feature selection",
+      "protein panel",
+      "panel selection"
+    ],
+    "category": "methods",
+    "who": "A common goal in targeted assays (antibody panels, targeted mass spectrometry).",
+    "why": "Measuring a few proteins well is cheaper and more sensitive than measuring thousands. A good panel lets you predict the rest.",
+    "how": "Choose k proteins (the panel). Fit a model (here ridge regression) that predicts every other protein from the panel. Score it on held-out cells with R². Methods differ in how the k are picked: highest variance (HVP), random, or variance scores propagated over the graph by random walk with restart.",
+    "what": "Test 2. For k = 25, 50 and 100, complex-propagated panels lost to HVP, and random panels beat every scored panel at k = 25 and 50 (R² 0.419 at k = 50).",
+    "example": "A 50-protein panel that explains on average 19% of the variance (R² 0.19) of the other proteins.",
+    "links": [
+      {
+        "label": "Wikipedia: Feature selection",
+        "url": "https://en.wikipedia.org/wiki/Feature_selection",
+        "checked": "HTTP 200 on 2026-10-21"
+      }
+    ],
+    "related": [
+      "ridge regression",
+      "R²",
+      "random walk with restart",
+      "Jaccard index",
+      "macro-F1"
+    ],
+    "link_check": "Every URL fetched with curl -L on 2026-10-21 and returned HTTP 200."
+  },
+  {
+    "term": "ridge regression",
+    "aka": [
+      "Tikhonov regularization",
+      "L2-penalised regression"
+    ],
+    "category": "methods",
+    "who": "Described for statistics by Hoerl and Kennard (1970, Technometrics). Wikipedia notes it is also called Tikhonov regularization, after Andrey Tikhonov.",
+    "why": "With many correlated inputs, plain linear regression gives wild, unstable weights. Ridge keeps them small and steady.",
+    "how": "Find weights w that minimise (prediction errors)² + α × (sum of w²). The second term is a penalty that pulls weights toward zero. Correlated features end up sharing the credit instead of fighting.",
+    "what": "The model in Test 2: α = 1.0, standardised panel features, 5-fold cross-validation over cells.",
+    "example": "If PSMB5 and PSMB6 carry the same information, ridge gives each about half the weight instead of +100 and −99.",
+    "links": [
+      {
+        "label": "Wikipedia: Ridge regression",
+        "url": "https://en.wikipedia.org/wiki/Ridge_regression",
+        "checked": "HTTP 200 on 2026-10-21"
+      },
+      {
+        "label": "scikit-learn linear models (Ridge)",
+        "url": "https://scikit-learn.org/stable/modules/linear_model.html",
+        "checked": "HTTP 200 on 2026-10-21"
+      },
+      {
+        "label": "Hoerl & Kennard 1970, Technometrics",
+        "url": "https://doi.org/10.1080/00401706.1970.10488634",
+        "checked": "Crossref 200 on 2026-10-21"
+      }
+    ],
+    "related": [
+      "panel design",
+      "R²"
+    ],
+    "link_check": "Web URLs fetched with curl -L and returned HTTP 200. DOIs were checked at https://api.crossref.org/works/<DOI> (HTTP 200, title matched); doi.org itself forwards to publisher pages that often block scripts, so those were not used as the check."
+  },
+  {
+    "term": "R²",
+    "aka": [
+      "R-squared",
+      "coefficient of determination"
+    ],
+    "category": "methods",
+    "who": "Wikipedia attributes it to the geneticist Sewall Wright, first published in 1921.",
+    "why": "It answers 'how much of the up-and-down is my model explaining?' on a 0-to-1 scale.",
+    "how": "R² = 1 − (sum of squared errors) / (sum of squared distances from the mean). 1 is perfect. 0 is no better than always guessing the average. On new data it can even be negative.",
+    "what": "The Test 2 score: R² per target protein on held-out cells, observed entries only, then averaged over targets.",
+    "example": "Errors adding up to 30 when guessing the mean gives 100 means R² = 0.7.",
+    "links": [
+      {
+        "label": "Wikipedia: Coefficient of determination",
+        "url": "https://en.wikipedia.org/wiki/Coefficient_of_determination",
+        "checked": "HTTP 200 on 2026-10-21"
+      }
+    ],
+    "related": [
+      "ridge regression",
+      "panel design",
+      "RMSE"
+    ],
+    "link_check": "Every URL fetched with curl -L on 2026-10-21 and returned HTTP 200."
+  },
+  {
+    "term": "RMSE",
+    "aka": [
+      "root mean square error"
+    ],
+    "category": "methods",
+    "who": "A standard error measure throughout science and engineering.",
+    "why": "One number for 'how far off, typically', in the same units as the data.",
+    "how": "Take each prediction error, square it (so negatives don't cancel and big misses count more), average them, then take the square root.",
+    "what": "Test 1's score on masked entries, on the log2 scale. For example, in-complex MCAR: Complex Portal 0.730 vs kNN 0.687.",
+    "example": "Errors of 1, −1, 2 and 0 give √((1+1+4+0)/4) ≈ 1.22.",
+    "links": [
+      {
+        "label": "Wikipedia: Root mean square deviation",
+        "url": "https://en.wikipedia.org/wiki/Root_mean_square_deviation",
+        "checked": "HTTP 200 on 2026-10-21"
+      }
+    ],
+    "related": [
+      "imputation",
+      "log2 intensity",
+      "bootstrap",
+      "R²"
+    ],
+    "link_check": "Every URL fetched with curl -L on 2026-10-21 and returned HTTP 200."
+  },
+  {
+    "term": "Jaccard index",
+    "aka": [
+      "Jaccard similarity",
+      "intersection over union",
+      "IoU"
+    ],
+    "category": "methods",
+    "who": "Wikipedia says it was first introduced by Grove Karl Gilbert in 1884, and later developed independently by Paul Jaccard.",
+    "why": "It is a simple way to say how much two sets overlap.",
+    "how": "J(A, B) = (number of items in both) / (number in either). Identical sets give 1. Sets with nothing in common give 0.",
+    "what": "Test 3 (stability). Pick a 50-protein panel on 20 bootstrap resamples of cells and average the pairwise Jaccard. Complex Portal scored 0.761, HVP 0.751 and its null 0.760, a pass by a negligible margin.",
+    "example": "Panels {A, B, C, D} and {B, C, D, E} share 3 of 5 total, so J = 0.6.",
+    "links": [
+      {
+        "label": "Wikipedia: Jaccard index",
+        "url": "https://en.wikipedia.org/wiki/Jaccard_index",
+        "checked": "HTTP 200 on 2026-10-21"
+      }
+    ],
+    "related": [
+      "bootstrap",
+      "panel design"
+    ],
+    "link_check": "Every URL fetched with curl -L on 2026-10-21 and returned HTTP 200."
+  },
+  {
+    "term": "bootstrap",
+    "aka": [
+      "bootstrapping",
+      "resampling with replacement"
+    ],
+    "category": "methods",
+    "who": "Introduced by Bradley Efron (1979, Annals of Statistics).",
+    "why": "It tells you how much a result might wobble if you had collected the data again, without collecting new data.",
+    "how": "Make a new dataset of the same size by drawing items from your data at random with replacement (some appear twice, some not at all). Recompute the statistic. Do this hundreds or thousands of times. The spread of answers gives an uncertainty range, such as a 95% confidence interval.",
+    "what": "Used twice. (1) Paired bootstrap with 1000 resamples of masked entries for the RMSE difference CIs in Test 1. (2) 20 resamples of cells for panel stability in Test 3.",
+    "example": "Δ RMSE vs kNN = +0.043 [+0.037, +0.048]: the 95% interval excludes 0, so kNN is reliably better.",
+    "links": [
+      {
+        "label": "Wikipedia: Bootstrapping (statistics)",
+        "url": "https://en.wikipedia.org/wiki/Bootstrapping_(statistics)",
+        "checked": "HTTP 200 on 2026-10-21"
+      },
+      {
+        "label": "Efron 1979, Annals of Statistics",
+        "url": "https://doi.org/10.1214/aos/1176344552",
+        "checked": "Crossref 200 on 2026-10-21"
+      }
+    ],
+    "related": [
+      "RMSE",
+      "Jaccard index",
+      "preregistration"
+    ],
+    "link_check": "Web URLs fetched with curl -L and returned HTTP 200. DOIs were checked at https://api.crossref.org/works/<DOI> (HTTP 200, title matched); doi.org itself forwards to publisher pages that often block scripts, so those were not used as the check."
+  },
+  {
+    "term": "macro-F1",
+    "aka": [
+      "macro-averaged F1 score"
+    ],
+    "category": "methods",
+    "who": "A standard machine-learning metric. scikit-learn implements it as f1_score(average='macro').",
+    "why": "Plain accuracy can look good by always guessing the biggest class. Macro-F1 makes each class count equally.",
+    "how": "For each class: precision = correct guesses of that class / all guesses of it; recall = correct / all true members; F1 = 2·P·R/(P + R). Macro-F1 is the plain average of the per-class F1 scores.",
+    "what": "Sanity check only: logistic regression on a 50-protein panel to tell the 4 sorted populations apart. HVP 0.787, random 0.767, Complex Portal 0.768, all proteins 0.865.",
+    "example": "Class F1s of 0.9, 0.8, 0.7 and 0.6 give macro-F1 = 0.75.",
+    "links": [
+      {
+        "label": "Wikipedia: F-score",
+        "url": "https://en.wikipedia.org/wiki/F-score",
+        "checked": "HTTP 200 on 2026-10-21"
+      },
+      {
+        "label": "scikit-learn f1_score",
+        "url": "https://scikit-learn.org/stable/modules/generated/sklearn.metrics.f1_score.html",
+        "checked": "HTTP 200 on 2026-10-21"
+      }
+    ],
+    "related": [
+      "ceiling effect",
+      "panel design"
+    ],
+    "link_check": "Every URL fetched with curl -L on 2026-10-21 and returned HTTP 200."
+  },
+  {
+    "term": "ceiling effect",
+    "aka": [
+      "ceiling"
+    ],
+    "category": "methods",
+    "who": "A general idea in measurement and statistics.",
+    "why": "If a test is too easy, everyone scores near the top, and you cannot tell good methods from bad ones.",
+    "how": "Scores pile up against the maximum possible value, so real differences get squashed. The fix is a harder test, or noticing it and not over-reading the scores.",
+    "what": "Preregistered rule: if random panels reach macro-F1 of 0.9 or more, flag a ceiling effect. They reached 0.767, so the flag was False.",
+    "example": "If every student gets 100% on a quiz, it cannot show who studied more.",
+    "links": [
+      {
+        "label": "Wikipedia: Ceiling effect (statistics)",
+        "url": "https://en.wikipedia.org/wiki/Ceiling_effect_(statistics)",
+        "checked": "HTTP 200 on 2026-10-21"
+      }
+    ],
+    "related": [
+      "macro-F1",
+      "preregistration"
+    ],
+    "link_check": "Every URL fetched with curl -L on 2026-10-21 and returned HTTP 200."
+  },
+  {
+    "term": "preregistration",
+    "aka": [
+      "pre-registration",
+      "registered analysis plan"
+    ],
+    "category": "methods",
+    "who": "Promoted widely by groups such as the Center for Open Science.",
+    "why": "If you choose tests after seeing results, it is easy to fool yourself. Writing the plan first keeps the test honest.",
+    "how": "Before running the analysis, write down the claim, data, methods, metrics and pass/fail rules, and timestamp it (here, a git commit). Afterwards, report every result, and list any change to the plan as a 'deviation' with a reason.",
+    "what": "benchmarks/PREREGISTRATION.md was committed before any benchmark ran. That is why we report Test 1 as a fail, even though every prior beat its own shuffled null.",
+    "example": "Writing 'pass = 95% CI of the RMSE difference excludes 0' before seeing any numbers.",
+    "links": [
+      {
+        "label": "Wikipedia: Preregistration (science)",
+        "url": "https://en.wikipedia.org/wiki/Preregistration_(science)",
+        "checked": "HTTP 200 on 2026-10-21"
+      },
+      {
+        "label": "Center for Open Science: Preregistration",
+        "url": "https://www.cos.io/initiatives/prereg",
+        "checked": "HTTP 200 on 2026-10-21"
+      }
+    ],
+    "related": [
+      "bootstrap",
+      "shuffled null",
+      "ceiling effect"
+    ],
+    "link_check": "Every URL fetched with curl -L on 2026-10-21 and returned HTTP 200."
+  },
+  {
+    "term": "MCP",
+    "aka": [
+      "Model Context Protocol"
+    ],
+    "category": "agents",
+    "who": "Wikipedia states it was introduced by Anthropic in November 2024 as an open standard.",
+    "why": "Each AI app used to need custom code for each tool. MCP is one shared plug shape, so any MCP client can use any MCP server.",
+    "how": "An MCP server lists its tools, each with a name, a description, and a JSON schema for inputs and outputs. The client (inside an AI app) shows these to the model. When the model asks to call a tool, the client sends a JSON-RPC message, the server runs the tool, and it returns JSON.",
+    "what": "Our package runs as an MCP server (scp-graphfs-mcp). Its tools include get_complexes, explain_protein, build_prior, propagate_scores, impute_with_prior and select_panel. The optional variant_to_complexes tool is added with --enable-contrib.",
+    "example": "An agent calls get_complexes with id 'PSMB5' and gets back the curated complexes that contain it.",
+    "links": [
+      {
+        "label": "Model Context Protocol website",
+        "url": "https://modelcontextprotocol.io/",
+        "checked": "HTTP 200 on 2026-10-21"
+      },
+      {
+        "label": "Wikipedia: Model Context Protocol",
+        "url": "https://en.wikipedia.org/wiki/Model_Context_Protocol",
+        "checked": "HTTP 200 on 2026-10-21"
+      }
+    ],
+    "related": [
+      "LLM agent",
+      "AnnData",
+      "knowledge graph"
+    ],
+    "link_check": "Every URL fetched with curl -L on 2026-10-21 and returned HTTP 200."
+  },
+  {
+    "term": "LLM agent",
+    "aka": [
+      "AI agent",
+      "tool-using language model"
+    ],
+    "category": "agents",
+    "who": "Built by many AI labs and developers on top of large language models.",
+    "why": "A chat model alone can only write text. An agent can also look things up and run analyses, step by step, toward a goal.",
+    "how": "A large language model predicts text. In an agent loop, the model reads the task and the tool list, decides to call a tool, reads the result, and repeats until done. Good agents check results instead of guessing. Our tools return explicit errors and never invent a complex, which helps.",
+    "what": "The intended user of our MCP server: an agent that can answer 'which complexes is this protein in, and can we impute it?' with real data.",
+    "example": "Asked about a PSMB5 variant, an agent calls variant_to_complexes, then impute_with_prior on a user's .h5ad file.",
+    "links": [
+      {
+        "label": "Wikipedia: Large language model",
+        "url": "https://en.wikipedia.org/wiki/Large_language_model",
+        "checked": "HTTP 200 on 2026-10-21"
+      },
+      {
+        "label": "Wikipedia: Intelligent agent",
+        "url": "https://en.wikipedia.org/wiki/Intelligent_agent",
+        "checked": "HTTP 200 on 2026-10-21"
+      }
+    ],
+    "related": [
+      "MCP",
+      "variant"
+    ],
+    "link_check": "Every URL fetched with curl -L on 2026-10-21 and returned HTTP 200."
+  },
+  {
+    "term": "prior",
+    "aka": [
+      "prior knowledge",
+      "biological prior"
+    ],
+    "category": "concepts",
+    "who": "A term from Bayesian statistics, used loosely in machine learning for 'what we assume before seeing the data'.",
+    "why": "Data from single cells is sparse and noisy. Outside knowledge can fill in where data is thin, if that knowledge is right for the job.",
+    "how": "In Bayesian terms, a prior is a probability you hold before the evidence, which data then updates. Here it is looser: a graph that says which proteins should behave alike. The fitted β sets how much each graph is trusted.",
+    "what": "We compare four priors (corum, complexportal, string, string_exp), plus shuffled nulls, against data-only methods (kNN, mean).",
+    "example": "Assuming PSMB5 tracks other proteasome subunits is a complex prior.",
+    "links": [
+      {
+        "label": "Wikipedia: Prior probability",
+        "url": "https://en.wikipedia.org/wiki/Prior_probability",
+        "checked": "HTTP 200 on 2026-10-21"
+      }
+    ],
+    "related": [
+      "knowledge graph",
+      "CORUM",
+      "Complex Portal",
+      "STRING",
+      "shuffled null",
+      "transferability"
+    ],
+    "link_check": "Every URL fetched with curl -L on 2026-10-21 and returned HTTP 200."
+  },
+  {
+    "term": "transferability",
+    "aka": [
+      "generalisation",
+      "cross-context transfer"
+    ],
+    "category": "concepts",
+    "who": "A common concern in machine learning and biology.",
+    "why": "A method that only works on the data it was tuned on is not much use. We want results that hold in new cells, conditions or instruments.",
+    "how": "Train or choose on one group, then test on a different group and see how much performance drops. Curated priors might transfer better than data-driven ones, because complexes are shared across cell types.",
+    "what": "A stretch test: pick the panel on LSC + prog cells, then score it on CD38_pos + CD38_neg cells. TMT-based or other cell types are untested.",
+    "example": "A panel chosen on stem-like cells that still predicts well in more mature cells transfers.",
+    "links": [
+      {
+        "label": "Wikipedia: Generalization (machine learning)",
+        "url": "https://en.wikipedia.org/wiki/Generalization_(machine_learning)",
+        "checked": "HTTP 200 on 2026-10-21"
+      },
+      {
+        "label": "Wikipedia: Domain adaptation",
+        "url": "https://en.wikipedia.org/wiki/Domain_adaptation",
+        "checked": "HTTP 200 on 2026-10-21"
+      }
+    ],
+    "related": [
+      "prior",
+      "panel design",
+      "TMT"
+    ],
+    "link_check": "Every URL fetched with curl -L on 2026-10-21 and returned HTTP 200."
+  },
+  {
+    "term": "co-expression vs co-complex membership",
+    "aka": [
+      "co-expression vs physical association"
+    ],
+    "category": "concepts",
+    "who": "A long-running theme in systems biology.",
+    "why": "'Goes up and down together' and 'physically stuck together' are different facts. Mixing them can make a test circular.",
+    "how": "Co-expression is a pattern in data: two genes' levels correlate across samples, maybe through a shared regulator. Co-complex membership is physical: the proteins are parts of one machine, shown by experiments and curated in CORUM or the Complex Portal. Co-complex proteins often co-vary (because of stoichiometry and orphan subunit degradation), but many co-expressed pairs never touch.",
+    "what": "This is why STRING-combined (which includes a co-expression channel) is not a clean test. It is also why we also run string_exp. And a caveat: even shuffled partners correlate with a protein (median r 0.63 vs 0.75 for real partners), which suggests a cell-wide abundance factor.",
+    "example": "Ribosome proteins are both co-complex and co-expressed. Two genes switched on by the same stress signal may be co-expressed only.",
+    "links": [
+      {
+        "label": "Wikipedia: Gene co-expression network",
+        "url": "https://en.wikipedia.org/wiki/Gene_co-expression_network",
+        "checked": "HTTP 200 on 2026-10-21"
+      },
+      {
+        "label": "STRING FAQ: evidence channels",
+        "url": "https://string-db.org/help/faq/",
+        "checked": "HTTP 200 on 2026-10-21"
+      }
+    ],
+    "related": [
+      "STRING evidence channels",
+      "protein complex",
+      "stoichiometry",
+      "shuffled null",
+      "PPI"
+    ],
+    "link_check": "Every URL fetched with curl -L on 2026-10-21 and returned HTTP 200."
+  },
+  {
+    "term": "shuffled null",
+    "aka": [
+      "null model",
+      "own null"
+    ],
+    "category": "concepts",
+    "who": "Null models are standard in network science. Maslov and Sneppen (2002) used degree-preserving versions for protein networks.",
+    "why": "To claim the real graph helps, you must beat a fake graph that keeps everything except the biology.",
+    "how": "Make many degree-preserving shuffles of the real graph and run the same method on each. Average the results. If the real graph is not clearly better, its gain came from graph shape (degree, edge count), not from which proteins are linked.",
+    "what": "Each prior's 'own null' is 10 shuffles. Every prior beat its own null on RMSE, so the curated structure carries real signal, even though none beat kNN.",
+    "example": "Complex Portal MCAR RMSE 0.730 vs its own null mean 0.807.",
+    "links": [
+      {
+        "label": "Wikipedia: Null model",
+        "url": "https://en.wikipedia.org/wiki/Null_model",
+        "checked": "HTTP 200 on 2026-10-21"
+      },
+      {
+        "label": "Maslov & Sneppen 2002, Science",
+        "url": "https://doi.org/10.1126/science.1065103",
+        "checked": "Crossref 200 on 2026-10-21"
+      }
+    ],
+    "related": [
+      "degree-preserving shuffle",
+      "prior",
+      "preregistration",
+      "bootstrap"
+    ],
+    "link_check": "Web URLs fetched with curl -L and returned HTTP 200. DOIs were checked at https://api.crossref.org/works/<DOI> (HTTP 200, title matched); doi.org itself forwards to publisher pages that often block scripts, so those were not used as the check."
+  },
+  {
+    "term": "variant",
+    "aka": [
+      "genetic variant",
+      "mutation",
+      "sequence variant"
+    ],
+    "category": "variants",
+    "who": "Catalogued by clinical and research genetics communities.",
+    "why": "A change in a gene can change or break the protein, and that can break the protein's complex.",
+    "how": "A variant is a difference in DNA compared with a reference genome: one letter swapped, a few letters added or removed, or bigger changes. A single-letter change in a coding region can swap one amino acid, add a stop signal, or do nothing.",
+    "what": "Input to variant_to_complexes. It maps a gene or variant to the complexes and partner subunits it could affect, and says whether each partner is measured in our dataset.",
+    "example": "PSMB5:c.100A>G means an A changed to G at coding position 100 of PSMB5.",
+    "links": [
+      {
+        "label": "Wikipedia: Mutation",
+        "url": "https://en.wikipedia.org/wiki/Mutation",
+        "checked": "HTTP 200 on 2026-10-21"
+      },
+      {
+        "label": "Wikipedia: Single-nucleotide polymorphism",
+        "url": "https://en.wikipedia.org/wiki/Single-nucleotide_polymorphism",
+        "checked": "HTTP 200 on 2026-10-21"
+      }
+    ],
+    "related": [
+      "HGVS",
+      "HGNC",
+      "UniProt",
+      "Ensembl",
+      "ID mapping",
+      "protein complex"
+    ],
+    "link_check": "Every URL fetched with curl -L on 2026-10-21 and returned HTTP 200."
+  },
+  {
+    "term": "HGVS",
+    "aka": [
+      "HGVS nomenclature",
+      "Human Genome Variation Society notation"
+    ],
+    "category": "variants",
+    "who": "Maintained by the Human Genome Variation Society. The 2016 recommendations paper is by den Dunnen and colleagues.",
+    "why": "Everyone needs to write the same variant the same way, or databases and doctors will mix them up.",
+    "how": "Format: reference : type . change. 'c.' means coding DNA, 'g.' genomic, 'p.' protein. The reference can be a transcript (NM_002797.5 or ENST...) with an optional gene in brackets. Example: c.100A>G means position 100 of the coding sequence changed from A to G.",
+    "what": "variant_to_complexes accepts 'PSMB5:c.100A>G', 'NM_002797.5(PSMB5):c.100A>G' or 'ENST...:c.100A>G'. If there is no gene name, it asks Ensembl REST which gene the transcript belongs to.",
+    "example": "NM_002797.5(PSMB5):c.100A>G",
+    "links": [
+      {
+        "label": "HGVS Nomenclature",
+        "url": "https://hgvs-nomenclature.org/",
+        "checked": "HTTP 200 on 2026-10-21"
+      },
+      {
+        "label": "den Dunnen et al. 2016, Human Mutation: HGVS Recommendations",
+        "url": "https://doi.org/10.1002/humu.22981",
+        "checked": "Crossref 200 on 2026-10-21"
+      }
+    ],
+    "related": [
+      "variant",
+      "Ensembl",
+      "HGNC",
+      "ID mapping"
+    ],
+    "link_check": "Web URLs fetched with curl -L and returned HTTP 200. DOIs were checked at https://api.crossref.org/works/<DOI> (HTTP 200, title matched); doi.org itself forwards to publisher pages that often block scripts, so those were not used as the check."
+  },
+  {
+    "term": "Ensembl",
+    "aka": [
+      "Ensembl genome browser",
+      "ENSG/ENST IDs"
+    ],
+    "category": "variants",
+    "who": "Wikipedia describes it as a project at the European Bioinformatics Institute, launched in 1999. The 2024 paper is by Harrison and many colleagues.",
+    "why": "It gives every gene and transcript a stable ID and annotates genomes automatically, so tools can link DNA, RNA and protein.",
+    "how": "Ensembl matches the genome sequence against known proteins and RNAs to find genes. Each gene gets an ENSG ID and each transcript an ENST ID. Its REST API answers questions like 'which gene does this ENST belong to?'",
+    "what": "Accepted as input (ENSG IDs resolve via the HGNC snapshot). For transcript-only HGVS, we call Ensembl REST /lookup/id and cache the answer.",
+    "example": "ENSG IDs start with 'ENSG' and transcripts with 'ENST'.",
+    "links": [
+      {
+        "label": "Ensembl",
+        "url": "https://www.ensembl.org/",
+        "checked": "HTTP 200 on 2026-10-21"
+      },
+      {
+        "label": "Ensembl REST API",
+        "url": "https://rest.ensembl.org/",
+        "checked": "HTTP 200 on 2026-10-21"
+      },
+      {
+        "label": "Ensembl 2024 (NAR)",
+        "url": "https://doi.org/10.1093/nar/gkad1049",
+        "checked": "Crossref 200 on 2026-10-21"
+      }
+    ],
+    "related": [
+      "HGVS",
+      "HGNC",
+      "UniProt",
+      "ID mapping"
+    ],
+    "link_check": "Web URLs fetched with curl -L and returned HTTP 200. DOIs were checked at https://api.crossref.org/works/<DOI> (HTTP 200, title matched); doi.org itself forwards to publisher pages that often block scripts, so those were not used as the check."
+  },
+  {
+    "term": "UniProt",
+    "aka": [
+      "UniProtKB",
+      "UniProt accession"
+    ],
+    "category": "variants",
+    "who": "Wikipedia says it is run by a consortium of EMBL-EBI, the Swiss Institute of Bioinformatics (SIB) and the Protein Information Resource (PIR).",
+    "why": "It is the reference list of protein sequences and what is known about them, with stable IDs that other databases use.",
+    "how": "Each protein entry has an accession (like P28074), a sequence, names, functions and links. Isoforms add a suffix (P28074-2). Accessions follow a fixed letter-digit pattern, which we check with a regular expression.",
+    "what": "Every node in our graphs is a canonical UniProt accession (isoform and chain suffixes stripped). A dataset protein group 'P1;P2' counts as in a complex if any of its accessions is.",
+    "example": "P28074 = PSMB5, proteasome subunit beta type-5.",
+    "links": [
+      {
+        "label": "UniProt",
+        "url": "https://www.uniprot.org/",
+        "checked": "HTTP 200 on 2026-10-21"
+      },
+      {
+        "label": "UniProt: accession number format",
+        "url": "https://www.uniprot.org/help/accession_numbers",
+        "checked": "HTTP 200 on 2026-10-21"
+      },
+      {
+        "label": "UniProt 2023 (NAR)",
+        "url": "https://doi.org/10.1093/nar/gkac1052",
+        "checked": "Crossref 200 on 2026-10-21"
+      }
+    ],
+    "related": [
+      "ID mapping",
+      "HGNC",
+      "CORUM",
+      "Complex Portal",
+      "proteasome"
+    ],
+    "link_check": "Web URLs fetched with curl -L and returned HTTP 200. DOIs were checked at https://api.crossref.org/works/<DOI> (HTTP 200, title matched); doi.org itself forwards to publisher pages that often block scripts, so those were not used as the check."
+  },
+  {
+    "term": "ID mapping",
+    "aka": [
+      "identifier mapping",
+      "ID conversion"
+    ],
+    "category": "variants",
+    "who": "Offered as a service by UniProt and others; done by every bioinformatics pipeline.",
+    "why": "The same protein has many names in different databases: gene symbol, Ensembl ID, UniProt accession. Joining data needs a reliable translation.",
+    "how": "Look up each ID in a cross-reference table and return the matching IDs in the target system. One ID can map to several (or none), so good tools report ambiguity instead of guessing.",
+    "what": "ids.py maps gene symbols (current, previous, alias) and Ensembl gene IDs to UniProt through an offline HGNC snapshot. An ambiguous symbol returns an 'ambiguous_symbol' error with candidates. Nothing is resolved by fuzzy matching or an LLM.",
+    "example": "Symbol 'MB1' is a listed alias of PSMB5 and also of CD79A, so the tool returns both as candidates.",
+    "links": [
+      {
+        "label": "UniProt ID mapping",
+        "url": "https://www.uniprot.org/id-mapping",
+        "checked": "HTTP 200 on 2026-10-21"
+      },
+      {
+        "label": "UniProt ID mapping help",
+        "url": "https://www.uniprot.org/help/id_mapping",
+        "checked": "HTTP 200 on 2026-10-21"
+      }
+    ],
+    "related": [
+      "UniProt",
+      "HGNC",
+      "Ensembl",
+      "HGVS"
+    ],
+    "link_check": "Every URL fetched with curl -L on 2026-10-21 and returned HTTP 200."
+  },
+  {
+    "term": "HGNC",
+    "aka": [
+      "HUGO Gene Nomenclature Committee",
+      "gene symbol"
+    ],
+    "category": "variants",
+    "who": "The HUGO Gene Nomenclature Committee approves one official symbol per human gene. The 2023 resources paper is by Seal and colleagues, with Bruford as last author.",
+    "why": "Without one official name per gene, the same gene goes by several names, and different genes sometimes share one.",
+    "how": "HGNC gives each gene a unique symbol and ID (HGNC:...). It keeps old 'previous symbols' and 'alias symbols' so old names can be traced, and it links out to Ensembl and UniProt.",
+    "what": "Our offline symbol resolver reads the HGNC complete set in data/raw. variant_to_complexes reports how a name was resolved: symbol, prev, alias, ensembl, hgvs_gene or hgvs_transcript.",
+    "example": "PSMB5 is the approved symbol. In the HGNC table, MB1 is listed as an alias of PSMB5 and also of CD79A.",
+    "links": [
+      {
+        "label": "HGNC (genenames.org)",
+        "url": "https://www.genenames.org/",
+        "checked": "HTTP 200 on 2026-10-21"
+      },
+      {
+        "label": "Wikipedia: HUGO Gene Nomenclature Committee",
+        "url": "https://en.wikipedia.org/wiki/HUGO_Gene_Nomenclature_Committee",
+        "checked": "HTTP 200 on 2026-10-21"
+      },
+      {
+        "label": "Seal et al. 2023, NAR: Genenames.org, the HGNC resources in 2023",
+        "url": "https://doi.org/10.1093/nar/gkac888",
+        "checked": "Crossref 200 on 2026-10-21"
+      }
+    ],
+    "related": [
+      "ID mapping",
+      "UniProt",
+      "Ensembl",
+      "HGVS",
+      "variant"
+    ],
+    "link_check": "Web URLs fetched with curl -L and returned HTTP 200. DOIs were checked at https://api.crossref.org/works/<DOI> (HTTP 200, title matched); doi.org itself forwards to publisher pages that often block scripts, so those were not used as the check."
+  }
+]

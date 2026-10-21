@@ -130,7 +130,7 @@ function Infer() {
           <text x={x as number} y={(y as number) + 4} textAnchor="middle" fontSize={10} fill={t === "?" ? "var(--ink)" : "#fff"}>{t as string}</text>
         </g>
       ))}
-      <text x={230} y={108} fontSize={10} fill="var(--ink-2)">guess: probably high too</text>
+      <text x={176} y={100} fontSize={10} fill="var(--ink-2)">guess: probably high too</text>
     </svg>
   );
 }

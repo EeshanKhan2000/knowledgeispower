@@ -64,7 +64,7 @@ body { overflow-x: hidden; -webkit-text-size-adjust: 100%; }
     font: inherit;
     text-decoration-color: var(--accent);
   }
-  .tbl-wrap { @apply -mx-4 overflow-x-auto px-4 md:mx-0 md:px-0; }
+  .tbl-wrap { @apply relative -mx-4 overflow-x-auto px-4 md:mx-0 md:px-0; }
   .tbl { @apply w-full border-collapse text-sm; }
   .tbl th { @apply whitespace-nowrap border-b border-line px-2 py-1.5 text-left text-xs font-semibold uppercase tracking-wide text-muted; }
   .tbl td { @apply border-b border-line px-2 py-1.5 align-top text-ink2; }
@@ -82,7 +82,7 @@ body { overflow-x: hidden; -webkit-text-size-adjust: 100%; }
   .md ul { @apply list-disc pl-6; }
   .md ol { @apply list-decimal pl-6; }
   .md blockquote { @apply my-3 border-l-4 border-line pl-3 italic; }
-  .md pre { @apply my-3 max-h-[28rem] overflow-auto rounded-lg border border-line bg-surface2 p-3 text-xs; }
+  .md pre { @apply relative my-3 max-h-[28rem] overflow-auto rounded-lg border border-line bg-surface2 p-3 text-xs; }
   .md code { @apply font-mono text-[0.85em]; }
   .md :not(pre) > code { @apply rounded bg-surface2 px-1; overflow-wrap: anywhere; }
   .md a { @apply text-accent underline; overflow-wrap: anywhere; }
