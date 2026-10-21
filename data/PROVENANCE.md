@@ -27,3 +27,9 @@ hash in a new row, and leave the old row in place.
   **not verified** by fetching the licence pages at snapshot time.
 - **The dataset ships without `layers['raw']`.** The loader in `scp_graphfs_mcp.datasets` adds it
   as `2**X`, which follows the convention exactly but is not an independent raw export.
+
+## Derived files
+
+| File | Built by | From | SHA-256 |
+|---|---|---|---|
+| `data/derived/string_v12.5_9606_uniprot.tsv.gz` | `scripts/build_string_subset.py` | STRING v12.5 links (detailed) + aliases (`Ensembl_HGNC_uniprot_ids` rows), edges with combined ≥ 400 or experimental ≥ 400; 1,050,464 UniProt pairs | `a933a71db0671f11d8ef86e0084ccfb3f375920a834e7cd3f3588914b47f1a78` |
