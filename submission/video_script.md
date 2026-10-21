@@ -25,7 +25,7 @@ prior, so our headline hypothesis failed. And random panels beat prior-guided on
 
 **1:45–2:00 · Limitations and ask.**
 - One dataset.
-- The data isn't per-cell normalised, and a strong cell-wide factor may favour kNN.
+- Much protein co-variation is shared broadly, not complex-specific. A per-cell-normalised exploratory rerun gave the same verdict.
 - Curated databases are biased toward well-studied proteins.
 
 "Everything's open and preregistered. Grab a slot in `docs/SLOTS.md`."

@@ -40,7 +40,9 @@ Not in a complex, the curated priors fall back to kNN, so they are identical to 
 - **Test 4: curated ≥ STRING-exp ≥ STRING on in-complex RMSE:** **fail**. Complex Portal is best of the four priors on both masks, but STRING-combined beats STRING-experimental.
 - **Sanity (classification, k=50, macro-F1, not evidence):** HVP 0.787, random 0.767, Complex Portal 0.768, all proteins 0.865. Ceiling flag: False.
 
-**Caveat found after the run (not preregistered):** for well-measured complex proteins, the weighted mean of *shuffled-null* partners already correlates with the protein at median r = 0.63 (IQR 0.38–0.79), against median r = 0.75 for real curated partners (`results/discordant_subunits.csv`). That suggests a strong cell-wide abundance factor in these per-cell-unnormalised values, which kNN exploits. A normalised rerun would be a separate, exploratory analysis.
+**Caveat found after the run (not preregistered):** for well-measured complex proteins, the weighted mean of *shuffled-null* partners already correlates with the protein at median r = 0.63 (IQR 0.38–0.79), against median r = 0.75 for real curated partners (`results/discordant_subunits.csv`). Much of the co-variation is shared broadly across proteins, not specific to complexes.
+
+**Exploratory, not preregistered: per-cell median normalisation** (`results/exploratory/normalise_median/`). The verdicts are unchanged (test 1 **fail**). In-complex MCAR RMSE: Complex Portal 0.725, kNN 0.669, own null 0.797. Null-partner median r stays 0.63, so per-cell scale does not explain kNN's advantage.
 <!-- HEADLINE:END -->
 
 The design was preregistered in [`benchmarks/PREREGISTRATION.md`](benchmarks/PREREGISTRATION.md), committed before any benchmark ran. Every row, including losses, is in `results/*.json` and on the dashboard.

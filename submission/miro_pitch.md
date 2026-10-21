@@ -7,5 +7,5 @@
 **Ask:**
 - A second single-cell proteomics dataset with real missingness (slot S2).
 - Someone to wrap the NIFty baseline (S4).
-- Help testing whether per-cell normalisation changes the verdict.
+- Ideas for priors that capture what kNN captures (per-cell normalisation alone did not change the verdict).
 - Repo: github.com/xX-its-amit-Xx/knowledgeispower · slots in `docs/SLOTS.md`.

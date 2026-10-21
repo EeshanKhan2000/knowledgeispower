@@ -1,0 +1,36 @@
+{
+ "test1_corum": {
+  "MCAR": false,
+  "MNAR": false
+ },
+ "test1_complexportal": {
+  "MCAR": false,
+  "MNAR": false
+ },
+ "test1_pass": false,
+ "test2_wins_out_of_3": {
+  "corum": 1,
+  "complexportal": 0
+ },
+ "test2_pass": false,
+ "test3": {
+  "corum": false,
+  "complexportal": false
+ },
+ "test3_pass": false,
+ "test4_in_complex_rmse": {
+  "MCAR": {
+   "corum": 0.7699635847087672,
+   "complexportal": 0.7253627276129756,
+   "string_exp": 0.7923873283726318,
+   "string": 0.7709207413112796
+  },
+  "MNAR": {
+   "corum": 0.9419940318815905,
+   "complexportal": 0.9047050586947359,
+   "string_exp": 0.9956239518896157,
+   "string": 0.9628262950329827
+  }
+ },
+ "test4_pass": false
+}

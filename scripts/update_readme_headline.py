@@ -17,6 +17,22 @@ meta = json.loads((R / "run_meta.json").read_text())
 import pandas as pd  # noqa: E402
 dq = pd.read_csv(R / "discordant_subunits.csv")[["null_mean_r", "r_with_partners"]].quantile([0.25, 0.5, 0.75])
 
+def exploratory_lines():
+    E = R / "exploratory" / "normalise_median"
+    if not (E / "imputation.json").exists():
+        return []
+    ei = json.loads((E / "imputation.json").read_text())
+    ev = json.loads((E / "verdicts.json").read_text())
+    c = {(x["prior"], x["vs"]): x for x in ei["masks"]["MCAR"]["comparisons"] if x["stratum"] == "in_complex"}
+    nq = pd.read_csv(E / "discordant_subunits.csv")["null_mean_r"].median()
+    return ["",
+            "**Exploratory, not preregistered: per-cell median normalisation** (`results/exploratory/normalise_median/`). "
+            f"The verdicts are unchanged (test 1 {yn(ev['test1_pass'])}). In-complex MCAR RMSE: Complex Portal "
+            f"{c[('complexportal', 'knn')]['rmse_prior']:.3f}, kNN {c[('complexportal', 'knn')]['rmse_ref']:.3f}, "
+            f"own null {c[('complexportal', 'own_null_mean')]['rmse_ref']:.3f}. Null-partner median r stays "
+            f"{nq:.2f}, so per-cell scale does not explain kNN's advantage."]
+
+
 PRIORS = ["complexportal", "corum", "string", "string_exp"]
 LABEL = {"complexportal": "Complex Portal", "corum": "CORUM", "string": "STRING (combined ≥700)",
          "string_exp": "STRING (experimental ≥700)"}
@@ -89,9 +105,9 @@ lines += [
     f"**Caveat found after the run (not preregistered):** for well-measured complex proteins, the weighted mean of "
     f"*shuffled-null* partners already correlates with the protein at median r = {dq['null_mean_r'][0.5]:.2f} "
     f"(IQR {dq['null_mean_r'][0.25]:.2f}–{dq['null_mean_r'][0.75]:.2f}), against median r = {dq['r_with_partners'][0.5]:.2f} "
-    "for real curated partners (`results/discordant_subunits.csv`). That suggests a strong cell-wide abundance factor "
-    "in these per-cell-unnormalised values, which kNN exploits. A normalised rerun would be a separate, exploratory analysis.",
-]
+    "for real curated partners (`results/discordant_subunits.csv`). Much of the co-variation is shared broadly "
+    "across proteins, not specific to complexes.",
+] + exploratory_lines()
 text = (ROOT / "README.md").read_text()
 a, b = text.index("<!-- HEADLINE:START -->"), text.index("<!-- HEADLINE:END -->")
 (ROOT / "README.md").write_text(text[:a] + "<!-- HEADLINE:START -->\n" + "\n".join(lines) + "\n" + text[b:])

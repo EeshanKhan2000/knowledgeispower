@@ -116,7 +116,7 @@ register_tool("my_tool", my_tool, "what it does",
 - Headline result (results/verdicts.json): test 1 FAILS. Curated priors beat their own shuffled nulls (in-complex RMSE, e.g. Complex Portal 0.730 vs null 0.807, MCAR) but lose to kNN (0.687). Panel test fails (random panels beat scored ones). See README for every row.
 - Core MCP tools live: `get_complexes`, `explain_protein`, `build_prior`, `propagate_scores`, `impute_with_prior`, `select_panel`.
 - Slots: S1 taken (Eeshan Khan, checkpoint Oct 21 14:00 ET). S2–S7 open (`docs/SLOTS.md`).
-- Known limitations: one dataset (Petrosius 2023, 215 cells); data not per-cell normalised (strong cell-wide factor); curated-database coverage bias; masked observed values under-represent true dropouts; HVP picks likely contaminants (keratins).
+- Known limitations: one dataset (Petrosius 2023, 215 cells); much co-variation is broad rather than complex-specific (a per-cell-normalised exploratory rerun gave the same verdict); curated-database coverage bias; masked observed values under-represent true dropouts; HVP picks likely contaminants (keratins).
 
 ## Scope guard
 This project is **not** multi-omics integration, **not** a GNN embedding of the data, and **not** a general knowledge-graph platform. Ideas outside the thesis go to `docs/SLOTS.md` as proposals, not code.

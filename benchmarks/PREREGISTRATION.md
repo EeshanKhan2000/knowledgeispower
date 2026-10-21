@@ -93,4 +93,4 @@ runtime must stay under 30 min on a laptop.
    (`git diff f0fb4b6 7626455 -- benchmarks src/scp_graphfs_mcp data`). `run.py` now records the commit at
    the start.
 2. **Not a deviation, but flagged:** the per-cell normalisation question (see the README caveat) was noticed
-   after the run. Any normalised analysis will be reported separately as exploratory.
+   after the run. An exploratory per-cell median-normalised rerun (`python benchmarks/run.py --normalise median` → `results/exploratory/normalise_median/`) gave the same verdicts. It is not part of the preregistered result.
