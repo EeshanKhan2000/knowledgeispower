@@ -70,3 +70,15 @@ Before running more, three dev dimensions are added:
 **Scoping rule:** if the only qualifying method wins in a regime (e.g. n_cells ≤ 60), the v2
 preregistration states that regime, and the README reports the claim *as scoped*. The phase-1
 full-data result stays as reported.
+
+## Amendment 2: an independent held-out dataset (committed before any evaluation on it)
+
+Repeated seeds on the same 215 cells can't fully remove forking-path risk, so we add an **independent
+dataset**: Leduc et al. 2022 (nPOP/pSCoPE), melanoma + monocytes, the **pre-imputation** protein assay
+`proteins_norm2`. That's 1543 cells and 65.9% missing; provenance is in `data/PROVENANCE.md`.
+
+- It's built from the scpdata `.Rda` without R (`scripts/rda_extract_leduc.py`, `scripts/build_leduc2022.py`).
+- **No method has been evaluated on it.** No imputation, panel or correlation analysis may be run on it
+  until `benchmarks/PREREGISTRATION_v3.md` is committed. v3 fixes the method(s) using Petrosius
+  evidence only (dev + v2 confirmation).
+- Allowed before v3: shape, missingness and label counts (already printed by the build script).

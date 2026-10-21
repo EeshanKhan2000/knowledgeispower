@@ -43,5 +43,19 @@ def load_petrosius2023() -> ad.AnnData:
     return a
 
 
+LEDUC_PATH = DATA_DIR / "datasets" / "leduc2022_pscope_proteins_norm2.h5ad"
+
+
+def load_leduc2022() -> ad.AnnData:
+    """Leduc et al. 2022 (nPOP / pSCoPE) melanoma + monocyte single cells; the pre-imputation protein
+    assay `proteins_norm2` (log2 relative quantities, NaN = missing). Held out for the phase-3
+    independent-dataset confirmation; see benchmarks/EXPLORATION.md."""
+    a = ad.read_h5ad(LEDUC_PATH)
+    validate_dataset(a)
+    return a
+
+
+register_dataset("leduc2022", load_leduc2022,
+                 "Leduc et al. 2022 pSCoPE melanoma/monocyte, pre-imputation proteins (held-out dataset)", contrib=False)
 register_dataset("petrosius2023", load_petrosius2023,
                  "OCI-AML8227 single-cell proteomics (Petrosius et al. 2023 preprint), 215 cells", contrib=False)
