@@ -47,6 +47,33 @@ Not in a complex, the curated priors fall back to kNN, so they are identical to 
 
 The design was preregistered in [`benchmarks/PREREGISTRATION.md`](benchmarks/PREREGISTRATION.md), committed before any benchmark ran. Every row, including losses, is in `results/*.json` and on the dashboard.
 
+## 2b. Phase 2–3: looking for a version of the claim that survives held-out tests
+
+<!-- PHASE23:START -->
+*Exploration protocol:* [`benchmarks/EXPLORATION.md`](benchmarks/EXPLORATION.md). Every dev result is in [`docs/EXPLORATION_LOG.md`](docs/EXPLORATION_LOG.md). Each confirmation was preregistered before its held-out data was touched, and run once.
+
+**v2: Petrosius held-out masks.** Primary E3 (low-rank + CORUM Laplacian): **not confirmed** (6/8). It does not beat its own shuffled null:
+- MCAR: -0.0007 [-0.0031, +0.0016]
+- MNAR: +0.0001 [-0.0018, +0.0017]
+
+**v3: independent dataset (Leduc 2022, 1543 cells); E6, Complex Portal residuals on low-rank.** Passes 8/8 as written, but the gain is practically zero (no minimum effect size was preregistered; disclosed):
+- MCAR vs lowrank_nograph: -0.0000 [-0.0001, -0.0000] (-0.01%)
+- MCAR vs own_null_mean: -0.0000 [-0.0001, -0.0000] (-0.01%)
+- MCAR vs data_graph: -0.0007 [-0.0008, -0.0005] (-0.14%)
+- MCAR vs knn: -0.0047 [-0.0053, -0.0039] (-1.00%)
+- MNAR vs lowrank_nograph: -0.0001 [-0.0001, -0.0001] (-0.01%)
+- MNAR vs own_null_mean: -0.0001 [-0.0001, -0.0001] (-0.01%)
+- MNAR vs data_graph: -0.0004 [-0.0005, -0.0002] (-0.07%)
+- MNAR vs knn: -0.0055 [-0.0062, -0.0048] (-0.98%)
+
+**v4: Leduc, 30-cell subsamples; data graph + Complex Portal.** **Not confirmed** (2/6). It loses to kNN. Secondary: Complex Portal partners vs. data-derived partners:
+- n=30 MCAR: -0.0298 [-0.0340, -0.0258] (-5.33%)
+- n=30 MNAR: -0.0177 [-0.0219, -0.0138] (-2.77%)
+- n=60 MCAR: -0.0253 [-0.0284, -0.0225] (-4.73%)
+- n=60 MNAR: -0.0230 [-0.0257, -0.0202] (-3.72%)
+
+<!-- PHASE23:END -->
+
 ## 3. Quickstart
 
 ```bash
