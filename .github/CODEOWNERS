@@ -1,0 +1,13 @@
+# Protected paths are Amit-only. Enforced when branch protection on main has
+# "Require review from Code Owners" enabled (repo Settings → Branches).
+*                                   @xX-its-amit-Xx
+/contrib/variant_bridge/            @xX-its-amit-Xx @EeshanKhan2000
+/tests/contrib/                     @xX-its-amit-Xx
+# Explicitly protected (Amit-only, never contributor-owned):
+/src/scp_graphfs_mcp/               @xX-its-amit-Xx
+/benchmarks/                        @xX-its-amit-Xx
+/results/                           @xX-its-amit-Xx
+/data/                              @xX-its-amit-Xx
+/tests/test_variant_bridge.py       @xX-its-amit-Xx
+/AGENTS.md                          @xX-its-amit-Xx
+/.github/                           @xX-its-amit-Xx

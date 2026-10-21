@@ -1,0 +1,36 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "scp-graphfs-mcp"
+version = "0.1.0"
+description = "Curated protein-complex priors for single-cell proteomics imputation and panel design, exposed to LLM agents over MCP."
+readme = "README.md"
+requires-python = ">=3.11"
+license = "Apache-2.0"
+authors = [{ name = "Amit Shenoy" }]
+dependencies = [
+    "anndata>=0.10",
+    "numpy>=1.24",
+    "scipy>=1.10",
+    "pandas>=2.0",
+    "scikit-learn>=1.3",
+    "networkx>=3.0",
+    "mcp>=1.2",
+    "scp-prep @ git+https://github.com/xX-its-amit-Xx/scp-prep@d6643af2f03fbca2c0b52ec8d00604df09ccaed4",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=7.4"]
+
+[project.scripts]
+scp-graphfs-mcp = "scp_graphfs_mcp.server:main"
+
+[tool.setuptools.packages.find]
+where = ["src", "."]
+include = ["scp_graphfs_mcp*", "contrib*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = ["network: needs internet (UniProt/Ensembl APIs)"]
