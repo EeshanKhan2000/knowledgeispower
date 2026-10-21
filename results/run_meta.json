@@ -1,0 +1,37 @@
+{
+ "code_commit": "76264557deca98c831f8a174670ce0276431ed9a",
+ "quick": false,
+ "include_contrib": false,
+ "seeds": [
+  0,
+  1,
+  2,
+  3,
+  4
+ ],
+ "n_nulls": 10,
+ "n_bootstrap": 1000,
+ "random_seeds": [
+  0,
+  1,
+  2,
+  3,
+  4,
+  5,
+  6,
+  7,
+  8,
+  9
+ ],
+ "n_stability_bootstraps": 20,
+ "runtime_seconds": 567.4,
+ "python": "3.13.16",
+ "versions": {
+  "numpy": "2.5.4",
+  "scipy": "1.18.1",
+  "scikit-learn": "1.9.1",
+  "anndata": "0.13.4",
+  "networkx": "3.7",
+  "scp-prep": "0.1.0"
+ }
+}
