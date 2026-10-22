@@ -204,3 +204,69 @@ the confirmation set (khan2023) stays untouched.
 **Selection:** the α whose curated pkNN beats all baselines on ≥ 2 of 3 targets, on both masks, with the lowest mean RMSE.
 If one qualifies, v6 is preregistered on khan2023 (30-cell subsamples, seeds 6000–6009, 1% SESOI vs. each baseline).
 If none qualifies, the sweep stops here: there will be no further α values and no other k or m.
+
+## Amendment 9: exhaustive representation sweep (committed before any run it covers)
+
+**Why:** Amendments 4–8 tested five knowledge sources and three estimators. Amit asked (Oct 22) for an exhaustive attempt at
+"every single representation" before we accept a negative result. This amendment fixes the whole grid, the baselines,
+the selection rule and the single confirmation **before** any real-data run. Representation modules are built by
+agents that are not allowed to run imputation or see results.
+
+**Representations (protein side).** Each is a graph (neighbours with weights), a feature block (cosine neighbours), or a
+bulk reference panel (correlations and ridge coefficients learned *in the reference*):
+- **Already in the repo:** Complex Portal, CORUM, STRING, hu.MAP 3.0 (graphs); GO, HPA, UniProt keywords, PaxDb/physical,
+  external single-cell corpus loadings (features).
+- **New:**
+  - Sequence and structure: ProtT5 sequence embeddings (UniProt); PDB co-structure (SIFTS: chains in the same entry).
+  - Drug-target annotations: Pharos/TCRD.
+  - Pathways and interaction databases: Reactome pathways; BioGRID physical; IntAct.
+  - Phenotype and literature: Monarch phenotypes (and diseases); NCBI gene2pubmed co-citation.
+  - Mechanistic graph: INDRA, or Pathway Commons if INDRA is not openly downloadable.
+  - Bulk co-regulation panels: CCLE bulk proteomics (375 lines) and ProteomeHD.
+- **Combined:**
+  - `union_curated`: the union of all knowledge graphs (excluding bulk panels), weight = number of sources.
+  - `concat_features`: all feature blocks concatenated.
+- A source that fails to download or covers < 20% of a target's proteins is reported as such and dropped. Dropping
+  never depends on imputation results.
+
+**Estimators** (each run on every representation, with fixed hyper-parameters):
+1. **RPR** (reference-panel regression, `scp_graphfs_mcp.refpanel`). It uses m = 20 neighbours and λ = 10. Bulk panels use
+   reference ridge coefficients (λ_ref = 1, `signed=True`); graphs and features use similarity-weighted averages.
+2. **RPR-stack:** `stack_with_base` mixes RPR with kNN. The weight w ∈ {0, .25, .5, .75, 1} is chosen on a 10% inner
+   mask of *observed* eligible entries.
+3. **pkNN** (Amendment 7, α = 0.5, m = 50, k = 10). Graphs enter through their spectral embedding; features directly.
+   It runs at 30 cells only, as before.
+
+**Baselines and nulls** (all must be beaten):
+- kNN; low-rank (`grmf(..., lam_g=0)`);
+- the generic ensemble `stack_with_base(kNN, low-rank)`;
+- the data-only control: RPR and RPR-stack using neighbours from the target data's own correlations (`neighbours_from_data`);
+- a **null per representation:** RPR and RPR-stack with the neighbour lists relabelled at random (`permute_neighbours`,
+  seeds 0 and 1); pkNN with `permuted_features` (seeds 0 and 1).
+
+**Grid (dev only):**
+- targets: Petrosius 2023, Leduc 2022, SCoPE2;
+- MCAR and MNAR masks;
+- seeds 100–102;
+- regimes: 30 cells (**primary**) and 200 cells (all 215 for Petrosius).
+
+The data representation stays log2 as loaded. Cell-median centring is applied only in the robustness check below.
+
+**Selection rule:**
+- A (representation, estimator) pair *qualifies* if, at 30 cells, its mean RMSE (over seeds) is ≥ 1% lower than **every**
+  baseline and its own nulls on ≥ 2 of 3 targets, under both masks.
+- Among qualifiers, the one with the lowest mean RMSE relative to kNN is selected. Only that pair goes to confirmation,
+  so there is a single confirmatory test despite the large dev grid.
+- Every cell of the grid is published (`results/phase6/dev/`) whatever the outcome.
+
+**Robustness check (selected pair only, dev):** repeat with cell-median-centred data (`--normalise median`) and at
+200 cells. This is reported but is not a gate.
+
+**Confirmation (v6, only if something qualifies):**
+- The holdout is khan2023 (reserved in Amendment 4; never inspected beyond shape and missingness).
+- It is run on 30-cell subsamples, seeds 6000–6009, under MCAR and MNAR.
+- Success: the selected pair beats each baseline and its nulls by ≥ 1% mean RMSE (SESOI). The 95% paired bootstrap CI of
+  the relative difference must exclude 0 in favour of the method, under both masks.
+- `PREREGISTRATION_v6.md` will be committed before the holdout is loaded for evaluation.
+
+**If nothing qualifies:** we report the full grid as an exhaustive negative result. There is no second sweep.
