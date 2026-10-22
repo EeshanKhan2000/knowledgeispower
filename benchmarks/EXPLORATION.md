@@ -155,3 +155,23 @@ Second tier, only if time allows: Pharos (target development level), Monarch (ph
 ≥ 2 of 3 targets in the 30-cell regime, pick the one with the lowest mean 30-cell RMSE. It is then preregistered
 (v6) with a **1% SESOI** against each baseline and run once on **khan2023**. If none qualifies, that is reported
 and khan2023 stays untouched.
+
+## Amendment 6: ensemble of kNN and knowledge-IMC (committed before running it)
+
+**Motivation:** Amendment-5 dev found that knowledge features beat shuffled features in every 30-cell case, but kNN beats
+the IMC family there. kNN errors come from neighbouring cells, and IMC errors come from protein knowledge, so the two errors may be
+partly independent. An ensemble may beat both (analogy: Netflix-prize blending, sensor fusion).
+
+**Method E7:** x̂ = (1 − w) · kNN + w · IMC(curated_all), with **w = 0.5 fixed** (nothing is tuned).
+
+**Required baselines:**
+- kNN;
+- **the null ensemble** (1 − w) · kNN + w · IMC(shuffled curated_all features, seeds 0–1), so a gain must come from
+  the knowledge, not from averaging two models;
+- the kNN + IMC(no features) ensemble.
+
+**Dev:** the same targets, regimes and seeds as Amendment 5, in the 30-cell regime plus all-cells / 200 cells.
+
+**Rule:** E7 qualifies if it beats all three baselines on ≥ 2 of 3 targets at 30 cells, on both masks.
+If it qualifies, it is preregistered as v6 (SESOI 1% vs. each baseline) and run once on **khan2023** at 30-cell
+subsamples (seeds 6000–6009).

@@ -184,3 +184,19 @@ Each prior graph was tested in residual-on-kNN (E1) and residual-on-low-rank (E6
 
 **Selection rule (Amendment 4): no method qualifies.** No curated variant beats all baselines across corpus targets.
 Following the rule, **v6 is not run as a win**, and khan2023 stays an untouched holdout for a future, different idea.
+
+## 2026-10-22 · Amendment 5 dev: knowledge features in side-information MF (`results/phase5/dev/dev_imc.json`)
+Overall RMSE, mean over dev seeds 100–102. "curated_all" = GO + HPA + UniProt keywords + PaxDb/length/mass + spectral
+embeddings of Complex Portal and STRING.
+
+| Target, cells | kNN | low-rank | IMC, no features | IMC, shuffled features | IMC, curated_all |
+|---|---|---|---|---|---|
+| Leduc 30, MCAR / MNAR | **0.546 / 0.633** | 0.835 / 0.868 | 0.725 / 0.772 | 0.682 / 0.742 | 0.664 / 0.733 |
+| SCoPE2 30 | **0.551 / 0.646** | 0.912 / 0.943 | 0.765 / 0.831 | 0.710 / 0.773 | 0.692 / 0.764 |
+| Petrosius 28 | 0.981 / 0.962 | 1.126 / 1.131 | 0.994 / 1.003 | 0.933 / 0.970 | **0.891 / 0.936** |
+| at 200 / 215 cells | ≈ everything equal (±0.01) | | | | |
+
+**Read:**
+- **Knowledge features beat shuffled features in every 30-cell cell.** Combining sources is best, and no single source is enough.
+- **But kNN dominates the low-rank family at 30 cells** on Leduc and SCoPE2.
+- **Rule outcome:** IMC qualifies on 1 of 3 targets, so no v6 is run.
