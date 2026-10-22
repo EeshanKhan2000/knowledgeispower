@@ -248,3 +248,13 @@ Overall RMSE at 30 cells (Petrosius 28), mean over dev seeds; change of the cura
 - **Knowledge-defined neighbourhoods beat shuffled ones in every case, and beat data-defined ones in 5/6.**
 - **They beat plain kNN only on Petrosius.** On Leduc and SCoPE2 they are within ~1% of kNN.
 - **Rule: qualifies on 1 of 3, so it does not qualify.** It is the closest approach so far.
+
+## 2026-10-22 · Amendment 8 dev: pkNN α sweep (`results/phase5/dev/dev_pknn_sweep.json`)
+**α = 0.1:**
+- **Leduc:** kNN 0.5458 / 0.6331 vs. pkNN curated 0.5459 / 0.6304 (MCAR / MNAR). On MCAR a shuffled-neighbourhood null scores 0.5454.
+- **SCoPE2:** curated pkNN is 0.5527 vs. kNN 0.5513 on MCAR.
+
+**α = 0.25:** wins on Petrosius only.
+
+**Rule: no α qualifies** (≥ 2 of 3 targets, both masks), so the sweep stops as pre-committed.
+As the local weight shrinks, pkNN converges to kNN and the knowledge neighbourhood stops mattering.
