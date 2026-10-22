@@ -1,1 +1,42 @@
 [15:03:28] petrosius2023: big ref (9914, 2813), warm 0.975
+[15:03:55] leduc2022: big ref (8586, 2844), warm 0.945
+[15:04:23] specht2021: big ref (8639, 3042), warm 0.848
+[15:04:37] petrosius2023 n=28 MCAR 101 done
+[15:04:38] petrosius2023 n=28 MNAR 100 done
+[15:04:39] petrosius2023 n=28 MCAR 102 done
+[15:04:40] petrosius2023 n=28 MCAR 100 done
+[15:04:51] petrosius2023 n=28 MNAR 101 done
+[15:04:51] petrosius2023 n=28 MNAR 102 done
+[15:05:47] petrosius2023 n=215 MCAR 100 done
+[15:05:47] petrosius2023 n=215 MCAR 101 done
+[15:05:57] petrosius2023 n=215 MCAR 102 done
+[15:05:58] petrosius2023 n=215 MNAR 100 done
+[15:06:14] leduc2022 n=30 MCAR 100 done
+[15:06:18] leduc2022 n=30 MCAR 101 done
+[15:06:31] leduc2022 n=30 MCAR 102 done
+[15:06:37] leduc2022 n=30 MNAR 100 done
+[15:06:48] leduc2022 n=30 MNAR 101 done
+[15:06:49] petrosius2023 n=215 MNAR 101 done
+[15:06:50] petrosius2023 n=215 MNAR 102 done
+[15:06:50] leduc2022 n=30 MNAR 102 done
+[15:07:45] leduc2022 n=200 MCAR 100 done
+[15:07:51] leduc2022 n=200 MCAR 102 done
+[15:07:51] leduc2022 n=200 MCAR 101 done
+[15:07:52] leduc2022 n=200 MNAR 100 done
+[15:08:07] specht2021 n=30 MCAR 100 done
+[15:08:09] specht2021 n=30 MCAR 101 done
+[15:08:28] specht2021 n=30 MCAR 102 done
+[15:08:28] specht2021 n=30 MNAR 100 done
+[15:08:40] leduc2022 n=200 MNAR 101 done
+[15:08:41] specht2021 n=30 MNAR 101 done
+[15:08:43] specht2021 n=30 MNAR 102 done
+[15:08:46] leduc2022 n=200 MNAR 102 done
+[15:09:41] specht2021 n=200 MCAR 100 done
+[15:09:43] specht2021 n=200 MCAR 101 done
+[15:09:43] specht2021 n=200 MCAR 102 done
+[15:09:45] specht2021 n=200 MNAR 100 done
+[15:10:08] specht2021 n=200 MNAR 101 done
+[15:10:09] specht2021 n=200 MNAR 102 done
+{'method': 'stack3_big', 'targets_won_both_masks': 1, 'qualifies': False, 'mean_rel_to_knn': 0.9585868898150035, 'per_target': {'leduc2022': False, 'specht2021': False, 'petrosius2023': True}}
+{'method': 'stack2_big', 'targets_won_both_masks': 0, 'qualifies': False, 'mean_rel_to_knn': 0.9684406807757943, 'per_target': {'leduc2022': False, 'specht2021': False, 'petrosius2023': False}}
+{'method': 'refmf_big', 'targets_won_both_masks': 0, 'qualifies': False, 'mean_rel_to_knn': 0.9823406395067256, 'per_target': {'leduc2022': False, 'specht2021': False, 'petrosius2023': False}}

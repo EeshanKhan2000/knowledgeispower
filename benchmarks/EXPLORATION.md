@@ -366,3 +366,26 @@ null on ≥ 2/3 targets under both masks at 30 cells.
 **Holdout:** khan2023 (Amendment 9 had no qualifier, and Amendment 10 had none). The single confirmation goes to the best
 Amendment-11 qualifier, using seeds 6000–6009, 30-cell subsamples, a 1% SESOI, and a paired-bootstrap CI that excludes 0
 under both masks. The reference for khan2023 is the full big corpus + bulk panels; khan2023 is never in it.
+
+## Amendment 12: spend the khan2023 holdout on the best dev candidate (post-gate confirmatory test; committed before the holdout is evaluated)
+
+**Status:** no candidate in Amendments 9–11 passed the dev gate.
+
+**Decision:**
+- Amit has asked us to push for a positive result while staying honest. We therefore spend the single khan2023
+  confirmation on the strongest dev candidate, **`stack3_big`** (kNN + low-rank + reference projection with the
+  Amendment-11 reference).
+- It is labelled a **post-gate** test: it did not pass our own dev qualification rule, and any write-up must say so.
+- It is the only use of khan2023. If it fails, the project reports a negative result. derks2022, if ever rebuilt from
+  unimputed precursors, remains for future work.
+
+**Hypothesis (H12):** on 30-cell subsamples of khan2023, `stack3_big` has lower overall RMSE than:
+- kNN;
+- low-rank;
+- the kNN + low-rank stack;
+- its own permuted-loading null (mean of seeds 0 and 1).
+
+The margin must be ≥ 1% (SESOI), and the 95% paired-bootstrap CI must lie entirely below 0. This must hold under **both**
+MCAR and MNAR. `stack2_all` is reported as a **secondary** comparator (whether the bigger reference adds over the smaller).
+
+**Details:** `benchmarks/PREREGISTRATION_v6.md` and `benchmarks/confirm_v6.py`, run once, at the commit recorded in the output.

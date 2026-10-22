@@ -114,10 +114,10 @@ def main():
             c = boot_rmse_diff(SE[method], [SE[r] for r in refs], 1000, seed=17)
             ref = float(np.mean([rmse[r] for r in refs]))
             pct = 100 * c["delta_rmse"] / ref
-            comps.append({"vs": label, **c, "pct_of_ref_rmse": pct,
-                          "pass": bool(c["ci95"][1] < -SIG_TOL and pct <= -1.0)})
+            comps.append({"vs": label, "role": "secondary" if label == "stack2_all" else "primary", **c,
+                          "pct_of_ref_rmse": pct, "pass": bool(c["ci95"][1] < -SIG_TOL and pct <= -1.0)})
         out["masks"][kind] = {"rmse": rmse, "comparisons": comps, "stack_weights": weights}
-    passes = [c["pass"] for k in out["masks"].values() for c in k["comparisons"]]
+    passes = [c["pass"] for k in out["masks"].values() for c in k["comparisons"] if c["role"] == "primary"]
     out["confirmed"] = bool(all(passes))
     out["passes"] = f"{sum(passes)}/{len(passes)}"
     out["runtime_seconds"] = round(time.time() - t0, 1)

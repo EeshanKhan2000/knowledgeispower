@@ -1,0 +1,35 @@
+[
+ {
+  "method": "stack3_big",
+  "targets_won_both_masks": 1,
+  "qualifies": false,
+  "mean_rel_to_knn": 0.9585868898150035,
+  "per_target": {
+   "leduc2022": false,
+   "specht2021": false,
+   "petrosius2023": true
+  }
+ },
+ {
+  "method": "stack2_big",
+  "targets_won_both_masks": 0,
+  "qualifies": false,
+  "mean_rel_to_knn": 0.9684406807757943,
+  "per_target": {
+   "leduc2022": false,
+   "specht2021": false,
+   "petrosius2023": false
+  }
+ },
+ {
+  "method": "refmf_big",
+  "targets_won_both_masks": 0,
+  "qualifies": false,
+  "mean_rel_to_knn": 0.9823406395067256,
+  "per_target": {
+   "leduc2022": false,
+   "specht2021": false,
+   "petrosius2023": false
+  }
+ }
+]

@@ -331,3 +331,28 @@ data-only pkNN 1.016. At 200 cells: low-rank 0.979; stack **0.953**.
   error is.
 - **The kNN + low-rank and kNN + transfer stacks help *different* targets** (Petrosius vs. SCoPE2). The reference is
   small (≈ 4,000–5,600 cells from 4 datasets, plus 669 bulk samples).
+
+## 2026-10-22 · Amendment 11 dev: bigger reference (17 datasets, ~8,600–9,900 reference cells) + 3-way stack (`results/phase8/dev/`)
+**Mean RMSE relative to kNN at 30 cells** (MCAR / MNAR):
+
+| Method | Leduc | Petrosius | SCoPE2 |
+|---|---|---|---|
+| kNN + low-rank stack | 1.000 / 1.000 | 0.932 / 0.962 | 1.000 / 1.000 |
+| `stack2_all` (Amendment 10 reference) | 0.995 / 0.997 | 0.954 / 0.993 | 0.985 / 0.986 |
+| `refmf_big` alone | 1.020 / 1.019 | 0.898 / 0.972 | 1.002 / 0.983 |
+| `stack2_big` | 0.993 / 0.997 | 0.894 / 0.959 | 0.985 / 0.983 |
+| **`stack3_big`** (kNN + low-rank + `refmf_big`) | 0.993 / 0.997 | **0.860 / 0.933** | **0.985 / 0.983** |
+| `stack3_big` with permuted loadings (null) | 1.003 / 1.004 | 0.924 / 0.974 | 0.999 / 0.998 |
+
+**Selection rule:** **0/3 qualify.** `stack3_big` wins on Petrosius only (1/3 targets).
+- On SCoPE2 it beats kNN, low-rank, the kNN + low-rank stack and its null by ≥ 1.4%. It fails only against the preregistered
+  extra baseline `stack2_all` (the smaller Amendment-10 reference): the bigger reference adds nothing on SCoPE2.
+- On Leduc nothing beats kNN by 1%.
+
+At 200 cells, `stack3_big` ≈ the kNN + low-rank stack (the projection weight goes to 0).
+
+**Read:**
+- The bigger reference makes transfer much stronger on Petrosius: `refmf_big` alone is −10% vs kNN, where the
+  Amendment-10 reference gave −2%.
+- *Post-hoc observation (not a claim):* had `stack2_all` not been a preregistered bar, `stack3_big` would have passed on
+  2/3 targets. We keep the rule as written.
