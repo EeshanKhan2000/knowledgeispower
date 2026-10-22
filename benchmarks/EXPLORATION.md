@@ -277,3 +277,55 @@ kNN fill leaves such proteins NaN. As a result, 3,948 of 6,138 RPR / RPR-stack r
 selects empty columns, so it was unaffected, as was pkNN. Fix: those proteins contribute z = 0 (test
 `test_rpr_neighbour_never_observed_does_not_poison`). The whole grid is re-run unchanged. The first run's files are kept as
 `results/phase6/dev/run1_buggy/` for transparency. The selection rule, grid and hyper-parameters are unchanged.
+
+## Amendment 10: transfer from external references for tiny targets (committed before any run it covers)
+
+**Why (dev-derived motivation, disclosed):**
+- In Amendment 9's first run, unaffected parts only, low-rank completion was ~39% *worse* than kNN at 30 cells but
+  ~2% *better* at 200, and the kNN + low-rank stack was the strongest baseline.
+- Our reading: at 30 cells the bottleneck is learning *which proteins move together*, not knowing the prior.
+- Fields with tiny target samples import that structure from elsewhere:
+  - ancestry PCA projects new genomes onto reference PCs;
+  - recommender systems handle cold-start items with side information;
+  - genotype imputation copies from reference haplotypes;
+  - NLP uses a masked model pretrained on a large corpus. Our version is linear, since no deep-learning stack is
+    installed.
+
+Amit asked (Oct 22) for "a wildly new representation or strategy" drawn from other domains.
+
+**References** (`scp_graphfs_mcp.transfer`; the target is always excluded and holdouts are never included):
+- `corpus`: the other single-cell datasets in `external.CORPUS`, z-scored per protein within each dataset;
+- `all`: `corpus` plus CCLE (375 lines) and ProteomeHD (294 experiments) bulk samples.
+
+**Strategies** (hyper-parameters fixed: rank 20, λ = 5, 15 ALS iterations, ≥ 20 reference observations to count a
+protein as warm; donor k = 10 from 2000 reference cells, ≥ 20 co-observed proteins):
+1. `refmf_<ref>`: protein loadings learned on the reference by masked ALS. Each target cell fits its own scores on its
+   observed proteins (ridge), and the missing entries are predicted from them. Proteins the reference never saw keep
+   the kNN fill.
+2. `refmf_<ref>_kg`: as 1, but cold proteins take the weighted mean loading of their *warm* knowledge neighbours. The
+   neighbours come from the Amendment-9 `union_curated` graph (top 20). This is where the curated prior is tested
+   directly.
+3. `donor_corpus`: kNN whose donors are external corpus cells, mapped to target scale with the target's per-protein
+   mean and SD.
+4. `stack(kNN, s)` for each s in 1–3: the same inner-mask weight rule as Amendment 9.
+
+**Nulls and baselines:**
+- Baselines: kNN, low-rank, and `stack(kNN, low-rank)`.
+- Null for `refmf`: loadings permuted among warm proteins (`permute_rows`, seeds 0 and 1).
+- Null for `_kg`: the same strategy with the knowledge neighbour lists relabelled (`refpanel.permute_neighbours`,
+  seed 0).
+- Null for `donor`: reference columns permuted among proteins (seed 0).
+- **Secondary (thesis-specific, not a gate):** `refmf_<ref>_kg` vs `refmf_<ref>`.
+
+**Grid:** as in Amendment 9 (three dev targets; MCAR and MNAR; seeds 100–102; 30 cells primary; 200 cells / all of
+Petrosius secondary).
+
+**Selection:** the Amendment-9 rule. A pair qualifies if it is ≥ 1% better than every baseline and its own null(s) on
+≥ 2/3 targets under both masks at 30 cells. The single best qualifier is confirmed.
+
+**Holdout:**
+- If Amendment 9 has no qualifier, Amendment 10's single confirmation uses khan2023, as specified there: seeds
+  6000–6009, 30-cell subsamples, ≥ 1% SESOI, and the paired-bootstrap CI must exclude 0 under both masks.
+- If Amendment 9 has a qualifier, khan2023 goes to it, and Amendment 10 waits for derks2022 to be built under the same
+  rule.
+- Every result is published either way.
