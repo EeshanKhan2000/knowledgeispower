@@ -1546,5 +1546,129 @@
       "variant"
     ],
     "link_check": "Web URLs fetched with curl -L and returned HTTP 200. DOIs were checked at https://api.crossref.org/works/<DOI> (HTTP 200, title matched); doi.org itself forwards to publisher pages that often block scripts, so those were not used as the check."
+  },
+
+  {
+    "term": "SESOI",
+    "aka": [
+      "Smallest Effect Size of Interest"
+    ],
+    "category": "methods",
+    "who": "Used by researchers to plan studies and interpret the size of observed effects.",
+    "why": "A result can be statistically significant but too small to matter in practice. SESOI helps researchers decide what size of effect would be meaningful before interpreting the results.",
+    "how": "Researchers set a justified threshold for the smallest effect they care about, using previous evidence, practical needs, or scientific reasoning. They then compare the observed effect and its uncertainty with that threshold.",
+    "what": "For evaluating protein-complex priors, this idea encourages researchers to distinguish a measurable improvement in imputation from an improvement large enough to be useful.",
+    "example": "Before comparing two imputation methods, researchers could define how much reduction in prediction error would be worth the extra complexity of a prior-guided method.",
+    "links": [
+      {
+        "label": "Lakens et al. 2018: Equivalence Testing for Psychological Research",
+        "url": "https://doi.org/10.1177/2515245918770963",
+        "checked": "Verified: article page loads"
+      }
+    ],
+    "related": [
+      "prior",
+      "transferability"
+    ],
+    "link_check": "The DOI resolves to the published article page."
+  },
+  
+  {
+    "term": "forking paths",
+    "aka": [
+      "Analytical flexibility"
+    ],
+    "category": "methods",
+    "who": "Used by researchers who make choices while cleaning data, selecting variables, and analysing results.",
+    "why": "Different reasonable analysis choices can lead to different results. If researchers try many approaches but report only the one that supports their hypothesis, the findings can appear more convincing than they really are.",
+    "how": "Researchers can reduce this problem by planning important analysis decisions in advance, reporting the choices they made, and checking whether their conclusions change under reasonable alternative analyses.",
+    "what": "When evaluating protein-complex priors, researchers should consider whether the apparent benefit of a method remains when reasonable analysis choices change.",
+    "example": "A researcher tests several ways to handle missing protein measurements. If only the approach showing the largest improvement is reported, the result may overstate how well the method works.",
+    "links": [
+      {
+        "label": "Gelman and Loken: The Garden of Forking Paths",
+        "url": "https://www.stat.columbia.edu/~gelman/research/unpublished/p_hacking.pdf",
+        "checked": "Verified: PDF opens"
+      }
+    ],
+    "related": [
+      "SESOI"
+    ],
+    "link_check": "The linked PDF opens and contains The Garden of Forking Paths."
+  },
+  
+  {
+    "term": "low-rank completion",
+    "aka": [
+      "Low-rank matrix completion"
+    ],
+    "category": "methods",
+    "who": "Used by data scientists and researchers to estimate missing values in structured datasets.",
+    "why": "Some datasets contain missing measurements, but their values may follow shared patterns. Low-rank completion uses those patterns to estimate missing entries rather than treating every value as unrelated.",
+    "how": "The method represents a data matrix using a smaller number of underlying factors. It uses the observed entries to estimate those factors and then predicts the missing entries, relying on the assumption that the data has a suitable low-rank structure.",
+    "what": "For protein-complex data, low-rank completion could help estimate missing measurements by using patterns shared across proteins or samples. Its estimates depend on whether those patterns are appropriate for the data.",
+    "example": "Imagine a table of protein measurements across many samples, with some cells missing. If the measurements share a few underlying patterns, a low-rank method can use the observed cells to estimate some missing ones.",
+    "links": [
+      {
+        "label": "Low-Rank Matrix Completion: A Contemporary Survey",
+        "url": "https://doi.org/10.1109/ACCESS.2019.2928130",
+        "checked": "Verified: article page loads"
+      }
+    ],
+    "related": [
+      "prior"
+    ],
+    "link_check": "The DOI resolves to the published survey article page."
+  },
+  
+  {
+    "term": "residual stacking",
+    "aka": [
+      "Stacking residuals"
+    ],
+    "category": "methods",
+    "who": "Used by data scientists who combine predictions from multiple models.",
+    "why": "One model may consistently miss certain patterns. Residual stacking uses the errors left by an earlier model to help a later model improve its predictions.",
+    "how": "A first model makes predictions, and researchers calculate the residuals, which are the differences between observed and predicted values. A second model learns patterns in those residuals, and its predictions can be combined with the first model's predictions. Evaluation must use data that was not used to train the models.",
+    "what": "For protein-complex data, residual stacking could help a model correct systematic errors in estimates of missing measurements. Researchers should check that the improvement generalises to new data rather than reflecting overfitting.",
+    "example": "A first model predicts protein measurements but tends to underestimate high values. A second model learns this pattern from the first model's residuals and helps correct the predictions.",
+    "links": [
+      {
+        "label": "Wolpert: Stacked Generalization",
+        "url": "https://doi.org/10.1016/S0893-6080(05)80023-1",
+        "checked": "Verified: article page loads"
+      }
+    ],
+    "related": [
+      "low-rank completion"
+    ],
+    "link_check": "The DOI resolves to the Stacked Generalization paper."
+  },
+
+  {
+    "term": "cold-start",
+    "aka": [
+      "Cold-start problem"
+    ],
+    "category": "methods",
+    "who": "Used by data scientists when making predictions for new users, items, proteins, or samples with little or no existing data.",
+    "why": "Many prediction methods rely on having enough previous observations to learn useful patterns. When a new item has little or no history, those methods may struggle to make reliable predictions.",
+    "how": "Researchers can use information about the new item, such as its known features or relationships to other items, to make an initial prediction. They should evaluate the method on genuinely new items to check whether it works in practice.",
+    "what": "In protein-complex research, a cold-start problem can arise when a protein or complex has few measured observations. Related biological information may help, but the usefulness of that information must be tested.",
+    "example": "A model trained on previously measured protein complexes is asked to estimate values for a newly studied complex with very few measurements. The model may need to rely on known protein features or relationships to make an initial estimate.",
+    "links": [
+      {
+        "label": "Schein et al.: Methods and Metrics for Cold-Start Recommendations",
+        "url": "https://doi.org/10.1145/1060745.1060754",
+        "checked": "Verified: article page loads"
+      }
+    ],
+    "related": [
+      "prior",
+      "transferability"
+    ],
+    "link_check": "The DOI resolves to the Methods and Metrics for Cold-Start Recommendations paper."
   }
+
+
 ]
