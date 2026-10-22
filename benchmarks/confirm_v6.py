@@ -36,23 +36,33 @@ GRID3 = [w for w in itertools.product(GRID2, repeat=3) if abs(sum(w) - 1) < 1e-9
 
 def main():
     method = sys.argv[1]
+    dry = "--dry-run-dev" in sys.argv  # smoke test on a DEV dataset (specht2021, 2 seeds); never touches khan2023
+    global OUT, SEEDS
+    if dry:
+        OUT = Path("/tmp/claude-0/-home-user-knowledgeispower/19f0adc1-0e52-561e-b422-c31fec9b93e5/scratchpad/confirm_v6_dryrun.json")
+        SEEDS = [100, 101]
+        OUT.unlink(missing_ok=True)
     assert method in ("refmf_big", "stack2_big", "stack3_big")
     prereg = (ROOT / "benchmarks" / "PREREGISTRATION_v6.md").read_text()
     if f"`{method}`" not in prereg:
         sys.exit(f"refusing: {method} is not the method named in PREREGISTRATION_v6.md")
     if OUT.exists():
         sys.exit(f"refusing: {OUT} exists; the v6 confirmation is single-use")
-    if subprocess.run(["git", "diff", "--quiet", "--", "src", "benchmarks"], cwd=ROOT).returncode != 0:
+    if not dry and subprocess.run(["git", "diff", "--quiet", "--", "src", "benchmarks"], cwd=ROOT).returncode != 0:
         sys.exit("refusing: uncommitted changes in src/ or benchmarks/")
     commit = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip()
     t0 = time.time()
-    full = load_khan2023()
+    if dry:
+        from scp_graphfs_mcp.datasets import load_specht2021
+        full, excl = load_specht2021(), ("specht2021",)
+    else:
+        full, excl = load_khan2023(), ()
     names = list(full.var_names)
     datasets = T.extended_corpus()
-    Z = np.vstack([T.corpus_reference(names, (), datasets), T.bulk_reference(names)])
+    Z = np.vstack([T.corpus_reference(names, excl, datasets), T.bulk_reference(names)])
     V, warm = T.fit_loadings(Z)
     nulls = [T.permute_rows(V, warm, s) for s in (0, 1)]
-    Za = np.vstack([T.corpus_reference(names, ()), T.bulk_reference(names)])  # Amendment-10 reference (baseline)
+    Za = np.vstack([T.corpus_reference(names, excl), T.bulk_reference(names)])  # Amendment-10 reference (baseline)
     Va, warm_a = T.fit_loadings(Za)
     ct = full.obs["cell_type"].values
     types = sorted(set(ct))
