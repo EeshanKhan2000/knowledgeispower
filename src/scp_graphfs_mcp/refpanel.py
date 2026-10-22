@@ -133,7 +133,7 @@ def rpr(Xm: np.ndarray, nbrs, base: np.ndarray | None = None, lam: float = 10.0,
     sd = np.nanstd(Xm, 0)
     mu = np.where(np.isfinite(mu), mu, np.nanmean(base, 0))
     sd = np.where(np.isfinite(sd) & (sd > 1e-6), sd, 1.0)
-    Z = (np.where(obs, Xm, base) - mu) / sd
+    Z = np.nan_to_num((np.where(obs, Xm, base) - mu) / sd)  # never-observed proteins contribute 0, not NaN
     out = base.copy()
     for j in np.where((~obs).any(0))[0]:
         idx, w = nbrs[j]

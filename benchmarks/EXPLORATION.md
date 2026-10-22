@@ -270,3 +270,10 @@ The data representation stays log2 as loaded. Cell-median centring is applied on
 - `PREREGISTRATION_v6.md` will be committed before the holdout is loaded for evaluation.
 
 **If nothing qualifies:** we report the full grid as an exhaustive negative result. There is no second sweep.
+
+**Amendment 9: deviation 1 (implementation bug, fixed before any selection was acted on).** In the first full run,
+`refpanel.rpr` returned NaN for any protein whose neighbour list contained a protein never observed in that subsample. The
+kNN fill leaves such proteins NaN. As a result, 3,948 of 6,138 RPR / RPR-stack rows were NaN. The data-only control never
+selects empty columns, so it was unaffected, as was pkNN. Fix: those proteins contribute z = 0 (test
+`test_rpr_neighbour_never_observed_does_not_poison`). The whole grid is re-run unchanged. The first run's files are kept as
+`results/phase6/dev/run1_buggy/` for transparency. The selection rule, grid and hyper-parameters are unchanged.

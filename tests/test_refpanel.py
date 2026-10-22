@@ -49,3 +49,11 @@ def test_stack_with_base_returns_weight_in_grid():
     X, Xm, M, nbrs = _toy(4)
     Y, w = R.stack_with_base(Xm, lambda Xi, b: R.rpr(Xi, nbrs, base=b))
     assert w in (0.0, 0.25, 0.5, 0.75, 1.0) and np.isfinite(Y).all()
+
+
+def test_rpr_neighbour_never_observed_does_not_poison():
+    X, Xm, M, nbrs = _toy(5)
+    Xm[:, 1] = np.nan  # protein 1 never observed (happens in 30-cell subsamples)
+    M = M & ~np.isnan(X) & (np.arange(X.shape[1]) != 1)[None, :]
+    Y = R.rpr(Xm, nbrs)
+    assert np.isfinite(Y[M]).all()

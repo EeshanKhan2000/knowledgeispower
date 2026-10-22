@@ -1,0 +1,51 @@
+[13:12:01] petrosius2023 n=28 MCAR 102 done (204 rows)
+[13:12:02] petrosius2023 n=28 MNAR 100 done (204 rows)
+[13:12:03] petrosius2023 n=28 MCAR 101 done (204 rows)
+[13:12:05] petrosius2023 n=28 MCAR 100 done (204 rows)
+[13:15:20] petrosius2023 n=215 MCAR 100 done (137 rows)
+[13:15:20] petrosius2023 n=215 MCAR 101 done (137 rows)
+[13:16:26] petrosius2023 n=28 MNAR 102 done (204 rows)
+[13:16:27] petrosius2023 n=28 MNAR 101 done (204 rows)
+[13:18:33] petrosius2023 n=215 MNAR 100 done (137 rows)
+[13:18:34] petrosius2023 n=215 MCAR 102 done (137 rows)
+[13:20:02] petrosius2023 n=215 MNAR 102 done (137 rows)
+[13:20:02] petrosius2023 n=215 MNAR 101 done (137 rows)
+[13:22:11] leduc2022 n=30 MCAR 100 done (204 rows)
+[13:22:14] leduc2022 n=30 MCAR 101 done (204 rows)
+[13:23:20] leduc2022 n=30 MNAR 100 done (204 rows)
+[13:23:25] leduc2022 n=30 MCAR 102 done (204 rows)
+[13:25:46] leduc2022 n=200 MCAR 100 done (137 rows)
+[13:25:48] leduc2022 n=200 MCAR 101 done (137 rows)
+[13:25:51] leduc2022 n=30 MNAR 101 done (204 rows)
+[13:25:54] leduc2022 n=30 MNAR 102 done (204 rows)
+[13:29:10] leduc2022 n=200 MCAR 102 done (137 rows)
+[13:29:15] leduc2022 n=200 MNAR 100 done (137 rows)
+[13:29:21] leduc2022 n=200 MNAR 101 done (137 rows)
+[13:29:21] leduc2022 n=200 MNAR 102 done (137 rows)
+[13:32:44] specht2021 n=30 MCAR 101 done (204 rows)
+[13:32:46] specht2021 n=30 MCAR 100 done (204 rows)
+[13:32:57] specht2021 n=30 MNAR 100 done (204 rows)
+[13:33:01] specht2021 n=30 MCAR 102 done (204 rows)
+[13:36:04] specht2021 n=200 MCAR 100 done (137 rows)
+[13:36:05] specht2021 n=200 MCAR 101 done (137 rows)
+[13:37:26] specht2021 n=30 MNAR 101 done (204 rows)
+[13:37:29] specht2021 n=30 MNAR 102 done (204 rows)
+[13:38:56] specht2021 n=200 MCAR 102 done (137 rows)
+[13:38:57] specht2021 n=200 MNAR 100 done (137 rows)
+[13:39:49] specht2021 n=200 MNAR 101 done (137 rows)
+[13:39:50] specht2021 n=200 MNAR 102 done (137 rows)
+{'estimator': 'pknn', 'rep': 'concat_features', 'targets_won_both_masks': 0, 'qualifies': False, 'mean_rel_to_knn': 0.996480905940229, 'per_target': {'leduc2022': False, 'petrosius2023': False, 'specht2021': False}}
+{'estimator': 'pknn', 'rep': 'proteomehd', 'targets_won_both_masks': 0, 'qualifies': False, 'mean_rel_to_knn': 1.001299145807101, 'per_target': {'leduc2022': False, 'petrosius2023': False, 'specht2021': False}}
+{'estimator': 'pknn', 'rep': 'uniprot_kw', 'targets_won_both_masks': 0, 'qualifies': False, 'mean_rel_to_knn': 1.0018763051933786, 'per_target': {'leduc2022': False, 'petrosius2023': False, 'specht2021': False}}
+{'estimator': 'pknn', 'rep': 'union_curated', 'targets_won_both_masks': 0, 'qualifies': False, 'mean_rel_to_knn': 1.0021054342835194, 'per_target': {'leduc2022': False, 'petrosius2023': False, 'specht2021': False}}
+{'estimator': 'pknn', 'rep': 'corpus', 'targets_won_both_masks': 0, 'qualifies': False, 'mean_rel_to_knn': 1.0022120280463997, 'per_target': {'leduc2022': False, 'petrosius2023': False, 'specht2021': False}}
+{'estimator': 'pknn', 'rep': 'string', 'targets_won_both_masks': 0, 'qualifies': False, 'mean_rel_to_knn': 1.0024608271864672, 'per_target': {'leduc2022': False, 'petrosius2023': False, 'specht2021': False}}
+{'estimator': 'pknn', 'rep': 'biogrid', 'targets_won_both_masks': 0, 'qualifies': False, 'mean_rel_to_knn': 1.0025540082129707, 'per_target': {'leduc2022': False, 'petrosius2023': False, 'specht2021': False}}
+{'estimator': 'pknn', 'rep': 'go', 'targets_won_both_masks': 0, 'qualifies': False, 'mean_rel_to_knn': 1.0026006409260053, 'per_target': {'leduc2022': False, 'petrosius2023': False, 'specht2021': False}}
+{'estimator': 'pknn', 'rep': 'prott5', 'targets_won_both_masks': 0, 'qualifies': False, 'mean_rel_to_knn': 1.0029945758458252, 'per_target': {'leduc2022': False, 'petrosius2023': False, 'specht2021': False}}
+{'estimator': 'pknn', 'rep': 'ccle', 'targets_won_both_masks': 0, 'qualifies': False, 'mean_rel_to_knn': 1.0034016486314778, 'per_target': {'leduc2022': False, 'petrosius2023': False, 'specht2021': False}}
+{'estimator': 'pknn', 'rep': 'pathwaycommons', 'targets_won_both_masks': 0, 'qualifies': False, 'mean_rel_to_knn': 1.0036519272440427, 'per_target': {'leduc2022': False, 'petrosius2023': False, 'specht2021': False}}
+{'estimator': 'pknn', 'rep': 'intact', 'targets_won_both_masks': 0, 'qualifies': False, 'mean_rel_to_knn': 1.0040154592048849, 'per_target': {'leduc2022': False, 'petrosius2023': False, 'specht2021': False}}
+{'estimator': 'pknn', 'rep': 'hpa', 'targets_won_both_masks': 0, 'qualifies': False, 'mean_rel_to_knn': 1.0055848599384596, 'per_target': {'leduc2022': False, 'petrosius2023': False, 'specht2021': False}}
+{'estimator': 'pknn', 'rep': 'physical', 'targets_won_both_masks': 0, 'qualifies': False, 'mean_rel_to_knn': 1.0058587174012439, 'per_target': {'leduc2022': False, 'petrosius2023': False, 'specht2021': False}}
+{'estimator': 'pknn', 'rep': 'cocitation', 'targets_won_both_masks': 0, 'qualifies': False, 'mean_rel_to_knn': 1.0066751045646642, 'per_target': {'leduc2022': False, 'petrosius2023': False, 'specht2021': False}}

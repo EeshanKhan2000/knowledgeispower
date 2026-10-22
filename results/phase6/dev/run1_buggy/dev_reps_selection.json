@@ -1,0 +1,794 @@
+[
+ {
+  "estimator": "pknn",
+  "rep": "concat_features",
+  "targets_won_both_masks": 0,
+  "qualifies": false,
+  "mean_rel_to_knn": 0.996480905940229,
+  "per_target": {
+   "leduc2022": false,
+   "petrosius2023": false,
+   "specht2021": false
+  }
+ },
+ {
+  "estimator": "pknn",
+  "rep": "proteomehd",
+  "targets_won_both_masks": 0,
+  "qualifies": false,
+  "mean_rel_to_knn": 1.001299145807101,
+  "per_target": {
+   "leduc2022": false,
+   "petrosius2023": false,
+   "specht2021": false
+  }
+ },
+ {
+  "estimator": "pknn",
+  "rep": "uniprot_kw",
+  "targets_won_both_masks": 0,
+  "qualifies": false,
+  "mean_rel_to_knn": 1.0018763051933786,
+  "per_target": {
+   "leduc2022": false,
+   "petrosius2023": false,
+   "specht2021": false
+  }
+ },
+ {
+  "estimator": "pknn",
+  "rep": "union_curated",
+  "targets_won_both_masks": 0,
+  "qualifies": false,
+  "mean_rel_to_knn": 1.0021054342835194,
+  "per_target": {
+   "leduc2022": false,
+   "petrosius2023": false,
+   "specht2021": false
+  }
+ },
+ {
+  "estimator": "pknn",
+  "rep": "corpus",
+  "targets_won_both_masks": 0,
+  "qualifies": false,
+  "mean_rel_to_knn": 1.0022120280463997,
+  "per_target": {
+   "leduc2022": false,
+   "petrosius2023": false,
+   "specht2021": false
+  }
+ },
+ {
+  "estimator": "pknn",
+  "rep": "string",
+  "targets_won_both_masks": 0,
+  "qualifies": false,
+  "mean_rel_to_knn": 1.0024608271864672,
+  "per_target": {
+   "leduc2022": false,
+   "petrosius2023": false,
+   "specht2021": false
+  }
+ },
+ {
+  "estimator": "pknn",
+  "rep": "biogrid",
+  "targets_won_both_masks": 0,
+  "qualifies": false,
+  "mean_rel_to_knn": 1.0025540082129707,
+  "per_target": {
+   "leduc2022": false,
+   "petrosius2023": false,
+   "specht2021": false
+  }
+ },
+ {
+  "estimator": "pknn",
+  "rep": "go",
+  "targets_won_both_masks": 0,
+  "qualifies": false,
+  "mean_rel_to_knn": 1.0026006409260053,
+  "per_target": {
+   "leduc2022": false,
+   "petrosius2023": false,
+   "specht2021": false
+  }
+ },
+ {
+  "estimator": "pknn",
+  "rep": "prott5",
+  "targets_won_both_masks": 0,
+  "qualifies": false,
+  "mean_rel_to_knn": 1.0029945758458252,
+  "per_target": {
+   "leduc2022": false,
+   "petrosius2023": false,
+   "specht2021": false
+  }
+ },
+ {
+  "estimator": "pknn",
+  "rep": "ccle",
+  "targets_won_both_masks": 0,
+  "qualifies": false,
+  "mean_rel_to_knn": 1.0034016486314778,
+  "per_target": {
+   "leduc2022": false,
+   "petrosius2023": false,
+   "specht2021": false
+  }
+ },
+ {
+  "estimator": "pknn",
+  "rep": "pathwaycommons",
+  "targets_won_both_masks": 0,
+  "qualifies": false,
+  "mean_rel_to_knn": 1.0036519272440427,
+  "per_target": {
+   "leduc2022": false,
+   "petrosius2023": false,
+   "specht2021": false
+  }
+ },
+ {
+  "estimator": "pknn",
+  "rep": "intact",
+  "targets_won_both_masks": 0,
+  "qualifies": false,
+  "mean_rel_to_knn": 1.0040154592048849,
+  "per_target": {
+   "leduc2022": false,
+   "petrosius2023": false,
+   "specht2021": false
+  }
+ },
+ {
+  "estimator": "pknn",
+  "rep": "hpa",
+  "targets_won_both_masks": 0,
+  "qualifies": false,
+  "mean_rel_to_knn": 1.0055848599384596,
+  "per_target": {
+   "leduc2022": false,
+   "petrosius2023": false,
+   "specht2021": false
+  }
+ },
+ {
+  "estimator": "pknn",
+  "rep": "physical",
+  "targets_won_both_masks": 0,
+  "qualifies": false,
+  "mean_rel_to_knn": 1.0058587174012439,
+  "per_target": {
+   "leduc2022": false,
+   "petrosius2023": false,
+   "specht2021": false
+  }
+ },
+ {
+  "estimator": "pknn",
+  "rep": "cocitation",
+  "targets_won_both_masks": 0,
+  "qualifies": false,
+  "mean_rel_to_knn": 1.0066751045646642,
+  "per_target": {
+   "leduc2022": false,
+   "petrosius2023": false,
+   "specht2021": false
+  }
+ },
+ {
+  "estimator": "pknn",
+  "rep": "reactome",
+  "targets_won_both_masks": 0,
+  "qualifies": false,
+  "mean_rel_to_knn": 1.0073983728322247,
+  "per_target": {
+   "leduc2022": false,
+   "petrosius2023": false,
+   "specht2021": false
+  }
+ },
+ {
+  "estimator": "pknn",
+  "rep": "pharos",
+  "targets_won_both_masks": 0,
+  "qualifies": false,
+  "mean_rel_to_knn": 1.012077550964537,
+  "per_target": {
+   "leduc2022": false,
+   "petrosius2023": false,
+   "specht2021": false
+  }
+ },
+ {
+  "estimator": "pknn",
+  "rep": "humap3",
+  "targets_won_both_masks": 0,
+  "qualifies": false,
+  "mean_rel_to_knn": 1.0133478661725548,
+  "per_target": {
+   "leduc2022": false,
+   "petrosius2023": false,
+   "specht2021": false
+  }
+ },
+ {
+  "estimator": "pknn",
+  "rep": "corum",
+  "targets_won_both_masks": 0,
+  "qualifies": false,
+  "mean_rel_to_knn": 1.018127709517798,
+  "per_target": {
+   "leduc2022": false,
+   "petrosius2023": false,
+   "specht2021": false
+  }
+ },
+ {
+  "estimator": "pknn",
+  "rep": "pdb_costructure",
+  "targets_won_both_masks": 0,
+  "qualifies": false,
+  "mean_rel_to_knn": 1.01917947492737,
+  "per_target": {
+   "leduc2022": false,
+   "petrosius2023": false,
+   "specht2021": false
+  }
+ },
+ {
+  "estimator": "pknn",
+  "rep": "complexportal",
+  "targets_won_both_masks": 0,
+  "qualifies": false,
+  "mean_rel_to_knn": 1.0223902349446723,
+  "per_target": {
+   "leduc2022": false,
+   "petrosius2023": false,
+   "specht2021": false
+  }
+ },
+ {
+  "estimator": "pknn",
+  "rep": "monarch",
+  "targets_won_both_masks": 0,
+  "qualifies": false,
+  "mean_rel_to_knn": 1.0253464989672378,
+  "per_target": {
+   "leduc2022": false,
+   "petrosius2023": false,
+   "specht2021": false
+  }
+ },
+ {
+  "estimator": "rpr",
+  "rep": "biogrid",
+  "targets_won_both_masks": 0,
+  "qualifies": false,
+  "mean_rel_to_knn": NaN,
+  "per_target": {
+   "leduc2022": false,
+   "petrosius2023": false,
+   "specht2021": false
+  }
+ },
+ {
+  "estimator": "rpr",
+  "rep": "ccle",
+  "targets_won_both_masks": 0,
+  "qualifies": false,
+  "mean_rel_to_knn": NaN,
+  "per_target": {
+   "leduc2022": false,
+   "petrosius2023": false,
+   "specht2021": false
+  }
+ },
+ {
+  "estimator": "rpr",
+  "rep": "cocitation",
+  "targets_won_both_masks": 0,
+  "qualifies": false,
+  "mean_rel_to_knn": NaN,
+  "per_target": {
+   "leduc2022": false,
+   "petrosius2023": false,
+   "specht2021": false
+  }
+ },
+ {
+  "estimator": "rpr",
+  "rep": "complexportal",
+  "targets_won_both_masks": 0,
+  "qualifies": false,
+  "mean_rel_to_knn": NaN,
+  "per_target": {
+   "leduc2022": false,
+   "petrosius2023": false,
+   "specht2021": false
+  }
+ },
+ {
+  "estimator": "rpr",
+  "rep": "concat_features",
+  "targets_won_both_masks": 0,
+  "qualifies": false,
+  "mean_rel_to_knn": NaN,
+  "per_target": {
+   "leduc2022": false,
+   "petrosius2023": false,
+   "specht2021": false
+  }
+ },
+ {
+  "estimator": "rpr",
+  "rep": "corpus",
+  "targets_won_both_masks": 0,
+  "qualifies": false,
+  "mean_rel_to_knn": NaN,
+  "per_target": {
+   "leduc2022": false,
+   "petrosius2023": false,
+   "specht2021": false
+  }
+ },
+ {
+  "estimator": "rpr",
+  "rep": "corum",
+  "targets_won_both_masks": 0,
+  "qualifies": false,
+  "mean_rel_to_knn": NaN,
+  "per_target": {
+   "leduc2022": false,
+   "petrosius2023": false,
+   "specht2021": false
+  }
+ },
+ {
+  "estimator": "rpr",
+  "rep": "go",
+  "targets_won_both_masks": 0,
+  "qualifies": false,
+  "mean_rel_to_knn": NaN,
+  "per_target": {
+   "leduc2022": false,
+   "petrosius2023": false,
+   "specht2021": false
+  }
+ },
+ {
+  "estimator": "rpr",
+  "rep": "hpa",
+  "targets_won_both_masks": 0,
+  "qualifies": false,
+  "mean_rel_to_knn": NaN,
+  "per_target": {
+   "leduc2022": false,
+   "petrosius2023": false,
+   "specht2021": false
+  }
+ },
+ {
+  "estimator": "rpr",
+  "rep": "humap3",
+  "targets_won_both_masks": 0,
+  "qualifies": false,
+  "mean_rel_to_knn": NaN,
+  "per_target": {
+   "leduc2022": false,
+   "petrosius2023": false,
+   "specht2021": false
+  }
+ },
+ {
+  "estimator": "rpr",
+  "rep": "intact",
+  "targets_won_both_masks": 0,
+  "qualifies": false,
+  "mean_rel_to_knn": NaN,
+  "per_target": {
+   "leduc2022": false,
+   "petrosius2023": false,
+   "specht2021": false
+  }
+ },
+ {
+  "estimator": "rpr",
+  "rep": "monarch",
+  "targets_won_both_masks": 0,
+  "qualifies": false,
+  "mean_rel_to_knn": NaN,
+  "per_target": {
+   "leduc2022": false,
+   "petrosius2023": false,
+   "specht2021": false
+  }
+ },
+ {
+  "estimator": "rpr",
+  "rep": "pathwaycommons",
+  "targets_won_both_masks": 0,
+  "qualifies": false,
+  "mean_rel_to_knn": NaN,
+  "per_target": {
+   "leduc2022": false,
+   "petrosius2023": false,
+   "specht2021": false
+  }
+ },
+ {
+  "estimator": "rpr",
+  "rep": "pdb_costructure",
+  "targets_won_both_masks": 0,
+  "qualifies": false,
+  "mean_rel_to_knn": NaN,
+  "per_target": {
+   "leduc2022": false,
+   "petrosius2023": false,
+   "specht2021": false
+  }
+ },
+ {
+  "estimator": "rpr",
+  "rep": "pharos",
+  "targets_won_both_masks": 0,
+  "qualifies": false,
+  "mean_rel_to_knn": NaN,
+  "per_target": {
+   "leduc2022": false,
+   "petrosius2023": false,
+   "specht2021": false
+  }
+ },
+ {
+  "estimator": "rpr",
+  "rep": "physical",
+  "targets_won_both_masks": 0,
+  "qualifies": false,
+  "mean_rel_to_knn": NaN,
+  "per_target": {
+   "leduc2022": false,
+   "petrosius2023": false,
+   "specht2021": false
+  }
+ },
+ {
+  "estimator": "rpr",
+  "rep": "proteomehd",
+  "targets_won_both_masks": 0,
+  "qualifies": false,
+  "mean_rel_to_knn": NaN,
+  "per_target": {
+   "leduc2022": false,
+   "petrosius2023": false,
+   "specht2021": false
+  }
+ },
+ {
+  "estimator": "rpr",
+  "rep": "prott5",
+  "targets_won_both_masks": 0,
+  "qualifies": false,
+  "mean_rel_to_knn": NaN,
+  "per_target": {
+   "leduc2022": false,
+   "petrosius2023": false,
+   "specht2021": false
+  }
+ },
+ {
+  "estimator": "rpr",
+  "rep": "reactome",
+  "targets_won_both_masks": 0,
+  "qualifies": false,
+  "mean_rel_to_knn": NaN,
+  "per_target": {
+   "leduc2022": false,
+   "petrosius2023": false,
+   "specht2021": false
+  }
+ },
+ {
+  "estimator": "rpr",
+  "rep": "string",
+  "targets_won_both_masks": 0,
+  "qualifies": false,
+  "mean_rel_to_knn": NaN,
+  "per_target": {
+   "leduc2022": false,
+   "petrosius2023": false,
+   "specht2021": false
+  }
+ },
+ {
+  "estimator": "rpr",
+  "rep": "union_curated",
+  "targets_won_both_masks": 0,
+  "qualifies": false,
+  "mean_rel_to_knn": NaN,
+  "per_target": {
+   "leduc2022": false,
+   "petrosius2023": false,
+   "specht2021": false
+  }
+ },
+ {
+  "estimator": "rpr",
+  "rep": "uniprot_kw",
+  "targets_won_both_masks": 0,
+  "qualifies": false,
+  "mean_rel_to_knn": NaN,
+  "per_target": {
+   "leduc2022": false,
+   "petrosius2023": false,
+   "specht2021": false
+  }
+ },
+ {
+  "estimator": "rpr_stack",
+  "rep": "biogrid",
+  "targets_won_both_masks": 0,
+  "qualifies": false,
+  "mean_rel_to_knn": NaN,
+  "per_target": {
+   "leduc2022": false,
+   "petrosius2023": false,
+   "specht2021": false
+  }
+ },
+ {
+  "estimator": "rpr_stack",
+  "rep": "ccle",
+  "targets_won_both_masks": 0,
+  "qualifies": false,
+  "mean_rel_to_knn": NaN,
+  "per_target": {
+   "leduc2022": false,
+   "petrosius2023": false,
+   "specht2021": false
+  }
+ },
+ {
+  "estimator": "rpr_stack",
+  "rep": "cocitation",
+  "targets_won_both_masks": 0,
+  "qualifies": false,
+  "mean_rel_to_knn": NaN,
+  "per_target": {
+   "leduc2022": false,
+   "petrosius2023": false,
+   "specht2021": false
+  }
+ },
+ {
+  "estimator": "rpr_stack",
+  "rep": "complexportal",
+  "targets_won_both_masks": 0,
+  "qualifies": false,
+  "mean_rel_to_knn": NaN,
+  "per_target": {
+   "leduc2022": false,
+   "petrosius2023": false,
+   "specht2021": false
+  }
+ },
+ {
+  "estimator": "rpr_stack",
+  "rep": "concat_features",
+  "targets_won_both_masks": 0,
+  "qualifies": false,
+  "mean_rel_to_knn": NaN,
+  "per_target": {
+   "leduc2022": false,
+   "petrosius2023": false,
+   "specht2021": false
+  }
+ },
+ {
+  "estimator": "rpr_stack",
+  "rep": "corpus",
+  "targets_won_both_masks": 0,
+  "qualifies": false,
+  "mean_rel_to_knn": NaN,
+  "per_target": {
+   "leduc2022": false,
+   "petrosius2023": false,
+   "specht2021": false
+  }
+ },
+ {
+  "estimator": "rpr_stack",
+  "rep": "corum",
+  "targets_won_both_masks": 0,
+  "qualifies": false,
+  "mean_rel_to_knn": NaN,
+  "per_target": {
+   "leduc2022": false,
+   "petrosius2023": false,
+   "specht2021": false
+  }
+ },
+ {
+  "estimator": "rpr_stack",
+  "rep": "go",
+  "targets_won_both_masks": 0,
+  "qualifies": false,
+  "mean_rel_to_knn": NaN,
+  "per_target": {
+   "leduc2022": false,
+   "petrosius2023": false,
+   "specht2021": false
+  }
+ },
+ {
+  "estimator": "rpr_stack",
+  "rep": "hpa",
+  "targets_won_both_masks": 0,
+  "qualifies": false,
+  "mean_rel_to_knn": NaN,
+  "per_target": {
+   "leduc2022": false,
+   "petrosius2023": false,
+   "specht2021": false
+  }
+ },
+ {
+  "estimator": "rpr_stack",
+  "rep": "humap3",
+  "targets_won_both_masks": 0,
+  "qualifies": false,
+  "mean_rel_to_knn": NaN,
+  "per_target": {
+   "leduc2022": false,
+   "petrosius2023": false,
+   "specht2021": false
+  }
+ },
+ {
+  "estimator": "rpr_stack",
+  "rep": "intact",
+  "targets_won_both_masks": 0,
+  "qualifies": false,
+  "mean_rel_to_knn": NaN,
+  "per_target": {
+   "leduc2022": false,
+   "petrosius2023": false,
+   "specht2021": false
+  }
+ },
+ {
+  "estimator": "rpr_stack",
+  "rep": "monarch",
+  "targets_won_both_masks": 0,
+  "qualifies": false,
+  "mean_rel_to_knn": NaN,
+  "per_target": {
+   "leduc2022": false,
+   "petrosius2023": false,
+   "specht2021": false
+  }
+ },
+ {
+  "estimator": "rpr_stack",
+  "rep": "pathwaycommons",
+  "targets_won_both_masks": 0,
+  "qualifies": false,
+  "mean_rel_to_knn": NaN,
+  "per_target": {
+   "leduc2022": false,
+   "petrosius2023": false,
+   "specht2021": false
+  }
+ },
+ {
+  "estimator": "rpr_stack",
+  "rep": "pdb_costructure",
+  "targets_won_both_masks": 0,
+  "qualifies": false,
+  "mean_rel_to_knn": NaN,
+  "per_target": {
+   "leduc2022": false,
+   "petrosius2023": false,
+   "specht2021": false
+  }
+ },
+ {
+  "estimator": "rpr_stack",
+  "rep": "pharos",
+  "targets_won_both_masks": 0,
+  "qualifies": false,
+  "mean_rel_to_knn": NaN,
+  "per_target": {
+   "leduc2022": false,
+   "petrosius2023": false,
+   "specht2021": false
+  }
+ },
+ {
+  "estimator": "rpr_stack",
+  "rep": "physical",
+  "targets_won_both_masks": 0,
+  "qualifies": false,
+  "mean_rel_to_knn": NaN,
+  "per_target": {
+   "leduc2022": false,
+   "petrosius2023": false,
+   "specht2021": false
+  }
+ },
+ {
+  "estimator": "rpr_stack",
+  "rep": "proteomehd",
+  "targets_won_both_masks": 0,
+  "qualifies": false,
+  "mean_rel_to_knn": NaN,
+  "per_target": {
+   "leduc2022": false,
+   "petrosius2023": false,
+   "specht2021": false
+  }
+ },
+ {
+  "estimator": "rpr_stack",
+  "rep": "prott5",
+  "targets_won_both_masks": 0,
+  "qualifies": false,
+  "mean_rel_to_knn": NaN,
+  "per_target": {
+   "leduc2022": false,
+   "petrosius2023": false,
+   "specht2021": false
+  }
+ },
+ {
+  "estimator": "rpr_stack",
+  "rep": "reactome",
+  "targets_won_both_masks": 0,
+  "qualifies": false,
+  "mean_rel_to_knn": NaN,
+  "per_target": {
+   "leduc2022": false,
+   "petrosius2023": false,
+   "specht2021": false
+  }
+ },
+ {
+  "estimator": "rpr_stack",
+  "rep": "string",
+  "targets_won_both_masks": 0,
+  "qualifies": false,
+  "mean_rel_to_knn": NaN,
+  "per_target": {
+   "leduc2022": false,
+   "petrosius2023": false,
+   "specht2021": false
+  }
+ },
+ {
+  "estimator": "rpr_stack",
+  "rep": "union_curated",
+  "targets_won_both_masks": 0,
+  "qualifies": false,
+  "mean_rel_to_knn": NaN,
+  "per_target": {
+   "leduc2022": false,
+   "petrosius2023": false,
+   "specht2021": false
+  }
+ },
+ {
+  "estimator": "rpr_stack",
+  "rep": "uniprot_kw",
+  "targets_won_both_masks": 0,
+  "qualifies": false,
+  "mean_rel_to_knn": NaN,
+  "per_target": {
+   "leduc2022": false,
+   "petrosius2023": false,
+   "specht2021": false
+  }
+ }
+]
