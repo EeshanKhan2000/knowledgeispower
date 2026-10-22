@@ -20,3 +20,32 @@
 [14:01:13] leduc2022 n=30 MNAR 101 done (204 rows)
 [14:05:28] leduc2022 n=200 MNAR 100 done (137 rows)
 [14:05:31] leduc2022 n=200 MCAR 102 done (137 rows)
+[14:07:16] leduc2022 n=200 MNAR 101 done (137 rows)
+[14:07:26] leduc2022 n=200 MNAR 102 done (137 rows)
+[14:13:24] specht2021 n=30 MCAR 100 done (204 rows)
+[14:13:24] specht2021 n=30 MCAR 101 done (204 rows)
+[14:14:56] specht2021 n=30 MCAR 102 done (204 rows)
+[14:15:13] specht2021 n=30 MNAR 100 done (204 rows)
+[14:21:14] specht2021 n=200 MCAR 100 done (137 rows)
+[14:21:27] specht2021 n=200 MCAR 101 done (137 rows)
+[14:23:49] specht2021 n=30 MNAR 102 done (204 rows)
+[14:23:51] specht2021 n=30 MNAR 101 done (204 rows)
+[14:28:16] specht2021 n=200 MCAR 102 done (137 rows)
+[14:28:33] specht2021 n=200 MNAR 100 done (137 rows)
+[14:29:39] specht2021 n=200 MNAR 102 done (137 rows)
+[14:29:39] specht2021 n=200 MNAR 101 done (137 rows)
+{'estimator': 'pknn', 'rep': 'concat_features', 'targets_won_both_masks': 0, 'qualifies': False, 'mean_rel_to_knn': 0.9964770129121806, 'per_target': {'specht2021': False, 'petrosius2023': False, 'leduc2022': False}}
+{'estimator': 'rpr_stack', 'rep': 'complexportal', 'targets_won_both_masks': 0, 'qualifies': False, 'mean_rel_to_knn': 0.9990180556728797, 'per_target': {'specht2021': False, 'petrosius2023': False, 'leduc2022': False}}
+{'estimator': 'rpr_stack', 'rep': 'pdb_costructure', 'targets_won_both_masks': 0, 'qualifies': False, 'mean_rel_to_knn': 0.9993488436692557, 'per_target': {'specht2021': False, 'petrosius2023': False, 'leduc2022': False}}
+{'estimator': 'rpr_stack', 'rep': 'ccle', 'targets_won_both_masks': 0, 'qualifies': False, 'mean_rel_to_knn': 0.9994517674739352, 'per_target': {'specht2021': False, 'petrosius2023': False, 'leduc2022': False}}
+{'estimator': 'rpr_stack', 'rep': 'proteomehd', 'targets_won_both_masks': 0, 'qualifies': False, 'mean_rel_to_knn': 0.9994794241067009, 'per_target': {'specht2021': False, 'petrosius2023': False, 'leduc2022': False}}
+{'estimator': 'rpr_stack', 'rep': 'corum', 'targets_won_both_masks': 0, 'qualifies': False, 'mean_rel_to_knn': 0.9995217319858459, 'per_target': {'specht2021': False, 'petrosius2023': False, 'leduc2022': False}}
+{'estimator': 'rpr_stack', 'rep': 'intact', 'targets_won_both_masks': 0, 'qualifies': False, 'mean_rel_to_knn': 0.9996054779505593, 'per_target': {'specht2021': False, 'petrosius2023': False, 'leduc2022': False}}
+{'estimator': 'rpr_stack', 'rep': 'pharos', 'targets_won_both_masks': 0, 'qualifies': False, 'mean_rel_to_knn': 0.999727899921175, 'per_target': {'specht2021': False, 'petrosius2023': False, 'leduc2022': False}}
+{'estimator': 'rpr_stack', 'rep': 'physical', 'targets_won_both_masks': 0, 'qualifies': False, 'mean_rel_to_knn': 0.9999148636052589, 'per_target': {'specht2021': False, 'petrosius2023': False, 'leduc2022': False}}
+{'estimator': 'rpr_stack', 'rep': 'hpa', 'targets_won_both_masks': 0, 'qualifies': False, 'mean_rel_to_knn': 0.999963975624118, 'per_target': {'specht2021': False, 'petrosius2023': False, 'leduc2022': False}}
+{'estimator': 'rpr_stack', 'rep': 'uniprot_kw', 'targets_won_both_masks': 0, 'qualifies': False, 'mean_rel_to_knn': 0.9999732757016583, 'per_target': {'specht2021': False, 'petrosius2023': False, 'leduc2022': False}}
+{'estimator': 'rpr_stack', 'rep': 'reactome', 'targets_won_both_masks': 0, 'qualifies': False, 'mean_rel_to_knn': 1.0000714470895702, 'per_target': {'specht2021': False, 'petrosius2023': False, 'leduc2022': False}}
+{'estimator': 'rpr_stack', 'rep': 'biogrid', 'targets_won_both_masks': 0, 'qualifies': False, 'mean_rel_to_knn': 1.0004156989608108, 'per_target': {'specht2021': False, 'petrosius2023': False, 'leduc2022': False}}
+{'estimator': 'rpr_stack', 'rep': 'go', 'targets_won_both_masks': 0, 'qualifies': False, 'mean_rel_to_knn': 1.0005452753487223, 'per_target': {'specht2021': False, 'petrosius2023': False, 'leduc2022': False}}
+{'estimator': 'rpr_stack', 'rep': 'pathwaycommons', 'targets_won_both_masks': 0, 'qualifies': False, 'mean_rel_to_knn': 1.000700034633314, 'per_target': {'specht2021': False, 'petrosius2023': False, 'leduc2022': False}}

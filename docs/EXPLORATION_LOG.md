@@ -258,3 +258,49 @@ Overall RMSE at 30 cells (Petrosius 28), mean over dev seeds; change of the cura
 
 **Rule: no α qualifies** (≥ 2 of 3 targets, both masks), so the sweep stops as pre-committed.
 As the local weight shrinks, pkNN converges to kNN and the knowledge neighbourhood stops mattering.
+
+## 2026-10-22 · Amendment 9 dev: exhaustive representation sweep (`results/phase6/dev/dev_reps.json`, `dev_reps_selection.json`)
+**Scope:**
+- 22 protein representations;
+- three estimators: RPR, RPR-stack and pkNN;
+- each with its own label-permutation nulls;
+- baselines: kNN, low-rank, the kNN + low-rank stack and data-only neighbours;
+- three dev targets, MCAR and MNAR, seeds 100–102, at 30 and 200 cells.
+
+6,138 rows in total. The first run had a NaN bug, which is fixed and logged as deviation 1; the buggy run is kept in `run1_buggy/`.
+
+**Selection rule:** 0 of 66 (representation, estimator) pairs qualify. **No Amendment-9 confirmation**, so khan2023 passes to
+Amendment 10.
+
+**Baselines at 30 cells** (RMSE relative to kNN): low-rank 1.389; kNN + low-rank stack **0.983**; data-only RPR 1.039;
+data-only pkNN 1.016. At 200 cells: low-rank 0.979; stack **0.953**.
+
+**RPR alone at 30 cells**, ranked: mean RMSE relative to kNN, then its own null.
+
+| Representation | rel. kNN | own null |
+|---|---|---|
+| **Complex Portal** | **1.005** | 1.020 |
+| **PDB co-structure** | 1.009 | 1.026 |
+| **CORUM** | 1.012 | 1.028 |
+| Monarch phenotypes | 1.022 | 1.024 |
+| NCBI co-citation | 1.028 | 1.058 |
+| Reactome | 1.028 | 1.036 |
+| hu.MAP 3.0 | 1.031 | 1.053 |
+| STRING | 1.032 | 1.061 |
+| SCP corpus loadings | 1.032 | 1.047 |
+| *data-only partners* | 1.039 | — |
+| CCLE (reference coefficients) | 1.041 | 1.061 |
+| BioGRID, ProtT5, GO, Pathway Commons, UniProt KW, HPA, IntAct, PaxDb/physical | 1.043–1.058 | ~1.065 |
+| ProteomeHD, Pharos | 1.062 | 1.062–1.065 |
+
+**Read:**
+- **The thesis's ranking claim holds.** Among 22 representations, *curated physical complex membership* is the best
+  protein prior. Complex Portal ranks first, PDB co-structure (physical, structural) second and CORUM third.
+  - Each beats its own null by 1.5–1.7%, and data-only partners by 2.6–3.3%.
+  - Broader functional knowledge (pathways, PPI networks, sequence embeddings, drug-target annotations) helps less.
+  - Bulk co-regulation panels (CCLE, ProteomeHD) help little or not at all at the single-cell level.
+- **Usefulness does not hold.** No representation beats kNN. When stacked with kNN, the inner-mask weight mostly
+  returns to kNN (RPR-stack ≈ 0.999–1.000 vs. kNN). The best pkNN (concatenated features, 0.9965) is 0.35% better than
+  kNN, below the 1% SESOI and worse than the generic kNN + low-rank stack.
+- The knowledge is real: RPR beats its null in 19/22 representations and pkNN in 18/22. But at the single-cell
+  level the protein-side signal it adds is smaller than what kNN already captures from cell similarity.
