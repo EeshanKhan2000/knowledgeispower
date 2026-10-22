@@ -175,3 +175,18 @@ partly independent. An ensemble may beat both (analogy: Netflix-prize blending, 
 **Rule:** E7 qualifies if it beats all three baselines on ≥ 2 of 3 targets at 30 cells, on both masks.
 If it qualifies, it is preregistered as v6 (SESOI 1% vs. each baseline) and run once on **khan2023** at 30-cell
 subsamples (seeds 6000–6009).
+
+## Amendment 7: protein-specific kNN, with knowledge-defined cell similarity (committed before running)
+
+**Idea (analogies: attention, locally weighted regression):** to impute protein j, measure cell–cell distance on j's
+knowledge-defined neighbourhood S_j instead of on all proteins. S_j = the m = 50 proteins most similar to j by cosine
+similarity of the curated_all feature vectors (Amendment 5).
+- **Distance:** d_j = 0.5 · d_local(S_j) + 0.5 · d_global (both nan-euclidean, rescaled to mean 1). This is fixed and not tuned.
+- **Estimate:** the mean of the k = 10 nearest donors that observe j.
+
+**Required baselines:**
+1. standard kNN;
+2. **null:** S_j from row-shuffled features (seeds 0–1);
+3. **data-only:** S_j = the 50 proteins most correlated with j in the masked training matrix.
+
+**Rule:** it qualifies if it beats all three on ≥ 2 of 3 targets at 30 cells, on both masks. If so: v6 on khan2023 with a 1% SESOI.

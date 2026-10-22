@@ -299,3 +299,64 @@ def select_pivoted_qr(Xfilled, var_names, k: int, cand: np.ndarray) -> list[str]
     A = (A - A.mean(0)) / np.where(A.std(0) > 0, A.std(0), 1.0)
     _, _, piv = qr(A, pivoting=True, mode="economic")
     return [list(var_names)[idx[p]] for p in piv[:k]]
+
+
+# --------------------------------------------------------------------------- E8 protein-specific kNN (Amendment 7)
+
+
+def _nan_dist(Xs: np.ndarray) -> np.ndarray:
+    """Mean squared difference over co-observed columns (nan-euclidean style), cells x cells."""
+    O = (~np.isnan(Xs)).astype(float)
+    Z = np.where(O > 0, Xs, 0.0)
+    cnt = O @ O.T
+    sq = (Z ** 2) @ O.T
+    d2 = sq + sq.T - 2 * Z @ Z.T
+    with np.errstate(invalid="ignore", divide="ignore"):
+        D = np.where(cnt > 0, d2 / cnt, np.nan)
+    return np.sqrt(np.maximum(D, 0))
+
+
+def neighbour_sets_from_features(F: np.ndarray, m: int = 50) -> np.ndarray:
+    Fn = F / np.maximum(np.linalg.norm(F, axis=1, keepdims=True), 1e-9)
+    S = Fn @ Fn.T
+    np.fill_diagonal(S, -np.inf)
+    return np.argsort(-S, axis=1)[:, :m]
+
+
+def neighbour_sets_from_data(X: np.ndarray, m: int = 50) -> np.ndarray:
+    obs = ~np.isnan(X)
+    mu, sd = np.nanmean(X, 0), np.nanstd(X, 0)
+    sd = np.where(sd > 1e-6, sd, 1.0)
+    Z = np.where(obs, (X - np.nan_to_num(mu)) / sd, 0.0)
+    O = obs.astype(float)
+    C = (Z.T @ Z) / np.maximum(O.T @ O, 1)
+    np.fill_diagonal(C, -np.inf)
+    return np.argsort(-C, axis=1)[:, :m]
+
+
+def protein_specific_knn(X: np.ndarray, nbrs: np.ndarray, k: int = 10, alpha: float = 0.5) -> np.ndarray:
+    obs = ~np.isnan(X)
+    Dg = _nan_dist(X)
+    Dg = Dg / np.nanmean(Dg)
+    colmean = np.nanmean(X, 0)
+    out = X.copy()
+    cache: dict[tuple, np.ndarray] = {}
+    for j in np.where((~obs).any(0))[0]:
+        key = tuple(nbrs[j])
+        Dl = cache.get(key)
+        if Dl is None:
+            Dl = _nan_dist(X[:, nbrs[j]])
+            Dl = Dl / np.nanmean(Dl) if np.isfinite(np.nanmean(Dl)) else Dg
+            cache[key] = Dl
+        D = alpha * np.where(np.isnan(Dl), Dg, Dl) + (1 - alpha) * Dg
+        D = np.where(np.isfinite(D), D, np.inf)
+        np.fill_diagonal(D, np.inf)
+        donors = obs[:, j]
+        for i in np.where(~obs[:, j])[0]:
+            cand = np.where(donors)[0]
+            if not len(cand):
+                out[i, j] = colmean[j]
+                continue
+            nn = cand[np.argsort(D[i, cand])[:k]]
+            out[i, j] = X[nn, j].mean()
+    return out
