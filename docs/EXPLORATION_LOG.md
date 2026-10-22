@@ -356,3 +356,34 @@ At 200 cells, `stack3_big` ≈ the kNN + low-rank stack (the projection weight g
   Amendment-10 reference gave −2%.
 - *Post-hoc observation (not a claim):* had `stack2_all` not been a preregistered bar, `stack3_big` would have passed on
   2/3 targets. We keep the rule as written.
+
+## 2026-10-22 · v6 confirmation on the khan2023 holdout (Amendment 12, post-gate): **H12 NOT CONFIRMED (3/8 primary)** (`results/confirm_v6/confirm_v6.json`)
+**Setup:**
+- 30-cell subsamples, seeds 6000–6009.
+- Reference: 17 datasets plus bulk panels, 10,129 samples × 4096 proteins. 84% of khan2023 proteins have reference
+  loadings.
+
+| Comparator | MCAR ΔRMSE (95% CI) | MNAR ΔRMSE (95% CI) |
+|---|---|---|
+| kNN (0.446 / 0.525) | **−1.40%** [CI < 0] PASS | −0.98% [CI < 0] fail (just under SESOI) |
+| low-rank | −28.3% PASS | −22.9% PASS |
+| kNN + low-rank stack | −0.55% [CI < 0] fail | −0.20% [CI < 0] fail |
+| own permuted-loading null | −0.61% [CI < 0] fail | −0.20% [CI < 0] fail |
+| *secondary:* `stack2_all` | −1.04% | −0.85% |
+
+**Read:**
+- On a completely untouched dataset (MCF-10A EMT, a different lab-year and cell type), the 3-way transfer stack is the best
+  method, and **every difference is statistically resolved (CIs exclude 0)**.
+- **But the margin over the strongest generic baseline (kNN + low-rank) and over the permuted reference is 0.2–0.6%,
+  below the preregistered 1% SESOI.** The selected stack weights put 0.25–0.5 on the reference projection in 9/10
+  subsamples, so the projection is used, but its *knowledge-specific* contribution over a permuted reference is small.
+- **Conclusion: H12 is not confirmed.** This was the single use of khan2023.
+
+### Where this leaves the thesis (Oct 22, after Amendments 4–12)
+- **Curated physical complex membership is the best protein-level prior we tested** (ranked #1 of 22), and
+  knowledge priors consistently beat their own nulls.
+- But neither curated priors nor any of 21 other knowledge sources beats plain kNN by a meaningful margin at single-cell
+  resolution.
+- The only mechanism that adds new signal is **transfer of protein covariance from large external references** (≈ 10k
+  cells). On the holdout it is real but small (≈ 0.2–0.6% over strong baselines; 1.0–1.4% over kNN).
+- **Honest headline:** a rigorous, preregistered negative result with one small, reproducible positive (transfer).
