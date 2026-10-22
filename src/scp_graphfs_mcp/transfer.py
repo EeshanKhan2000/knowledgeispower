@@ -28,13 +28,28 @@ def _z(X):
     return (X - mu) / sd
 
 
-def corpus_reference(var_names, exclude: tuple[str, ...]) -> np.ndarray:
-    """External single cells aligned to var_names: (N_cells x p), z-scored per protein *within* each dataset."""
-    if set(exclude) & HOLDOUTS:
+# Amendment 11: extra scpdata datasets built by scripts/corpus_ext/ (whatever built successfully; see PROVENANCE).
+EXCLUDED_FROM_CORPUS = HOLDOUTS | {"leduc2022_plexDIA", "specht2019v2"}
+
+
+def extended_corpus() -> list[str]:
+    from .external import CORPUS_DIR
+
+    ext = sorted(f.stem for f in CORPUS_DIR.glob("*.npz") if f.stem not in CORPUS)
+    bad = set(ext) & EXCLUDED_FROM_CORPUS
+    if bad:
+        raise ValueError(f"excluded datasets present in the corpus dir: {bad}")
+    return list(CORPUS) + ext
+
+
+def corpus_reference(var_names, exclude: tuple[str, ...], datasets: list[str] | None = None) -> np.ndarray:
+    """External single cells aligned to var_names: (N_cells x p), z-scored per protein *within* each dataset.
+    datasets=None -> the Amendment-4 corpus; pass `extended_corpus()` for Amendment 11."""
+    if set(exclude) & HOLDOUTS or set(datasets or []) & EXCLUDED_FROM_CORPUS:
         raise ValueError("holdouts are never part of the corpus")
     target = _target_accs(var_names)
     blocks = []
-    for name in CORPUS:
+    for name in (datasets or CORPUS):
         if name in exclude:
             continue
         X, accs = _load(name)
