@@ -56,12 +56,23 @@ def load_leduc2022() -> ad.AnnData:
 
 
 SPECHT_PATH = DATA_DIR / "datasets" / "specht2021_scope2_proteins_from_peptides.h5ad"
+KHAN_PATH = DATA_DIR / "datasets" / "khan2023_proteins_unimputed.h5ad"
 
 
 def load_specht2021() -> ad.AnnData:
     """SCoPE2 macrophages/monocytes (Specht et al. 2021); proteins = median of unimputed peptides.
     Held out for the v5 confirmation; see benchmarks/EXPLORATION.md Amendment 3."""
     a = ad.read_h5ad(SPECHT_PATH)
+    validate_dataset(a)
+    return a
+
+
+def load_khan2023() -> ad.AnnData:
+    """HOLDOUT (Amendment 9): MCF-10A EMT day 0/3/9 single cells, scpdata `proteins_unimputed`.
+
+    Deliberately NOT registered in DATASETS, so no benchmark or tool loops over it by accident. Only the v6
+    confirmation script may load it."""
+    a = ad.read_h5ad(KHAN_PATH)
     validate_dataset(a)
     return a
 
