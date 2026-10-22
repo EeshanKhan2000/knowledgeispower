@@ -19,7 +19,7 @@ from scp_graphfs_mcp.imc import permuted_features  # noqa: E402
 ROOT = Path(__file__).resolve().parents[1]
 
 
-def main():
+def main(alphas=(0.5,), out_name="dev_pknn.json"):
     rows, t0 = [], time.time()
     for tname, loader, regimes in TARGETS:
         full = loader()
@@ -40,20 +40,26 @@ def main():
                     Xm = X.copy()
                     Xm[mask] = np.nan
                     truth = X[mask]
-                    preds = {"knn": P._fill(Xm, P.loo_knn(Xm)),
-                             "pknn_curated": P.protein_specific_knn(Xm, N_cur),
-                             "pknn_data": P.protein_specific_knn(Xm, P.neighbour_sets_from_data(Xm))}
-                    for i, N in enumerate(N_null):
-                        preds[f"pknn_null{i}"] = P.protein_specific_knn(Xm, N)
+                    preds = {"knn": P._fill(Xm, P.loo_knn(Xm))}
+                    Nd = P.neighbour_sets_from_data(Xm)
+                    for a in alphas:
+                        sfx = "" if a == 0.5 and len(alphas) == 1 else f"_a{a}"
+                        preds[f"pknn_curated{sfx}"] = P.protein_specific_knn(Xm, N_cur, alpha=a)
+                        preds[f"pknn_data{sfx}"] = P.protein_specific_knn(Xm, Nd, alpha=a)
+                        for i, N in enumerate(N_null):
+                            preds[f"pknn_null{i}{sfx}"] = P.protein_specific_knn(Xm, N, alpha=a)
                     for m, Y in preds.items():
                         e = Y[mask] - truth
                         rows.append({"target": tname, "n_cells": int(len(idx)), "mask": kind, "seed": seed,
                                      "method": m, "rmse_all": float(np.sqrt(np.mean(e ** 2)))})
                     print(f"[{time.strftime('%H:%M:%S')}] {tname} n={len(idx)} {kind} {seed} ({time.time() - t0:.0f}s)", flush=True)
-    (ROOT / "results" / "phase5" / "dev" / "dev_pknn.json").write_text(json.dumps({"seeds": SEEDS, "rows": rows}, indent=1) + "\n")
+    (ROOT / "results" / "phase5" / "dev" / out_name).write_text(json.dumps({"seeds": SEEDS, "rows": rows}, indent=1) + "\n")
     import pandas as pd
     print(pd.DataFrame(rows).groupby(["target", "n_cells", "mask", "method"])["rmse_all"].mean().unstack("method").round(4).to_string())
 
 
 if __name__ == "__main__":
-    main()
+    if "--sweep" in sys.argv:
+        main(alphas=(0.1, 0.25), out_name="dev_pknn_sweep.json")
+    else:
+        main()

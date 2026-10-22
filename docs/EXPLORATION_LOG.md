@@ -231,3 +231,20 @@ Nine distinct approaches have been tried, including:
 They were tested across 5 datasets, with 4 single-use confirmations. The pattern is the same throughout:
 - **knowledge priors carry real, reproducible structure** (they beat shuffled versions in nearly every test);
 - **they do not beat strong data-only imputers (kNN or low-rank) by a meaningful margin.**
+
+## 2026-10-22 · Amendment 7 dev: protein-specific kNN, knowledge neighbourhoods, α = 0.5 (`results/phase5/dev/dev_pknn.json`)
+Overall RMSE at 30 cells (Petrosius 28), mean over dev seeds; change of the curated version relative to each comparator:
+
+| Target / mask | kNN | pkNN curated | vs kNN | vs null neighbourhoods | vs data neighbourhoods |
+|---|---|---|---|---|---|
+| Leduc MCAR | 0.546 | 0.552 | +1.1% | −1.4% | −1.3% |
+| Leduc MNAR | 0.633 | 0.639 | +0.9% | −1.1% | −1.6% |
+| Petrosius MCAR | 0.981 | **0.955** | −2.7% | −3.9% | −1.9% |
+| Petrosius MNAR | 0.962 | **0.940** | −2.4% | −3.6% | −5.1% |
+| SCoPE2 MCAR | 0.551 | 0.554 | +0.6% | −1.1% | −1.7% |
+| SCoPE2 MNAR | 0.646 | 0.648 | +0.2% | −1.3% | +0.3% |
+
+**Read:**
+- **Knowledge-defined neighbourhoods beat shuffled ones in every case, and beat data-defined ones in 5/6.**
+- **They beat plain kNN only on Petrosius.** On Leduc and SCoPE2 they are within ~1% of kNN.
+- **Rule: qualifies on 1 of 3, so it does not qualify.** It is the closest approach so far.

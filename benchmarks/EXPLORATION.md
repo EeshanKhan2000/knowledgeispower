@@ -190,3 +190,17 @@ similarity of the curated_all feature vectors (Amendment 5).
 3. **data-only:** S_j = the 50 proteins most correlated with j in the masked training matrix.
 
 **Rule:** it qualifies if it beats all three on ≥ 2 of 3 targets at 30 cells, on both masks. If so: v6 on khan2023 with a 1% SESOI.
+
+## Amendment 8: tune pkNN's local/global mix on dev (committed before running)
+
+**Basis:** Amendment-7 dev with α = 0.5 was within ~1% of kNN on Leduc and SCoPE2. Tuning on dev is allowed by this protocol;
+the confirmation set (khan2023) stays untouched.
+
+**Sweep:**
+- α ∈ {0.1, 0.25} (α = 0.5 was already run) with m = 50 and k = 10;
+- the same baselines (kNN; null neighbourhoods seeds 0–1, at the same α; data neighbourhoods, at the same α);
+- the same 30-cell dev configurations.
+
+**Selection:** the α whose curated pkNN beats all baselines on ≥ 2 of 3 targets, on both masks, with the lowest mean RMSE.
+If one qualifies, v6 is preregistered on khan2023 (30-cell subsamples, seeds 6000–6009, 1% SESOI vs. each baseline).
+If none qualifies, the sweep stops here: there will be no further α values and no other k or m.
