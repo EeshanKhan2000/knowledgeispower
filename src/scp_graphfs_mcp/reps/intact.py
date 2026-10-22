@@ -1,11 +1,15 @@
 """IntAct molecular interactions (human-human), from the clustered MITAB file.
 
-Raw file: ``data/cache/reps/intact/intact-micluster.zip`` (IntAct ``current/psimitab/``; MITAB 2.5,
-one row per unique interactor pair with all its evidences merged). It is used instead of the 1.1 GB
-``species/human.zip`` (evidence-level MITAB 2.7) because it is smaller (852 MB) and already
+Raw file: ``data/cache/reps/intact/intact-micluster.zip`` (IntAct ``current/psimitab/``;
+one row per unique interactor pair with all its evidences merged; MITAB 2.7 columns). It is used instead of the 1.1 GB
+``species/human.zip`` (evidence-level MITAB 2.7) because it is smaller (893 MB) and already
 aggregated per pair; both sides are filtered to taxid 9606 here anyway.
 
-Kept rows: both ``ID(s) interactor`` columns are ``uniprotkb:`` accessions (isoform / ``-PRO_`` chain
+In this file the primary ``ID(s) interactor`` columns hold IntAct ``intact:EBI-...`` IDs and the UniProt
+accession is in ``Alt. ID(s) interactor``; the first ``uniprotkb:`` token of the primary column, else
+of the alt-ID column, is used (alias columns, which list secondary accessions, are ignored).
+
+Kept rows: both interactors have a ``uniprotkb:`` accession (isoform / ``-PRO_`` chain
 suffixes collapsed to the canonical accession), both taxid columns are ``taxid:9606``, the pair is
 not a self-interaction, and the row's interaction types are not *only* colocalization (MI:0403) or
 genetic interaction (MI:0208 and children named "... genetic interaction"), so the graph stays
@@ -77,7 +81,7 @@ def _build() -> None:
                 f = line.rstrip("\n").split("\t")
                 if len(f) < 15 or not (_human(f[9]) and _human(f[10])):
                     continue
-                a, b = _uniprot(f[0]), _uniprot(f[1])
+                a, b = _uniprot(f[0]) or _uniprot(f[2]), _uniprot(f[1]) or _uniprot(f[3])
                 if not a or not b or a == b:
                     continue
                 if _non_physical_only(f[11]):
