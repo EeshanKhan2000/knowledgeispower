@@ -387,3 +387,31 @@ At 200 cells, `stack3_big` ≈ the kNN + low-rank stack (the projection weight g
 - The only mechanism that adds new signal is **transfer of protein covariance from large external references** (≈ 10k
   cells). On the holdout it is real but small (≈ 0.2–0.6% over strong baselines; 1.0–1.4% over kNN).
 - **Honest headline:** a rigorous, preregistered negative result with one small, reproducible positive (transfer).
+
+## 2026-10-22 · Amendment 13 dev: biology-integrated model, in-complex endpoint (`results/phase9/dev/`)
+**In-complex RMSE relative to kNN at 30 cells** (MCAR / MNAR):
+
+| Method | Leduc | Petrosius | SCoPE2 |
+|---|---|---|---|
+| kNN + low-rank stack | 1.000 / 1.000 | 0.934 / 0.956 | 1.000 / 1.000 |
+| `stack3_plain` (transfer, no biological prior) | **0.988 / 0.993** | 0.858 / 0.917 | **0.990 / 0.982** |
+| `stack3_kg` (transfer with κ = 0.25 complex prior on the loadings) | 0.991 / 0.996 | **0.856 / 0.913** | 0.992 / 0.985 |
+| **BIM** (+ complex RPR in a 4-way stack) | 0.991 / 0.996 | 0.856 / 0.913 | 0.992 / 0.985 |
+| `bim_null` (prior labels permuted) | 0.993 / 0.997 | 0.880 / 0.934 | 0.991 / 0.988 |
+
+**Gate: fails** (0/3 targets pass both H13a and H13b under both masks). brunner2022 stays untouched.
+- **H13a (useful vs kNN and the kNN + low-rank stack by ≥ 1%)** holds on Petrosius under both masks and on SCoPE2 MNAR only.
+  As in Amendment 11, this comes from *transfer*.
+- **H13b (biology-specific)** fails. Adding the complex prior to the transferred loadings is ~0.2–0.3% *worse* than plain
+  transfer on Leduc and SCoPE2, and only 0.2–0.4% better on Petrosius.
+  - BIM beats its permuted-prior null clearly only on Petrosius (−2.2–2.7%). There the null is a *wrong* prior that
+    hurts, not a correct prior that helps.
+- **The inner-mask stack gave the complex RPR component weight > 0 in only 1 of 36 subsamples.**
+- At 200 cells, BIM ≈ the kNN + low-rank stack.
+
+**Read:** once protein covariance is learned from ~10k external cells, curated complex membership adds no further
+information, because the reference already contains it.
+- Complex partners are among the most strongly co-varying proteins in the data: Complex Portal ranked #1 in
+  Amendment 9 *because* it matches real covariance.
+- So the prior is **correct but redundant** given enough data. Without that data (30 cells alone), it is correct but too
+  weak to beat kNN.

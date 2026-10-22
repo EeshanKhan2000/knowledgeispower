@@ -1,0 +1,58 @@
+{
+ "per_target_mask": {
+  "leduc2022/MCAR": {
+   "H13a": false,
+   "H13b": false,
+   "rel_knn": 0.991279319407205,
+   "rel_stack_lowrank": 0.991279319407205,
+   "rel_stack3_plain": 1.0030410017945872,
+   "rel_bim_null": 0.9978635523497889
+  },
+  "leduc2022/MNAR": {
+   "H13a": false,
+   "H13b": false,
+   "rel_knn": 0.9962362316247573,
+   "rel_stack_lowrank": 0.9962362316247573,
+   "rel_stack3_plain": 1.0028050233834356,
+   "rel_bim_null": 0.999517974486064
+  },
+  "petrosius2023/MCAR": {
+   "H13a": true,
+   "H13b": false,
+   "rel_knn": 0.8563008918589109,
+   "rel_stack_lowrank": 0.9165317925526996,
+   "rel_stack3_plain": 0.998607699463148,
+   "rel_bim_null": 0.9726211250589573
+  },
+  "petrosius2023/MNAR": {
+   "H13a": true,
+   "H13b": true,
+   "rel_knn": 0.9128632486668944,
+   "rel_stack_lowrank": 0.955062624334991,
+   "rel_stack3_plain": 0.9956216914890292,
+   "rel_bim_null": 0.9774525044024773
+  },
+  "specht2021/MCAR": {
+   "H13a": false,
+   "H13b": false,
+   "rel_knn": 0.9917821156835852,
+   "rel_stack_lowrank": 0.9917821156835852,
+   "rel_stack3_plain": 1.0023525624749543,
+   "rel_bim_null": 1.000541926237672
+  },
+  "specht2021/MNAR": {
+   "H13a": true,
+   "H13b": false,
+   "rel_knn": 0.9845695715209811,
+   "rel_stack_lowrank": 0.9845695715209811,
+   "rel_stack3_plain": 1.002662677989104,
+   "rel_bim_null": 0.9965283157520529
+  }
+ },
+ "targets_passing": {
+  "leduc2022": false,
+  "petrosius2023": false,
+  "specht2021": false
+ },
+ "gate_passed": false
+}
