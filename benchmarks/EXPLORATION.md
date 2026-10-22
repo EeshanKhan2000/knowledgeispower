@@ -439,3 +439,34 @@ MCAR and MNAR. `stack2_all` is reported as a **secondary** comparator (whether t
   - H13b passes if the CI is < 0 and the difference is ≤ −0.25% vs `stack3_plain` and vs `bim_null`.
   - All of this must hold under both masks.
 - **If the dev gate fails:** brunner2022 stays untouched and we report the result.
+
+## Amendment 14: refined hypothesis H14, tested once on the brunner2022 holdout (committed before the holdout is evaluated)
+
+**Honest status:** the curated-complex-specific hypothesis (H13b) has no dev support. In dev, the prior is correct but
+redundant once ~10k external cells are used.
+
+**Refinement.** Amit asked to tweak the hypothesis slightly and to integrate as much biological prior knowledge as
+possible. We broaden "biological prior" from *curated* knowledge to *empirical* prior knowledge: protein co-regulation
+learned from public data (16 single-cell datasets, excluding all holdouts, plus the CCLE and ProteomeHD bulk atlases).
+
+**H14:** on 30-cell subsamples of an unseen dataset, `stack3_plain` has lower **in-complex RMSE** than:
+- kNN;
+- the kNN + low-rank stack;
+- its own permuted-reference null (`transfer.permute_rows`, seeds 0 and 1, mean);
+
+by ≥ 1% with a 95% paired-bootstrap CI below 0, under both MCAR and MNAR (6 primary comparisons). `stack3_plain` is
+kNN + low-rank + reference projection, with simplex weights chosen on an inner mask of observed entries.
+
+**Disclosure:**
+- H14 was formulated *after* seeing dev results. In Amendment 13 dev it met the criteria vs kNN and the kNN + low-rank
+  stack on Petrosius and SCoPE2, under both masks.
+- On khan2023 a closely related test (overall RMSE, Amendment 12) did not pass vs the kNN + low-rank stack.
+- This is therefore a *replication attempt with a refined endpoint* on a new, untouched dataset of a different technology.
+  It is the single use of brunner2022.
+
+**Secondary (reported, not part of H14):**
+- overall RMSE;
+- BIM vs `stack3_plain` (curated-complex-specific);
+- BIM vs `bim_null`.
+
+**Details:** `benchmarks/PREREGISTRATION_v7.md` and `benchmarks/confirm_v7.py`.
