@@ -19,6 +19,12 @@ hash in a new row, and leave the old row in place.
 | `data/cache/corpus/schoof2021.npz` (via `scripts/rda_extract_assay.py` + `scripts/build_corpus.py`) | https://mghp.osn.xsede.org/bir190004-bucket01/ExperimentHub/scpdata/schoof2021.Rda | scpdata EH7085, assay `proteins` (unimputed), single cells only; raw `.Rda` SHA-256 `a70f4d74bdba43efb72a4e903b6b3daa7be6d30560c9ec62e9681eb3a4c75d0e` | 2026-10-21 | (cache, rebuildable) | no |
 | `data/cache/corpus/woo2022.npz` (same scripts) | https://mghp.osn.xsede.org/bir190004-bucket01/ExperimentHub/scpdata/woo2022_macrophage.Rda | scpdata EH8303, assay `proteins_LFQ` (0 = missing); raw `.Rda` SHA-256 `ba613f5ad4e333a2f021c21935e28555aae5b8530f74f3963dc41a96961d3a3e` | 2026-10-21 | (cache, rebuildable) | no |
 
+| `data/cache/features/goa_human.gaf.gz` | https://current.geneontology.org/annotations/goa_human.gaf.gz | GO Consortium human GAF ("current") | 2026-10-22 | `db472faff1785878521693af62646546cea6af4a386609dd01c72c0554a46a30` | no (cache; `scripts/fetch_features.sh`) |
+| `data/cache/features/proteinatlas.tsv.zip` | https://www.proteinatlas.org/download/proteinatlas.tsv.zip | Human Protein Atlas full table ("current") | 2026-10-22 | `ad401f8519ecdee5b67b0ad3bf28175d402d1ea0ad6c542b90fcab2bee39b470` | no |
+| `data/cache/features/9606-WHOLE_ORGANISM-integrated.txt` | https://pax-db.org/downloads/latest/datasets/9606/9606-WHOLE_ORGANISM-integrated.txt | PaxDb "latest", H. sapiens whole-organism integrated abundance | 2026-10-22 | `dbc2566f94d85117adb686a5acd99fc9fd1bad0ed7db7e803e332e0320f76a4a` | no |
+| `data/cache/features/9606.protein.physical.links.v12.5.txt.gz` | https://stringdb-downloads.org/download/protein.physical.links.v12.5/9606.protein.physical.links.v12.5.txt.gz | STRING v12.5 physical subnetwork | 2026-10-22 | `f3a6a5f8e53e9d0a7b2841544e18d823dc13ae53d6771ca23a6011c2b63ee8c5` | no |
+| `data/cache/features/uniprot_human.tsv` | https://rest.uniprot.org/uniprotkb/stream?query=organism_id:9606+AND+reviewed:true&fields=accession,length,mass,cc_subcellular_location,keyword&format=tsv | UniProtKB reviewed human (length, mass, location, keywords), queried 2026-10-22 | 2026-10-22 | `e33dc515816a82a4606d52f7867efc016ed42205ba32d79ecf91f350ff7dbc39` | no |
+
 ## Notes
 
 - **CORUM TLS:** `mips.helmholtz-muenchen.de` serves its leaf certificate without the intermediate
