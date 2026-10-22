@@ -1659,15 +1659,15 @@
     "links": [
       {
         "label": "Schein et al.: Methods and Metrics for Cold-Start Recommendations",
-        "url": "https://doi.org/10.1145/1060745.1060754",
-        "checked": "Verified: article page loads"
+        "url": "https://doi.org/10.1145/564376.564421",
+        "checked": "Verified: DOI matches the cited paper"
       }
     ],
     "related": [
       "prior",
       "transferability"
     ],
-    "link_check": "The DOI resolves to the Methods and Metrics for Cold-Start Recommendations paper."
+    "link_check": "The DOI matches Schein et al.'s Methods and Metrics for Cold-Start Recommendations."
   }
 
 
