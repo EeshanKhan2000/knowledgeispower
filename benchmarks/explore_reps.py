@@ -121,7 +121,9 @@ def build_reps(tname: str, names: list[str]):
             w = U[u][v]["weight"] + 1 if U.has_edge(u, v) else 1.0
             U.add_edge(u, v, weight=w)
     add_graph("union_curated", U)
-    add_features("concat_features", np.hstack([F for k, F in feats.items() if k in reps]))
+    used = [F for k, F in feats.items() if k in reps]
+    has_any = np.any(np.stack([F[:, -1] > 0.5 for F in used]), axis=0)
+    add_features("concat_features", np.hstack([F[:, :-1] for F in used] + [has_any[:, None].astype(float)]))
     return reps, report
 
 
