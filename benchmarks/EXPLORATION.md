@@ -119,3 +119,39 @@ nulls, and **an external data-only graph** (pooled co-variation, no curation). T
 **v6 rule (fixed now):** pick the single method with the best mean dev in-complex RMSE across corpus targets
 whose curated version beats all baselines on dev. Preregister it with a **SESOI of 1% RMSE** against every
 comparator, then run once on khan2023.
+
+## Amendment 5: knowledge as protein *representations* (side-information matrix completion); committed before any run
+
+**Why a new representation:** edge-based partner corrections are ≈ 0 after kNN or low-rank on Leduc and SCoPE2 (Amendment-4 dev).
+Knowledge may enter more usefully as **protein feature vectors** that shape a low-rank model's protein loadings.
+- **Analogies:** recommender systems with item side information (inductive / collective matrix factorisation), and
+  pretrained embeddings.
+- **Where it should matter most:** at **few cells**, where plain low-rank collapses (n = 28: 1.05 vs. kNN 0.92).
+
+**Model (IMC):** z-score X per protein, then fit X ≈ U Vᵀ on observed entries.
+- **Loadings:** V = F W + Δ, where F is a p×d protein feature matrix from knowledge sources.
+- **Penalties:** W is penalised lightly; Δ (protein-specific deviation) is penalised heavily, so the prior dominates when data are scarce.
+- **Variant "pretrained V":** V₀ is taken from a factor model fitted on the external corpus (leave-target-out), and v_j = V₀_j + δ_j.
+
+**Feature sources (each logged in `data/PROVENANCE.md`):**
+- GO annotations (goa_human GAF);
+- Human Protein Atlas (subcellular location, tissue/cell specificity);
+- UniProt (length, subcellular location);
+- PaxDb integrated abundance;
+- spectral embeddings of the STRING (combined, physical), Complex Portal and hu.MAP graphs;
+- external-corpus loadings.
+
+Second tier, only if time allows: Pharos (target development level), Monarch (phenotypes), INDRA (mechanisms).
+
+**Required baselines (all must be beaten):**
+1. kNN;
+2. plain low-rank (no features);
+3. **the same IMC with feature rows permuted across proteins** (null F, 5 seeds), the analogue of a degree-preserving shuffle;
+4. for the pretrained variant, the corpus factor model *without* curated features.
+
+**Dev:** leave-one-dataset-out on the corpus targets. Petrosius uses 215 and 28 cells; Leduc and SCoPE2 use 200- and 30-cell subsamples. Dev seeds are 100–102.
+
+**Selection rule (fixed now):** among IMC variants whose curated-feature version beats all four baselines on dev on
+≥ 2 of 3 targets in the 30-cell regime, pick the one with the lowest mean 30-cell RMSE. It is then preregistered
+(v6) with a **1% SESOI** against each baseline and run once on **khan2023**. If none qualifies, that is reported
+and khan2023 stays untouched.
