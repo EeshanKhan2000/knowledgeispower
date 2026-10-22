@@ -200,3 +200,34 @@ embeddings of Complex Portal and STRING.
 - **Knowledge features beat shuffled features in every 30-cell cell.** Combining sources is best, and no single source is enough.
 - **But kNN dominates the low-rank family at 30 cells** on Leduc and SCoPE2.
 - **Rule outcome:** IMC qualifies on 1 of 3 targets, so no v6 is run.
+
+## 2026-10-22 · Amendment 6 dev: kNN + knowledge-IMC ensemble, w = 0.5 (`results/phase5/dev/dev_ens.json`)
+Overall RMSE, dev seeds 100–102.
+
+| Target, cells | kNN | ensemble (curated) | null ensemble (shuffled features) | kNN + IMC (no features) |
+|---|---|---|---|---|
+| Leduc 30, MCAR / MNAR | **0.546 / 0.633** | 0.566 / 0.648 | 0.572 / 0.653 | 0.582 / 0.657 |
+| SCoPE2 30 | **0.551 / 0.646** | 0.565 / 0.653 | 0.576 / 0.665 | 0.593 / 0.681 |
+| Petrosius 28 | 0.981 / 0.962 | 0.878 / 0.897 | **0.876** / 0.900 | 0.893 / 0.907 |
+| Leduc 200 | 0.503 / 0.594 | 0.492 / 0.584 | 0.491 / 0.585 | **0.490 / 0.584** |
+| SCoPE2 200 | 0.509 / 0.611 | 0.486 / 0.575 | 0.487 / 0.576 | **0.484 / 0.575** |
+
+**Read:**
+- **At 30 cells,** blending with knowledge-IMC makes kNN *worse* on Leduc and SCoPE2. The knowledge-feature ensemble does beat the shuffled-feature ensemble by 0.8–1.9%, so the knowledge signal is consistent but too weak to lift a strong kNN.
+- **At 200 cells and on Petrosius,** ensembles beat kNN through model averaging, and the no-feature and shuffled ensembles do just as well.
+- **Rule: does not qualify on any target.** No v6 is run, and khan2023 stays untouched.
+
+## Overall status after Amendments 4–6 (2026-10-22 00:00 ET)
+Nine distinct approaches have been tried, including:
+- edge corrections;
+- graph-regularised MF;
+- residual stacking;
+- curated × external gating;
+- hu.MAP 3.0;
+- a pooled 5-dataset corpus;
+- knowledge feature representations from GO, HPA, UniProt, PaxDb, and spectral STRING/CP embeddings;
+- kNN ensembles.
+
+They were tested across 5 datasets, with 4 single-use confirmations. The pattern is the same throughout:
+- **knowledge priors carry real, reproducible structure** (they beat shuffled versions in nearly every test);
+- **they do not beat strong data-only imputers (kNN or low-rank) by a meaningful margin.**
