@@ -1,1 +1,24 @@
 [14:06:27] leduc2022 corpus: ref (4308, 2844), warm 0.720, usable after KG cold-start 0.993
+[14:06:46] leduc2022 all: ref (4977, 2844), warm 0.937, usable after KG cold-start 0.995
+[14:07:58] specht2021 corpus: ref (4361, 3042), warm 0.523, usable after KG cold-start 0.974
+[14:08:15] specht2021 all: ref (5030, 3042), warm 0.835, usable after KG cold-start 0.983
+[14:09:04] petrosius2023 n=28 MCAR 101 done
+[14:09:08] petrosius2023 n=28 MCAR 100 done
+[14:09:50] petrosius2023 n=28 MCAR 102 done
+[14:09:56] petrosius2023 n=28 MNAR 100 done
+[14:10:31] petrosius2023 n=28 MNAR 101 done
+[14:10:33] petrosius2023 n=28 MNAR 102 done
+[14:14:29] petrosius2023 n=215 MCAR 100 done
+[14:14:32] petrosius2023 n=215 MCAR 101 done
+[14:18:30] petrosius2023 n=215 MCAR 102 done
+[14:18:37] petrosius2023 n=215 MNAR 100 done
+[14:22:29] petrosius2023 n=215 MNAR 101 done
+[14:22:32] petrosius2023 n=215 MNAR 102 done
+[14:23:10] leduc2022 n=30 MCAR 101 done
+[14:23:11] leduc2022 n=30 MCAR 100 done
+[14:23:53] leduc2022 n=30 MCAR 102 done
+[14:23:53] leduc2022 n=30 MNAR 100 done
+[14:24:32] leduc2022 n=30 MNAR 101 done
+[14:24:32] leduc2022 n=30 MNAR 102 done
+[14:28:09] leduc2022 n=200 MCAR 101 done
+[14:28:10] leduc2022 n=200 MCAR 100 done
