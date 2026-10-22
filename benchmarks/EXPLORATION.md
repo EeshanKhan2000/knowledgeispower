@@ -329,3 +329,40 @@ Petrosius secondary).
 - If Amendment 9 has a qualifier, khan2023 goes to it, and Amendment 10 waits for derks2022 to be built under the same
   rule.
 - Every result is published either way.
+
+## Amendment 11: a bigger reference, plus a three-way stack (committed before any run it covers)
+
+**Why (from Amendment 10 dev):**
+- Transfer beats its permuted null by 3–12% at 30 cells, and a larger reference (`all` > `corpus`) was better.
+- The kNN + low-rank and kNN + transfer stacks win on different targets.
+- Amit asked for more data as the inductive bias.
+
+**Bigger corpus:**
+- Candidate scpdata datasets, fixed now: williams2020_lfq, williams2020_tmt, cong2020AC, liang2020_hela, brunner2022,
+  woo2022_lung, gregoire2023_mixCTRL, guise2024, krull2024, hu2023_K562, bubis2025, leduc2025, wu2026, ai2025a.
+- Each is added as single cells only. The rule is human only (no ortholog mapping). The protein assay must be
+  unimputed; if only an imputed protein assay exists, proteins are rebuilt as the median of unimputed peptides, and if
+  that is not possible the dataset is dropped. Values are log2 and per-cell median-centred, as in `scripts/build_corpus.py`.
+- **Excluded to protect the holdouts:** khan2023 and derks2022 themselves, plus leduc2022_plexDIA, which may share
+  plexDIA runs with derks2022.
+- **Also excluded:** specht2019v2, a subset of the SCoPE2 dev target.
+- Inclusion depends only on whether the build succeeds, never on imputation results. The final list is recorded in
+  `data/PROVENANCE.md` before the run.
+
+**Methods:**
+- `refmf_big` uses the Amendment-10 projection with the reference = the big corpus (leave target out) + CCLE + ProteomeHD,
+  with unchanged hyper-parameters.
+- `stack2_big` is the kNN + `refmf_big` stack, as in Amendment 10.
+- `stack3_big`: w_knn·kNN + w_lr·low-rank + w_t·`refmf_big`. The weights are on the simplex grid with step 0.25 and are
+  chosen on the same 10% inner mask of observed entries.
+
+**Nulls and baselines:**
+- Baselines: kNN, low-rank, the kNN + low-rank stack, and `stack2_all` from Amendment 10 (the smaller reference).
+- Null: `refmf_big` with loadings permuted among warm proteins (seeds 0 and 1), passed through the same stack.
+
+**Grid and selection:** the Amendment-10 grid and rule. Each candidate must be ≥ 1% better than every baseline and its
+null on ≥ 2/3 targets under both masks at 30 cells.
+
+**Holdout:** khan2023 (Amendment 9 had no qualifier, and Amendment 10 had none). The single confirmation goes to the best
+Amendment-11 qualifier, using seeds 6000–6009, 30-cell subsamples, a 1% SESOI, and a paired-bootstrap CI that excludes 0
+under both masks. The reference for khan2023 is the full big corpus + bulk panels; khan2023 is never in it.

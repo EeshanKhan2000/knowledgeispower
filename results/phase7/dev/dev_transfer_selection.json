@@ -1,0 +1,112 @@
+[
+ {
+  "method": "stack_refmf_all",
+  "targets_won_both_masks": 1,
+  "qualifies": false,
+  "mean_rel_to_knn": 0.9851138893419925,
+  "per_target": {
+   "specht2021": true,
+   "petrosius2023": false,
+   "leduc2022": false
+  }
+ },
+ {
+  "method": "stack_refmf_all_kg",
+  "targets_won_both_masks": 0,
+  "qualifies": false,
+  "mean_rel_to_knn": 0.9854004490914255,
+  "per_target": {
+   "specht2021": false,
+   "petrosius2023": false,
+   "leduc2022": false
+  }
+ },
+ {
+  "method": "stack_refmf_corpus",
+  "targets_won_both_masks": 1,
+  "qualifies": false,
+  "mean_rel_to_knn": 0.993173626932597,
+  "per_target": {
+   "specht2021": true,
+   "petrosius2023": false,
+   "leduc2022": false
+  }
+ },
+ {
+  "method": "stack_refmf_corpus_kg",
+  "targets_won_both_masks": 0,
+  "qualifies": false,
+  "mean_rel_to_knn": 0.9949682360060486,
+  "per_target": {
+   "specht2021": false,
+   "petrosius2023": false,
+   "leduc2022": false
+  }
+ },
+ {
+  "method": "stack_donor_corpus",
+  "targets_won_both_masks": 0,
+  "qualifies": false,
+  "mean_rel_to_knn": 1.000868440605737,
+  "per_target": {
+   "specht2021": false,
+   "petrosius2023": false,
+   "leduc2022": false
+  }
+ },
+ {
+  "method": "refmf_all",
+  "targets_won_both_masks": 0,
+  "qualifies": false,
+  "mean_rel_to_knn": 1.0071509855035135,
+  "per_target": {
+   "specht2021": false,
+   "petrosius2023": false,
+   "leduc2022": false
+  }
+ },
+ {
+  "method": "refmf_all_kg",
+  "targets_won_both_masks": 0,
+  "qualifies": false,
+  "mean_rel_to_knn": 1.0080033076525432,
+  "per_target": {
+   "specht2021": false,
+   "petrosius2023": false,
+   "leduc2022": false
+  }
+ },
+ {
+  "method": "refmf_corpus",
+  "targets_won_both_masks": 0,
+  "qualifies": false,
+  "mean_rel_to_knn": 1.0274741300877894,
+  "per_target": {
+   "specht2021": false,
+   "petrosius2023": false,
+   "leduc2022": false
+  }
+ },
+ {
+  "method": "refmf_corpus_kg",
+  "targets_won_both_masks": 0,
+  "qualifies": false,
+  "mean_rel_to_knn": 1.0338820754414701,
+  "per_target": {
+   "specht2021": false,
+   "petrosius2023": false,
+   "leduc2022": false
+  }
+ },
+ {
+  "method": "donor_corpus",
+  "targets_won_both_masks": 0,
+  "qualifies": false,
+  "mean_rel_to_knn": 1.082452595696492,
+  "per_target": {
+   "specht2021": false,
+   "petrosius2023": false,
+   "leduc2022": false
+  }
+ }
+]

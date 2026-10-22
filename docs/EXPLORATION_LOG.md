@@ -304,3 +304,30 @@ data-only pkNN 1.016. At 200 cells: low-rank 0.979; stack **0.953**.
   kNN, below the 1% SESOI and worse than the generic kNN + low-rank stack.
 - The knowledge is real: RPR beats its null in 19/22 representations and pkNN in 18/22. But at the single-cell
   level the protein-side signal it adds is smaller than what kNN already captures from cell similarity.
+
+## 2026-10-22 · Amendment 10 dev: transfer from external references (`results/phase7/dev/dev_transfer.json`)
+**Mean RMSE relative to kNN at 30 cells** (Leduc MCAR / MNAR · Petrosius · SCoPE2):
+
+| Method | Leduc | Petrosius | SCoPE2 |
+|---|---|---|---|
+| kNN + low-rank stack (baseline) | 1.000 / 1.000 | **0.932 / 0.962** | 1.000 / 1.000 |
+| `refmf_all` alone (corpus + CCLE + ProteomeHD loadings) | 1.023 / 1.021 | 0.980 / 1.028 | 1.002 / 0.990 |
+| its permuted-loadings null | 1.05 / 1.05 | 1.07–1.08 / 1.15–1.16 | 1.03 / 1.01–1.02 |
+| **kNN + `refmf_all` stack** | 0.995 / 0.997 | 0.954 / 0.993 | **0.985 / 0.986** |
+| kNN + `refmf_corpus` stack | 0.998 / 1.001 | 0.978 / 1.012 | 0.988 / 0.982 |
+| `refmf_all_kg` (KG cold start) vs its KG null | identical to within 0.1% | | |
+| reference-donor kNN | 1.07–1.13 | | |
+
+**Selection rule:**
+- **0 of 10 qualify.** The best is kNN + `refmf_all` stack: it wins on SCoPE2 under both masks, but on Petrosius the
+  generic kNN + low-rank stack is better.
+- At 200 cells, transfer does not help: target-learned low-rank is better.
+
+**Read:**
+- **Transfer is the first mechanism that adds signal kNN does not already have.** Reference loadings beat permuted ones
+  by 3–12% at 30 cells, adding bulk panels (`all`) beats the single-cell corpus alone, and the stack wins
+  1.4–1.5% on SCoPE2.
+- **The knowledge-graph cold start did nothing measurable** (≈ its null): the 4–26% of cold proteins are not where the
+  error is.
+- **The kNN + low-rank and kNN + transfer stacks help *different* targets** (Petrosius vs. SCoPE2). The reference is
+  small (≈ 4,000–5,600 cells from 4 datasets, plus 669 bulk samples).
