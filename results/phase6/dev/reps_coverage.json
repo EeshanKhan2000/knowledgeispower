@@ -1,0 +1,356 @@
+{
+ "petrosius2023": {
+  "complexportal": {
+   "kind": "graph",
+   "coverage": 0.3011020263064344,
+   "edges": 4671
+  },
+  "corum": {
+   "kind": "graph",
+   "coverage": 0.40774973338073234,
+   "edges": 18255
+  },
+  "string": {
+   "kind": "graph",
+   "coverage": 0.9363668681123356,
+   "edges": 39815
+  },
+  "humap3": {
+   "kind": "graph",
+   "coverage": 0.781016708140775,
+   "edges": 17646
+  },
+  "pdb_costructure": {
+   "kind": "graph",
+   "coverage": 0.40028439388553144,
+   "edges": 8962
+  },
+  "reactome": {
+   "kind": "graph",
+   "coverage": 0.5581230003554923,
+   "edges": 16474
+  },
+  "biogrid": {
+   "kind": "graph",
+   "coverage": 0.9864912904372556,
+   "edges": 138599
+  },
+  "intact": {
+   "kind": "graph",
+   "coverage": 0.9751155350159971,
+   "edges": 57554
+  },
+  "cocitation": {
+   "kind": "graph",
+   "coverage": 0.8993956629932457,
+   "edges": 100201
+  },
+  "pathwaycommons": {
+   "kind": "graph",
+   "coverage": 0.9914681834340562,
+   "edges": 171116
+  },
+  "go": {
+   "kind": "features",
+   "coverage": 0.9975115535015997,
+   "dim": 32
+  },
+  "hpa": {
+   "kind": "features",
+   "coverage": 0.9907571987202275,
+   "dim": 24
+  },
+  "uniprot_kw": {
+   "kind": "features",
+   "coverage": 0.9996445076430857,
+   "dim": 24
+  },
+  "physical": {
+   "kind": "features",
+   "coverage": 0.9996445076430857,
+   "dim": 5
+  },
+  "corpus": {
+   "kind": "features",
+   "coverage": 0.7365801635264841,
+   "dim": 10
+  },
+  "prott5": {
+   "kind": "features",
+   "coverage": 0.9992890152861713,
+   "dim": 32
+  },
+  "pharos": {
+   "kind": "features",
+   "coverage": 0.998933522929257,
+   "dim": 19
+  },
+  "monarch": {
+   "kind": "features",
+   "coverage": 0.3473160327052968,
+   "dim": 24
+  },
+  "monarch_disease": {
+   "kind": "features",
+   "coverage": 0.1713473160327053,
+   "dim": 16,
+   "dropped": "coverage < 20%"
+  },
+  "ccle": {
+   "kind": "reference",
+   "coverage": 0.9104159260575898,
+   "lines": 375
+  },
+  "proteomehd": {
+   "kind": "reference",
+   "coverage": 0.9281905439033061,
+   "lines": 294
+  },
+  "union_curated": {
+   "kind": "graph",
+   "coverage": 0.9964450764308568,
+   "edges": 290259
+  },
+  "concat_features": {
+   "kind": "features",
+   "coverage": 1.0,
+   "dim": 170
+  }
+ },
+ "leduc2022": {
+  "complexportal": {
+   "kind": "graph",
+   "coverage": 0.27637130801687765,
+   "edges": 4656
+  },
+  "corum": {
+   "kind": "graph",
+   "coverage": 0.38572433192686356,
+   "edges": 17621
+  },
+  "string": {
+   "kind": "graph",
+   "coverage": 0.8881856540084389,
+   "edges": 40940
+  },
+  "humap3": {
+   "kind": "graph",
+   "coverage": 0.7577355836849508,
+   "edges": 15014
+  },
+  "pdb_costructure": {
+   "kind": "graph",
+   "coverage": 0.3779887482419128,
+   "edges": 9546
+  },
+  "reactome": {
+   "kind": "graph",
+   "coverage": 0.5242616033755274,
+   "edges": 14739
+  },
+  "biogrid": {
+   "kind": "graph",
+   "coverage": 0.9771448663853727,
+   "edges": 137593
+  },
+  "intact": {
+   "kind": "graph",
+   "coverage": 0.9553445850914205,
+   "edges": 57426
+  },
+  "cocitation": {
+   "kind": "graph",
+   "coverage": 0.8611111111111112,
+   "edges": 95858
+  },
+  "pathwaycommons": {
+   "kind": "graph",
+   "coverage": 0.9845288326300985,
+   "edges": 172827
+  },
+  "go": {
+   "kind": "features",
+   "coverage": 0.990857946554149,
+   "dim": 32
+  },
+  "hpa": {
+   "kind": "features",
+   "coverage": 0.9869901547116737,
+   "dim": 24
+  },
+  "uniprot_kw": {
+   "kind": "features",
+   "coverage": 1.0,
+   "dim": 24
+  },
+  "physical": {
+   "kind": "features",
+   "coverage": 1.0,
+   "dim": 5
+  },
+  "corpus": {
+   "kind": "features",
+   "coverage": 0.719760900140647,
+   "dim": 10
+  },
+  "prott5": {
+   "kind": "features",
+   "coverage": 0.9992967651195499,
+   "dim": 32
+  },
+  "pharos": {
+   "kind": "features",
+   "coverage": 1.0,
+   "dim": 19
+  },
+  "monarch": {
+   "kind": "features",
+   "coverage": 0.3410689170182841,
+   "dim": 24
+  },
+  "monarch_disease": {
+   "kind": "features",
+   "coverage": 0.15857946554149085,
+   "dim": 16,
+   "dropped": "coverage < 20%"
+  },
+  "ccle": {
+   "kind": "reference",
+   "coverage": 0.8888888888888888,
+   "lines": 375
+  },
+  "proteomehd": {
+   "kind": "reference",
+   "coverage": 0.8593530239099859,
+   "lines": 294
+  },
+  "union_curated": {
+   "kind": "graph",
+   "coverage": 0.9936708860759493,
+   "edges": 281053
+  },
+  "concat_features": {
+   "kind": "features",
+   "coverage": 1.0,
+   "dim": 170
+  }
+ },
+ "specht2021": {
+  "complexportal": {
+   "kind": "graph",
+   "coverage": 0.20677186061801447,
+   "edges": 3303
+  },
+  "corum": {
+   "kind": "graph",
+   "coverage": 0.3116370808678501,
+   "edges": 12783
+  },
+  "string": {
+   "kind": "graph",
+   "coverage": 0.8257725180802103,
+   "edges": 29301
+  },
+  "humap3": {
+   "kind": "graph",
+   "coverage": 0.673241288625904,
+   "edges": 10734
+  },
+  "pdb_costructure": {
+   "kind": "graph",
+   "coverage": 0.2856673241288626,
+   "edges": 6124
+  },
+  "reactome": {
+   "kind": "graph",
+   "coverage": 0.48454963839579224,
+   "edges": 11918
+  },
+  "biogrid": {
+   "kind": "graph",
+   "coverage": 0.9510190664036818,
+   "edges": 101127
+  },
+  "intact": {
+   "kind": "graph",
+   "coverage": 0.9092702169625246,
+   "edges": 42408
+  },
+  "cocitation": {
+   "kind": "graph",
+   "coverage": 0.7928994082840237,
+   "edges": 76859
+  },
+  "pathwaycommons": {
+   "kind": "graph",
+   "coverage": 0.9631821170282708,
+   "edges": 127001
+  },
+  "go": {
+   "kind": "features",
+   "coverage": 0.9799474030243261,
+   "dim": 32
+  },
+  "hpa": {
+   "kind": "features",
+   "coverage": 0.9779750164365549,
+   "dim": 24
+  },
+  "uniprot_kw": {
+   "kind": "features",
+   "coverage": 0.997698882314267,
+   "dim": 24
+  },
+  "physical": {
+   "kind": "features",
+   "coverage": 0.997698882314267,
+   "dim": 5
+  },
+  "corpus": {
+   "kind": "features",
+   "coverage": 0.5220249835634451,
+   "dim": 10
+  },
+  "prott5": {
+   "kind": "features",
+   "coverage": 0.9970414201183432,
+   "dim": 32
+  },
+  "pharos": {
+   "kind": "features",
+   "coverage": 1.0,
+   "dim": 19
+  },
+  "monarch": {
+   "kind": "features",
+   "coverage": 0.3241288625904011,
+   "dim": 24
+  },
+  "monarch_disease": {
+   "kind": "features",
+   "coverage": 0.16206443129520054,
+   "dim": 16,
+   "dropped": "coverage < 20%"
+  },
+  "ccle": {
+   "kind": "reference",
+   "coverage": 0.7909270216962525,
+   "lines": 375
+  },
+  "proteomehd": {
+   "kind": "reference",
+   "coverage": 0.7100591715976331,
+   "lines": 294
+  },
+  "union_curated": {
+   "kind": "graph",
+   "coverage": 0.9809335963182118,
+   "edges": 212913
+  },
+  "concat_features": {
+   "kind": "features",
+   "coverage": 1.0,
+   "dim": 170
+  }
+ }
+}
