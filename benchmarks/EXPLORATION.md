@@ -389,3 +389,53 @@ The margin must be ≥ 1% (SESOI), and the 95% paired-bootstrap CI must lie enti
 MCAR and MNAR. `stack2_all` is reported as a **secondary** comparator (whether the bigger reference adds over the smaller).
 
 **Details:** `benchmarks/PREREGISTRATION_v6.md` and `benchmarks/confirm_v6.py`, run once, at the commit recorded in the output.
+
+## Amendment 13: a biology-integrated model (BIM) with a slightly refined hypothesis (committed before any run it covers)
+
+**Why:**
+- Amendments 9–12 show that curated *physical* complex membership is the best protein prior (A9 ranking: Complex Portal,
+  PDB co-structure, CORUM).
+- They also show that external references add real signal, but the prior was never *integrated* into the transferred
+  structure. It was only tried as a separate imputer or as a cold-start patch.
+- Amit (Oct 22): "integrate as much inductive bias from biological priors as possible; tweak the hypothesis slightly if
+  needed."
+
+**Refined hypothesis.** The thesis is about complexes, so the endpoint is RMSE on **complex-member proteins**
+(`in_any_complex`, the phase-1 in-complex endpoint), which is where a complex prior can act. Overall RMSE is secondary.
+- **H13a (useful):** BIM beats kNN and the kNN + low-rank stack by ≥ 1% in-complex RMSE.
+- **H13b (biology-specific):** BIM beats (i) the same pipeline without the biological prior (`stack3_plain`) and
+  (ii) the same pipeline with the prior's protein labels permuted (`bim_null`), by ≥ 0.25% in-complex RMSE.
+
+**BIM (fixed before running):**
+1. **Physical prior graph `phys`:** the union of Complex Portal, CORUM and PDB co-structure. Edge weight = number of
+   sources; each protein keeps its top 20 neighbours.
+2. **Knowledge-regularised reference factorisation.** ALS loadings on the external reference (the Amendment-11 corpus
+   minus the target, **minus brunner2022**, plus CCLE and ProteomeHD). Each warm protein's loading is shrunk toward the
+   mean of its `phys` partners with strength κ·n_obs, κ = 0.25 (`transfer.fit_loadings(kg=..., kappa=0.25)`). Rank 20,
+   λ = 5, 15 iterations, and ≥ 20 observations are as before. Cold proteins get the `phys` cold start (Amendment 10).
+3. **Within-target complex regression:** `refpanel.rpr` with the `phys` neighbours (m = 20, λ = 10).
+4. **Four-way stack** of kNN, low-rank, step-2 projection and step-3 RPR. The weights are on the simplex grid with step
+   0.25, chosen on the 10% inner mask of observed entries (overall squared error, as before).
+
+**Comparators:**
+- kNN;
+- the kNN + low-rank stack;
+- `stack3_plain`: kNN + low-rank + projection with κ = 0 and no RPR (the A11 method, re-fit on the same reference);
+- `bim_null`: BIM with `phys` neighbour lists relabelled at random (`refpanel.permute_neighbours`, seed 0), used in both
+  the factorisation and the RPR.
+- Also reported: `stack3_kg` (no RPR component).
+
+**Dev:**
+- The Amendment-9 grid: 3 targets, MCAR and MNAR, seeds 100–102, 30 cells primary; 200 cells / all of Petrosius reported.
+- **Gate:** H13a and H13b both hold (point estimates, mean over seeds) on ≥ 2/3 targets under both masks at 30 cells.
+
+**New holdout: brunner2022.**
+- 434 HeLa single cells in 5 cell-cycle groups (timsTOF DIA, a different technology).
+- It has only ever been part of the external *reference*. It was never imputed or scored, and no decision used its accuracy.
+- From now on it is removed from every reference. It joins `EXCLUDED_FROM_CORPUS` for Amendment 13.
+- **If the dev gate passes:** confirmation on brunner2022 uses 30-cell subsamples stratified by `CellCycleStage` (6
+  per stage), seeds 7000–7009, MCAR and MNAR, with in-complex RMSE.
+  - H13a passes if the paired-bootstrap CI is < 0 and the difference is ≤ −1% vs kNN and vs the kNN + low-rank stack.
+  - H13b passes if the CI is < 0 and the difference is ≤ −0.25% vs `stack3_plain` and vs `bim_null`.
+  - All of this must hold under both masks.
+- **If the dev gate fails:** brunner2022 stays untouched and we report the result.

@@ -30,6 +30,7 @@ def _z(X):
 
 # Amendment 11: extra scpdata datasets built by scripts/corpus_ext/ (whatever built successfully; see PROVENANCE).
 EXCLUDED_FROM_CORPUS = HOLDOUTS | {"leduc2022_plexDIA", "specht2019v2"}
+AMENDMENT13_HOLDOUT = "brunner2022"  # reference-only until Amendment 13; never in a reference from then on
 
 
 def extended_corpus() -> list[str]:
@@ -76,9 +77,14 @@ def bulk_reference(var_names) -> np.ndarray:
 
 
 def fit_loadings(Zref: np.ndarray, rank: int = 20, lam: float = 5.0, iters: int = 15, min_obs: int = 20,
-                 seed: int = 0):
+                 seed: int = 0, kg=None, kappa: float = 0.0):
     """Masked low-rank factorisation Zref ~ U V^T by alternating ridge. Returns (V, warm) with V (p x rank);
-    proteins observed in < min_obs reference samples are 'cold' (warm=False, V row = 0)."""
+    proteins observed in < min_obs reference samples are 'cold' (warm=False, V row = 0).
+
+    kg / kappa (Amendment 13): a biological prior on the loadings. kg is a per-protein list of (neighbour idx,
+    weights) over the full protein axis (e.g. curated complex partners). Each warm protein's loading is shrunk
+    toward the weight-normalised mean loading of its warm neighbours with strength kappa * n_obs_j, i.e. a
+    graph-Laplacian penalty whose weight scales with the evidence for that protein (kappa = 0: plain ALS)."""
     obs = ~np.isnan(Zref)
     warm = obs.sum(0) >= min_obs
     Z = np.where(obs, Zref, 0.0)[:, warm]
@@ -89,6 +95,17 @@ def fit_loadings(Zref: np.ndarray, rank: int = 20, lam: float = 5.0, iters: int 
     V = 0.1 * rng.normal(size=(Z.shape[1], rank))
     U = np.zeros((Z.shape[0], rank))
     I = lam * np.eye(rank)
+    nb = None
+    if kg is not None and kappa > 0:
+        col = -np.ones(Zref.shape[1], int)
+        col[np.where(warm)[0]] = np.arange(warm.sum())
+        nb = []
+        for j in np.where(warm)[0]:
+            idx, w = kg[j]
+            ok = (col[idx] >= 0) if len(idx) else np.zeros(0, bool)
+            ww = np.abs(np.asarray(w, float)[ok]) if len(idx) else np.zeros(0)
+            nb.append((col[idx[ok]], ww / ww.sum()) if ww.sum() > 0 else (np.zeros(0, int), np.zeros(0)))
+    nobs = O.sum(0)
     for _ in range(iters):
         for i in range(Z.shape[0]):
             o = O[i]
@@ -97,7 +114,12 @@ def fit_loadings(Zref: np.ndarray, rank: int = 20, lam: float = 5.0, iters: int 
         for j in range(Z.shape[1]):
             o = O[:, j]
             Uo = U[o]
-            V[j] = np.linalg.solve(Uo.T @ Uo + I, Uo.T @ Z[o, j])
+            A, b = Uo.T @ Uo + I, Uo.T @ Z[o, j]
+            if nb is not None and len(nb[j][0]):
+                g = kappa * nobs[j]
+                A = A + g * np.eye(rank)
+                b = b + g * (nb[j][1] @ V[nb[j][0]])
+            V[j] = np.linalg.solve(A, b)
     Vfull = np.zeros((Zref.shape[1], rank))
     Vfull[warm] = V
     return Vfull, warm

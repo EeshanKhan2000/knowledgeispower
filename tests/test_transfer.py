@@ -42,3 +42,15 @@ def test_donor_knn_finite_and_keeps_observed():
     base = np.where(np.isnan(Xm), np.nanmean(Xm, 0), Xm)
     Y = T.donor_knn(Xm, T._z(ref), base)
     assert np.isfinite(Y).all() and np.allclose(Y[~M], X[~M])
+
+
+def test_kg_prior_pulls_partners_together():
+    ref, X, Xm, M = _world(2, p=40)
+    Z = T._z(ref)
+    kg = [(np.array([j ^ 1]), np.array([1.0])) for j in range(40)]  # pairs (0,1), (2,3), ...
+    V0, warm = T.fit_loadings(Z, rank=5)
+    V1, _ = T.fit_loadings(Z, rank=5, kg=kg, kappa=1.0)
+    d = lambda V: np.mean([np.linalg.norm(V[2 * k] - V[2 * k + 1]) for k in range(20)])  # noqa: E731
+    assert d(V1) < 0.8 * d(V0)
+    V2, _ = T.fit_loadings(Z, rank=5, kg=kg, kappa=0.0)
+    assert np.allclose(V0, V2)
